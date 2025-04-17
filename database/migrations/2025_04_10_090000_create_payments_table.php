@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            // $table->index('appointment_id');
+            // $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
+            $table->foreignId('appoinment_id')->index()->onDelete('cascade');
+            $table->double('amount');
+            $table->timestamp('payment_date');
+            $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');
             $table->timestamps();
         });
     }

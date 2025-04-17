@@ -13,6 +13,22 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            // $table->index('recipient_id');
+            // $table->foreign('recipient_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->index('sender_id')->nullable();
+            // $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreignId('users_id')->index()->onDelete('cascade');
+            // $table->foreignId('users_id')->nullable()->index()->onDelete('cascade');
+            $table->unsignedBigInteger('recipient_id');
+            $table->unsignedBigInteger('sender_id')->nullable();
+            $table->foreign('recipient_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->text('content');
+            $table->enum('status', ['pending', 'read'])->default('pending');
+            // $table->index('notification_type_id')->nullable();
+            // $table->foreignId('notification_type_id')->index()->onDelete('cascade');
+            $table->foreignId('notification_type_id')->nullable()->index()->onDelete('cascade');
             $table->timestamps();
         });
     }

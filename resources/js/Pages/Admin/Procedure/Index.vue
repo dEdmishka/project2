@@ -46,19 +46,21 @@ import DropdownAction from '@/components/DropdownAction.vue'
 import { Badge } from '@/components/ui/badge';
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/cud/DeleteDialog.vue';
-import EditDialog from '@/components/cud/EditDialog.vue';
+import CreateDialog from '@/components/procedure/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/procedure/cud/DeleteDialog.vue';
+import EditDialog from '@/components/procedure/cud/EditDialog.vue';
 
 const props = defineProps({
     data: Array,
 })
 
-const data = props.data;
+const data = ref(props.data);
+const currentCell = ref();
 
 const createDialog = ref(false);
 const editDialog = ref(false);
 const deleteDialog = ref(false);
+
 
 const showCreateDialog = () => {
     createDialog.value = true;
@@ -69,6 +71,26 @@ const showEditDialog = () => {
 const showDeleteDialog = () => {
     deleteDialog.value = true;
 };
+
+const updateData = (newData) => {
+    data.value = newData;
+}
+
+const closeCreateDialog = () => {
+    createDialog.value = false;
+};
+
+const closeEditDialog = () => {
+    editDialog.value = false;
+};
+
+const closeDeleteDialog = () => {
+    deleteDialog.value = false;
+};
+
+const setCurrentCell = (editData) => {
+    currentCell.value = editData;
+}
 
 // const data = [
 // {
@@ -176,6 +198,7 @@ const columns = [
                 editDialog,
                 deleteDialog,
                 onExpand: row.toggleExpanded,
+                onCurrent: setCurrentCell,
             })
         },
     },
@@ -297,9 +320,9 @@ const table = useVueTable({
             </div>
         </div>
 
-        <CreateDialog v-model:open="createDialog"/>
-        <EditDialog v-model:open="editDialog"/>
-        <DeleteDialog v-model:open="deleteDialog"/>
+        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"/>
+        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"/>
+        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell" v-model:open="deleteDialog"/>
         <!-- <Dialog v-model:open="showDialog">
             <DialogTrigger as-child>
                 <Button variant="outline">

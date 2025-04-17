@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -30,13 +31,16 @@ Route::group([], function () {
         Route::post('login', [AuthController::class, 'enter'])->name('login.enter');
         Route::get('signup', [AuthController::class, 'signup'])->name('signup');
         Route::post('signup', [AuthController::class, 'store'])->name('signup.store');
+        Route::get('/', [HomeController::class, 'index'])->name('home');
     });
     // Authenticate middleware
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('account', [AccountController::class, 'index'])->name('account');
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });
+
+    
 });
 
 Route::group(['prefix' => 'admin'], function(){
@@ -52,6 +56,9 @@ Route::group(['prefix' => 'admin'], function(){
         Route::group(['prefix' => 'procedures'], function(){
             Route::get('/',[AdminProcedureController::class,'index'])->name('admin.procedure.index');
             Route::post('/',[AdminProcedureController::class,'store'])->name('admin.procedure.store');
+            // Route::get('/{id}',[AdminProcedureController::class,'edit'])->name('admin.procedure.edit');
+            Route::put('/{id}',[AdminProcedureController::class,'update'])->name('admin.procedure.update');
+            Route::delete('/{id}',[AdminProcedureController::class,'delete'])->name('admin.procedure.delete');
         });
         Route::post('logout',[AdminAuthController::class,'logout'])->name('admin.logout');
     });

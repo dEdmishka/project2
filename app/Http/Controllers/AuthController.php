@@ -15,6 +15,12 @@ class AuthController extends Controller
      */
     public function login()
     {
+        // if (Auth::check()) {
+        //     dd('user logged');
+        //     // The user is logged in...
+        // } else {
+        //     dd('user not logged');
+        // }
         return Inertia::render('Auth/Login');
     }
 

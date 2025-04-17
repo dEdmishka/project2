@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            // $table->index('patient_id');
+            // $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            // $table->index('staff_id');
+            // $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
+            $table->foreignId('patient_id')->index()->onDelete('cascade');
+            $table->foreignId('staff_id')->index()->onDelete('cascade');
+            $table->datetime('time');
+            $table->enum('status', ['active', 'closed', 'canceled'])->default('active');
+            // $table->index('procedure_id');
+            // $table->foreign('procedure_id')->references('id')->on('procedures')->onDelete('cascade');
+            $table->foreignId('procedure_id')->index()->onDelete('cascade');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

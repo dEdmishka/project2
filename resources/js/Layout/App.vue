@@ -1,6 +1,10 @@
 <script setup>
 import AppSidebar from "@/components/AppSidebar.vue"
 import NavActions from '@/components/NavActions.vue'
+import Navbar from "@/components/Navbar.vue"
+import Footer from "@/components/Footer.vue"
+import Hero from '@/components/Hero.vue'
+import About from '@/components/About.vue'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -15,12 +19,22 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button/index"
+import { Button } from "@/components/ui/button"
+import { Toaster } from '@/components/ui/sonner'
+import ScrollToTop from "@/components/ScrollToTop.vue"
 
 </script>
 
 <template>
-    <SidebarProvider>
+    <Toaster />
+
+    <Navbar />
+    <main class="container mx-auto">
+        <slot />
+    </main>
+    <Footer />
+    <ScrollToTop />
+    <!-- <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
             <header
@@ -50,5 +64,5 @@ import { Button } from "@/components/ui/button/index"
                 <slot />
             </div>
         </SidebarInset>
-    </SidebarProvider>
+    </SidebarProvider> -->
 </template>

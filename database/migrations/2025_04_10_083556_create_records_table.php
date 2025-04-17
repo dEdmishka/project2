@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('records', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary();
+            // $table->index('patient_id');
+            // $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            // $table->index('record_type_id');
+            // $table->foreign('record_type_id')->references('id')->on('record_types')->onDelete('cascade');
+            $table->foreignId('patient_id')->index()->onDelete('cascade');
+            $table->foreignId('record_type_id')->index()->onDelete('cascade');
+            $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

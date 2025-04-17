@@ -15,11 +15,12 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button/index"
-
+import { Button } from "@/components/ui/button"
+import { Toaster } from '@/components/ui/sonner'
 </script>
 
 <template>
+    <Toaster />
     <SidebarProvider>
         <AdminAppSidebar />
         <SidebarInset>
@@ -53,7 +54,7 @@ import { Button } from "@/components/ui/button/index"
                     </h1>
                 </div>
                 <div>
-                <!-- <div class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"> -->
+                    <!-- <div class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"> -->
                     <slot />
                 </div>
             </main>

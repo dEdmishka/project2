@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $seeders = array (UserSeeder::class, ProcedureSeeder::class);
+        // $seeders = array (UserSeeder::class, ProcedureSeeder::class);
+        $seeders = array (UserSeeder::class);
 
         foreach ($seeders as $seeder)
         { 

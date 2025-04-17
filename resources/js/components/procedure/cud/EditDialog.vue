@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from '@/components/ui/dialog'
 
 import { Label } from '@/components/ui/label'
@@ -24,12 +23,14 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 
-defineProps({
+const props = defineProps({
+    currentCell: Object,
     showDialog: Boolean,
 })
 
+import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { watch, ref } from 'vue';
 
 const form = useForm({
     name: '',
@@ -39,16 +40,43 @@ const form = useForm({
     is_active: false,
 });
 
+watch(
+  () => props.currentCell,
+  (newData) => {
+    if (newData) {
+      form.name = newData.name
+      form.description = newData.description
+      form.duration = newData.duration
+      form.price = newData.price
+      form.is_active = !!newData.is_active
+    }
+  },
+  { immediate: true }
+)
+
+const emit = defineEmits(['update', 'close']);
 const errors = ref({});
 
 const submit = () => {
-    form.post('/admin/procedures', {
-        // preserveState: true,
+    form.put(`/admin/procedures/${props.currentCell.id}`, {
         onError: (error) => {
             errors.value = error;
         },
-        onSuccess: () => {
+        onSuccess: (event) => {
+            const data = event.props.data;
+            console.log(data);
+            toast('Success!', {
+                variant: 'default',
+                duration: 3000,
+                description: 'Product has been successfully edited!',
+                action: {
+                    label: 'Got it',
+                    onClick: () => console.log('Undo'),
+                },
+            });
 
+            emit('update', data);
+            emit('close', false);
         }
     })
 };
@@ -58,9 +86,9 @@ const submit = () => {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Create procedure</DialogTitle>
+                <DialogTitle>Edit procedure</DialogTitle>
                 <DialogDescription>
-                    Make changes to your profile here. Click save when you're done.
+                    Make changes to your procedure here. Click save when you're done.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">

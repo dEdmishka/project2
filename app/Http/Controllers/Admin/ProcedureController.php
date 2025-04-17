@@ -43,4 +43,33 @@ class ProcedureController extends Controller
 
         return redirect()->back()->with('success', 'Successfully created');
     }
+
+    public function update(Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => '',
+            'duration' => 'required',
+            'price' => 'required',
+            'is_active' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        Procedure::whereId($id)->update($request->all());
+
+        return redirect()->back()->with('success', 'Successfully edited');
+    }    
+
+    public function delete($id) {
+        $procedure = Procedure::find($id);
+
+        if ($procedure) {
+            $procedure->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        }
+
+        return redirect()->back()->withErrors(['msg' => 'There`s no procedure to delete!']);
+    }    
 }
