@@ -5,7 +5,7 @@ import Statistics from "@/components/Statistics.vue";
 <template>
     <section
       id="about"
-      class="py-24 sm:py-32"
+      class="py-12 sm:py-16"
     >
       <div class="bg-muted/50 border rounded-lg py-12">
         <div class="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">
@@ -20,7 +20,7 @@ import Statistics from "@/components/Statistics.vue";
                 <span class="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
                   About{{" "}}
                 </span>
-                Company
+                Us
               </h2>
               <p class="text-xl text-muted-foreground mt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

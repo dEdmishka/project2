@@ -21,20 +21,20 @@ import {
 
 const routeList = [
     {
-        href: "#features",
-        label: "Features",
+        href: "/",
+        label: "Home",
     },
     {
-        href: "#testimonials",
-        label: "Testimonials",
+        href: "/about",
+        label: "About",
     },
     {
-        href: "#pricing",
-        label: "Pricing",
+        href: "/contacts",
+        label: "Contacts",
     },
     {
-        href: "#faq",
-        label: "FAQ",
+        href: "/help",
+        label: "Help",
     },
 ];
 
@@ -47,10 +47,10 @@ import NavActions from '@/components/NavActions.vue'
         <NavigationMenu class="mx-auto">
             <NavigationMenuList class="container h-14 px-4 w-screen flex justify-between">
                 <NavigationMenuItem  class="font-bold flex items-center">
-                    <a rel="noreferrer noopener" href="/" class="ml-2 font-bold text-xl flex">
+                    <Link rel="noreferrer noopener" href="/" class="ml-2 font-bold text-xl flex">
                         <Github />
                         ShadcnUI/Vue
-                    </a>
+                    </Link>
                 </NavigationMenuItem >
 
                 <!-- mobile -->

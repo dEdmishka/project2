@@ -18,7 +18,7 @@ return new class extends Migration
             // $table->index('department_type_id');
             // $table->foreign('department_type_id')->references('id')->on('department_types')->onDelete('cascade');
             $table->foreignId('center_id')->index()->onDelete('cascade');
-            $table->foreignId('department_id')->index()->onDelete('cascade');
+            $table->foreignId('department_type_id')->index()->onDelete('cascade');
             $table->string('name');
             $table->string('description');
             $table->integer('floor');

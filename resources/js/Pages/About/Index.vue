@@ -6,8 +6,6 @@ import Hero from '@/components/Hero.vue'
 import About from '@/components/About.vue'
 import HowItWorks from '@/components/HowItWorks.vue'
 import FAQ from '@/components/FAQ.vue'
-import Opportunities from '@/components/Opportunities.vue'
-import News from '@/components/News.vue'
 
 // defineProps({ user: Object })
 </script>
@@ -15,11 +13,9 @@ import News from '@/components/News.vue'
 <template>
   <Layout>
     <Hero />
-    <Opportunities />
     <About />
     <HowItWorks />
     <FAQ />
-    <News />
     <!-- <Head title="Welcome" />
     <h1 class="text-blue-600 text-center p-5">Welcome</h1>
     <h1 class="text-3xl font-bold underline">

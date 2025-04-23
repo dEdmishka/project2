@@ -12,25 +12,25 @@ const features = [
     icon: Medal,
     title: "Accessibility",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Simple communication between patients and healthcare professionals",
   },
   {
     icon: Map,
     title: "Community",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Data-driven insights to improve patient outcomes and satisfaction",
   },
   {
     icon: Plane,
     title: "Scalability",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Rehabilitation programs tailored to individual needs and preferences",
   },
   {
     icon: Gift,
     title: "Gamification",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Secure and private platform for patient data and communication",
   },
 ];
 </script>
@@ -38,14 +38,14 @@ const features = [
 <template>
     <section
       id="howItWorks"
-      class="text-center py-24 sm:py-32"
+      class="text-center py-12 sm:py-16"
     >
       <h2 class="text-3xl md:text-4xl font-bold ">
-        How It{{" "}}
+        Benefits{{" "}}
         <span class="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          Works{{" "}}
+          Of Our{{" "}}
         </span>
-        Step-by-Step Guide
+        Platform
       </h2>
       <p class="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
