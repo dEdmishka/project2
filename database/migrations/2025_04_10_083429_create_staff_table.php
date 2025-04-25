@@ -19,8 +19,10 @@ return new class extends Migration
             // $table->foreign('center_id')->references('id')->on('centers')->onDelete('cascade');
             $table->foreignId('user_id')->index()->onDelete('cascade');
             $table->foreignId('center_id')->index()->onDelete('cascade');
-            $table->string('phone_number', 15)->nullable();
             $table->string('specialization')->nullable();
+            $table->string('date_of_birth')->nullable() ;
+            $table->enum('gender', ['F', 'M'])->default('M');
+            $table->string('address')->nullable();
             // $table->index('staff_type_id');
             // $table->foreign('staff_type_id')->references('id')->on('staff_types')->onDelete('cascade');
             $table->foreignId('staff_type_id')->index()->onDelete('cascade');

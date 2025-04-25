@@ -19,6 +19,12 @@ const props = defineProps({
     defaultVersion: String
 })
 const selectedVersion = ref(props.defaultVersion);
+
+const selectVersion = (version) => {
+    selectedVersion.value = version;
+    // Emit an event to notify the parent component about the version change
+    // emit('update:version', version);
+}
 </script>
 
 <template>
@@ -33,15 +39,15 @@ const selectedVersion = ref(props.defaultVersion);
                             <GalleryVerticalEnd class="size-4" />
                         </div>
                         <div class="flex flex-col gap-0.5 leading-none">
-                            <span class="font-semibold">Documentation</span>
-                            <span class="">v{{ selectedVersion }}</span>
+                            <span class="font-semibold">Current Center</span>
+                            <span class="">{{ selectedVersion }}</span>
                         </div>
                         <ChevronsUpDown class="ml-auto" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent class="w-[--reka-dropdown-menu-trigger-width]" align="start">
-                    <DropdownMenuItem v-for="version in versions" :key="version" @select="selectedVersion = version">
-                        v{{ version }}
+                    <DropdownMenuItem v-for="version in versions" :key="version" @select="selectVersion(version)">
+                        {{ version }}
                         <Check v-if="version === selectedVersion" class="ml-auto" />
                     </DropdownMenuItem>
                 </DropdownMenuContent>

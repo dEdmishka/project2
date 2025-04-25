@@ -1,10 +1,10 @@
 <script setup>
-import AppSidebar from "@/components/AppSidebar.vue"
-import NavActions from '@/components/NavActions.vue'
-import Navbar from "@/components/Navbar.vue"
-import Footer from "@/components/Footer.vue"
-import Hero from '@/components/Hero.vue'
-import About from '@/components/About.vue'
+import AppSidebar from "@/components/account/layout/AppSidebar.vue"
+import NavActions from '@/components/account/layout/NavActions.vue'
+import Navbar from "@/components/blocks/Navbar.vue"
+import Footer from "@/components/blocks/Footer.vue"
+import Hero from '@/components/blocks/Hero.vue'
+import About from '@/components/blocks/About.vue'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { Toaster } from '@/components/ui/sonner'
-import ScrollToTop from "@/components/ScrollToTop.vue"
+import ScrollToTop from "@/components/blocks/ScrollToTop.vue"
 
 </script>
 

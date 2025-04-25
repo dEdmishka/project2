@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '@/Layout/Dashboard/App.vue'
+import Layout from '@/Layout/Dashboard/Index.vue'
 import { Head } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card/index'

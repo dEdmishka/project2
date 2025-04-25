@@ -1,5 +1,5 @@
 <script setup>
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Link } from "@inertiajs/vue3"
 import {
   Medal,
@@ -8,7 +8,6 @@ import {
   Gift,
   MoveRight,
 } from 'lucide-vue-next'
-import CardFooter from "./ui/card/CardFooter.vue";
 
 const features = [
   {

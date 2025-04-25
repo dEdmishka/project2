@@ -1,5 +1,5 @@
 <script setup>
-import Statistics from "@/components/Statistics.vue";
+import Statistics from "@/components/blocks/Statistics.vue";
 </script>
 
 <template>

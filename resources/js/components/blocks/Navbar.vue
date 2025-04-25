@@ -38,8 +38,8 @@ const routeList = [
     },
 ];
 
-import ThemeModeToggler from "@/components/ThemeModeToggler.vue";
-import NavActions from '@/components/NavActions.vue'
+import ThemeModeToggler from "@/components/blocks/ThemeModeToggler.vue";
+import NavActions from '@/components/account/layout/NavActions.vue'
 </script>
 
 <template>

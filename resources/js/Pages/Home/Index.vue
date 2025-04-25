@@ -2,12 +2,12 @@
 import Layout from '@/Layout/App.vue'
 import { Head } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
-import Hero from '@/components/Hero.vue'
-import About from '@/components/About.vue'
-import HowItWorks from '@/components/HowItWorks.vue'
-import FAQ from '@/components/FAQ.vue'
-import Opportunities from '@/components/Opportunities.vue'
-import News from '@/components/News.vue'
+import Hero from '@/components/blocks/Hero.vue'
+import About from '@/components/blocks/About.vue'
+import HowItWorks from '@/components/blocks/HowItWorks.vue'
+import FAQ from '@/components/blocks/FAQ.vue'
+import Opportunities from '@/components/blocks/Opportunities.vue'
+import News from '@/components/blocks/News.vue'
 
 // defineProps({ user: Object })
 </script>

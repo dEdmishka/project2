@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '@/Layout/Dashboard/App.vue';
+import Layout from '@/Layout/Dashboard/Index.vue';
 
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -42,13 +42,13 @@ import {
 } from '@tanstack/vue-table'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { h, ref } from 'vue'
-import DropdownAction from '@/components/DropdownAction.vue'
+import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Badge } from '@/components/ui/badge';
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/procedure/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/procedure/cud/DeleteDialog.vue';
-import EditDialog from '@/components/procedure/cud/EditDialog.vue';
+import CreateDialog from '@/components/admin/procedure/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/admin/procedure/cud/DeleteDialog.vue';
+import EditDialog from '@/components/admin/procedure/cud/EditDialog.vue';
 
 const props = defineProps({
     data: Array,

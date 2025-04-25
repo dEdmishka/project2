@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button/index"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card/index'
 import { TrendingUpIcon, TrendingDownIcon } from "lucide-vue-next";
 import { Badge } from "@/components/ui/badge";
-import Layout from "@/Layout/Dashboard/App.vue";
+import Layout from "@/Layout/Dashboard/Index.vue";
 </script>
 
 <template>

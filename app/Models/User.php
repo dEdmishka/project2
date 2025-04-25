@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -45,5 +46,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function staff(): HasOne
+    {
+        return $this->hasOne(Staff::class);
+    }
+
+    public function patient(): HasOne
+    {
+        return $this->hasOne(Patient::class);
+    }
+
+    public function getIsStaffAttribute(): bool
+    {
+        return $this->staff !== null;
+    }
+
+    /**
+     * Check if the user is a patient.
+     *
+     * @return bool
+     */
+    public function getIsPatientAttribute(): bool
+    {
+        return $this->patient !== null;
     }
 }

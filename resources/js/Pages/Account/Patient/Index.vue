@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '@/Layout/App.vue'
+import Layout from "@/Layout/Dashboard/Index.vue";
 import { Head } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
 
@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button'
   <Layout>
 
     <Head title="Account" />
-    Hiiiii {{ $page['props']['auth_user']['first_name'] }}
+    Hiiiii our user {{ $page['props']['user'] }}
+    <br>
     <h1 class="text-blue-600 text-center p-5">Welcome</h1>
     <h1 class="text-3xl font-bold underline">
       Hello world!

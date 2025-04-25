@@ -1,0 +1,39 @@
+<script setup>
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Link } from "@inertiajs/vue3"
+import {
+    MoveRight,
+} from 'lucide-vue-next'
+
+defineProps({
+    title: String,
+    subtitle: String,
+    description: String,
+    href: String,
+    hreftitle: String,
+})
+</script>
+
+<template>
+    <Card class="p-4 md:w-75 lg:w-100 gap-8 bg-muted/25">
+        <CardHeader>
+            <CardTitle
+                class="inline font-bold text-3xl md:text-6xl py-1 bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
+                {{ title }}
+            </CardTitle>
+            <CardDescription
+                class="inline font-bold text-2xl md:text-4xl py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
+                {{ subtitle }}
+            </CardDescription>
+        </CardHeader>
+        <CardContent class="flex flex-col justify-between flex-grow">
+            <CardDescription class="text-xl font-bold">
+                {{ description }}
+            </CardDescription>
+        </CardContent>
+        <CardFooter v-if="href" class="flex gap-8 items-center font-bold uppercase">
+            <Link :href="href" class="bg-[#d7b703] text-transparent bg-clip-text">{{ hreftitle }}</Link>
+            <MoveRight class="h-8 w-8 inline-block stroke-[#d7b703]" />
+        </CardFooter>
+    </Card>
+</template>

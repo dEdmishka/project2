@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignId('center_id')->index()->onDelete('cascade');
             $table->string('date_of_birth')->nullable() ;
             $table->enum('gender', ['F', 'M'])->default('M');
-            $table->string('phone_number', 15)->nullable();
             $table->string('address')->nullable();
             $table->enum('status', ['active', 'discharge'])->default('active');
             $table->softDeletes();

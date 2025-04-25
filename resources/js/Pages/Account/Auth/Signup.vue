@@ -4,7 +4,7 @@ const description
 const iframeHeight = '600px'
 const containerClass = 'w-full h-screen flex items-center justify-center px-4'
 
-import SignupForm from '@/components/SignupForm.vue'
+import SignupForm from '@/components/account/auth/SignupForm.vue'
 </script>
 
 <template>

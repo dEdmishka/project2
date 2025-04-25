@@ -1,6 +1,6 @@
 <script setup>
 const description = 'A simple login form.'
-import AdminLoginForm from '@/components/admin/AdminLoginForm.vue'
+import AdminLoginForm from '@/components/admin/auth/AdminLoginForm.vue'
 </script>
 
 <template>

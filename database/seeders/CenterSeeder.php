@@ -12,6 +12,11 @@ class CenterSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // User::factory()->create([
+        //     'first_name' => 'admin',
+        //     'last_name' => 'adminovich',
+        //     'email' => 'admin@admin.com',
+        //     'role' => 'admin',
+        // ]);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Pages\AboutController;
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Account\AccountController;
+use App\Http\Controllers\Account\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;

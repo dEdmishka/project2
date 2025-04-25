@@ -1,6 +1,6 @@
 <script setup>
-import SearchForm from "@/components/SearchForm.vue"
-import VersionSwitcher from "@/components/VersionSwitcher.vue"
+import SearchForm from "@/components/blocks/SearchForm.vue"
+import VersionSwitcher from "@/components/blocks/VersionSwitcher.vue"
 import {
   Sidebar,
   SidebarContent,
@@ -26,17 +26,13 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Home",
-          url: "/admin",
-        },
-        {
           title: "Dashboard",
-          url: "/admin/dashboard",
+          url: "/dashboard",
           // isActive: true,
         },
         {
-          title: "Procedures",
-          url: "/admin/procedures",
+          title: "Home",
+          url: "/",
         },
       ],
     },
@@ -166,7 +162,7 @@ const data = {
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="childItem in item.items" :key="childItem.title">
-              <SidebarMenuButton as-child :is-active="$page.url === childItem.url">
+              <SidebarMenuButton as-child :is-active="$page.url===childItem.url">
                 <Link :href="childItem.url">{{ childItem.title }}</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

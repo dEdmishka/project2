@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('centers', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
+            $table->string('email')->unique();
             $table->string('address');
             $table->string('description');
+            $table->time('start_time');
+            $table->time('close_time');
             $table->timestamps();
         });
     }
