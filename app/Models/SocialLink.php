@@ -11,7 +11,7 @@ class SocialLink extends Model
         'url',
     ];
 
-    public function owner()
+    public function social_linkable()
     {
         return $this->morphTo();
     }

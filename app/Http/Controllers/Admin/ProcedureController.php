@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Procedure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -12,10 +13,16 @@ class ProcedureController extends Controller
 {
     public function index()
     {
+        Auth::shouldUse('admin');
+
+        $user = Auth::user();
+
         $procedures = Procedure::get();
         // dd($procedures);
         return Inertia::render('Admin/Procedure/Index', [
             'data' => $procedures,
+            'user' => $user,
+            'main_url' => route('admin.procedure.index'),
         ]);
     }
 
@@ -41,7 +48,7 @@ class ProcedureController extends Controller
             'is_active' => $request->is_active,
         ]);
 
-        return redirect()->back()->with('success', 'Successfully created');
+        return redirect()->back()->with('success', 'Product has been successfully created!');
     }
 
     public function update(Request $request, $id) {
@@ -59,7 +66,7 @@ class ProcedureController extends Controller
 
         Procedure::whereId($id)->update($request->all());
 
-        return redirect()->back()->with('success', 'Successfully edited');
+        return redirect()->back()->with('success', 'Product has been successfully edited!');
     }    
 
     public function delete($id) {
@@ -67,7 +74,7 @@ class ProcedureController extends Controller
 
         if ($procedure) {
             $procedure->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect()->back()->with('success', 'Product has been successfully deleted!');
         }
 
         return redirect()->back()->withErrors(['msg' => 'There`s no procedure to delete!']);

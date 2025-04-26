@@ -21,17 +21,20 @@ class Center extends Model
         'email',
         'address',
         'description',
-        'start_time',
-        'close_time',
     ];
+
+    public function workingHours()
+    {
+        return $this->morphMany(WorkingHour::class, 'working_hourable');
+    }
 
     public function phoneNumbers()
     {
-        return $this->morphMany(Phone::class, 'owner');
+        return $this->morphMany(Phone::class, 'phoneable');
     }
 
     public function socialLinks()
     {
-        return $this->morphMany(SocialLink::class, 'owner');
+        return $this->morphMany(SocialLink::class, 'social_linkable');
     }
 }

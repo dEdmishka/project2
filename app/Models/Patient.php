@@ -35,11 +35,11 @@ class Patient extends Model
 
     public function phoneNumbers()
     {
-        return $this->morphMany(Phone::class, 'owner');
+        return $this->morphMany(Phone::class, 'phoneable');
     }
 
     public function socialLinks()
     {
-        return $this->morphMany(SocialLink::class, 'owner');
+        return $this->morphMany(SocialLink::class, 'socail_linkable');
     }
 }

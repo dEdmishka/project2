@@ -28,8 +28,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Toaster } from '@/components/ui/sonner'
 
-import { defineAsyncComponent, computed } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { defineAsyncComponent, computed, ref, onBeforeMount } from 'vue'
+import { usePage, router } from '@inertiajs/vue3'
+
+import Loader from '@/components/blocks/Loader.vue'
 
 const StaffNavActions = defineAsyncComponent(() => import('@/components/account/layout/staff/NavActions.vue'))
 const StaffAppSidebar = defineAsyncComponent(() => import('@/components/account/layout/staff/AppSidebar.vue'))
@@ -72,10 +74,24 @@ const components = {
     UserNavActions,
     UserAppSidebar,
 }
+
+const isLoading = ref(false)
+
+onBeforeMount(() => {
+    router.on('start', () => {
+        isLoading.value = true
+    })
+
+    router.on('finish', () => {
+        isLoading.value = false
+    })
+})
 </script>
 
 <template>
+    <Loader :show="isLoading" />
     <Toaster />
+
     <SidebarProvider>
         <component :is="components[appSidebar]" v-if="appSidebar" />
         <!-- <AdminAppSidebar /> -->

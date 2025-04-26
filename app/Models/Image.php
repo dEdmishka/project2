@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Phone extends Model
+class Image extends Model
 {
     protected $fillable = [
-        'phone_number',
+        'url',
     ];
 
-    public function phoneable()
+    public function imageable()
     {
         return $this->morphTo();
     }

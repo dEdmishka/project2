@@ -5,13 +5,14 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/vue3"
 
@@ -37,6 +38,10 @@ const data = {
         {
           title: "Procedures",
           url: "/admin/procedures",
+        },
+        {
+          title: "Centers",
+          url: "/admin/centers",
         },
       ],
     },

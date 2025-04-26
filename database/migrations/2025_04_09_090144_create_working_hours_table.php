@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('working_hours', function (Blueprint $table) {
             $table->id();
             $table->enum('day_of_week', ['0', '1', '2', '3', '4', '5', '6']);
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->boolean('is_day_off')->default(false);
-            $table->morphs('owner');
+            $table->morphs('working_hourable');
+            $table->timestamps();
         });
     }
 

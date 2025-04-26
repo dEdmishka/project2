@@ -5,13 +5,14 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/vue3"
 
@@ -23,36 +24,7 @@ const data = {
     {
       title: "Профіль",
       url: "/account",
-      items: [
-        {
-          title: "Медична картка",
-          url: "/account/record",
-        },
-        {
-          title: "Заплановані сеанси",
-          url: "/account/appointments",
-        },
-        {
-          title: "Діагноз",
-          url: "/account/diagnosis",
-        },
-        {
-          title: "Призначене лікування",
-          url: "/account/prescriptions",
-        },
-        {
-          title: "Документи",
-          url: "/account/documents",
-        },
-        {
-          title: "Повідомлення",
-          url: "/account/notifications",
-        },
-        {
-          title: "Рахунок",
-          url: "/account/billing",
-        },
-      ],
+      items: [],
     },
   ],
 }

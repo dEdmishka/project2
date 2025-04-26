@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -13,12 +14,24 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Dashboard/Index');
+        Auth::shouldUse('admin');
+
+        $user = Auth::user();
+
+        return Inertia::render('Admin/Dashboard/Index', [
+            'user' => $user,
+        ]);
     }
 
     public function home()
     {
-        return Inertia::render('Admin/Home/Index');
+        Auth::shouldUse('admin');
+
+        $user = Auth::user();
+
+        return Inertia::render('Admin/Home/Index', [
+            'user' => $user,
+        ]);
     }
 
     /**

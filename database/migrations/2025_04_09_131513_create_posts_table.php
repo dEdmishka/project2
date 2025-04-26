@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             // $table->index('author_id');
             // $table->foreign('author_id')->references('id')->on('users')->nullable()->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->index()->onDelete('cascade');
             $table->string('title');
             $table->text('content');
             $table->boolean('is_published');

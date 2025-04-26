@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ProcedureController as AdminProcedureController;
+use App\Http\Controllers\Admin\CenterController as AdminCenterController;
 use App\Http\Controllers\Pages\ContactsController;
 use App\Http\Controllers\Pages\HelpController;
 use App\Http\Controllers\Pages\HomeController;
@@ -61,9 +62,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::group(['prefix' => 'procedures'], function () {
             Route::get('/', [AdminProcedureController::class, 'index'])->name('admin.procedure.index');
             Route::post('/', [AdminProcedureController::class, 'store'])->name('admin.procedure.store');
-            // Route::get('/{id}',[AdminProcedureController::class,'edit'])->name('admin.procedure.edit');
             Route::put('/{id}', [AdminProcedureController::class, 'update'])->name('admin.procedure.update');
             Route::delete('/{id}', [AdminProcedureController::class, 'delete'])->name('admin.procedure.delete');
+        });
+        Route::group(['prefix' => 'centers'], function () {
+            Route::get('/', [AdminCenterController::class, 'index'])->name('admin.center.index');
+            Route::post('/', [AdminCenterController::class, 'store'])->name('admin.center.store');
+            Route::put('/{id}', [AdminCenterController::class, 'update'])->name('admin.center.update');
+            Route::delete('/{id}', [AdminCenterController::class, 'delete'])->name('admin.center.delete');
         });
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     });

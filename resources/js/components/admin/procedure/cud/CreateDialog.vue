@@ -26,6 +26,7 @@ import {
 
 const props = defineProps({
     showDialog: Boolean,
+    mainUrl: String,
 })
 
 import { toast } from 'vue-sonner';
@@ -44,16 +45,17 @@ const emit = defineEmits(['update', 'close']);
 const errors = ref({});
 
 const submit = () => {
-    form.post('/admin/procedures', {
+    form.post(`${props.mainUrl}`, {
         onError: (error) => {
             errors.value = error;
         },
         onSuccess: (event) => {
             const data = event.props.data;
+            const successMessage = event.props.flash.success;
             toast('Success!', {
                 variant: 'default',
                 duration: 3000,
-                description: 'Product has been successfully created!',
+                description: successMessage,
                 action: {
                     label: 'Got it',
                     onClick: () => console.log('Undo'),

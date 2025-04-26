@@ -7,6 +7,8 @@ import { Checkbox } from '@/components/ui/checkbox'
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
+    DropdownMenuRadioItem,
+    DropdownMenuRadioGroup,
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
@@ -41,14 +43,14 @@ import {
     useVueTable,
 } from '@tanstack/vue-table'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref } from 'vue'
+import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Badge } from '@/components/ui/badge';
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/admin/procedure/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/procedure/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/procedure/cud/EditDialog.vue';
+import CreateDialog from '@/components/admin/center/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/admin/center/cud/DeleteDialog.vue';
+import EditDialog from '@/components/admin/center/cud/EditDialog.vue';
 
 const props = defineProps({
     data: Array,
@@ -152,6 +154,26 @@ const columns = [
         cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('name')),
     },
     {
+        accessorKey: 'email',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Email', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
+    },
+    {
+        accessorKey: 'address',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Address', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('address')),
+    },
+    {
         accessorKey: 'description',
         header: ({ column }) => {
             return h(Button, {
@@ -162,31 +184,50 @@ const columns = [
         cell: ({ row }) => h('div', { class: 'lowercase max-w-75 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('description')),
     },
     {
-        accessorKey: 'price',
-        header: () => h('div', { class: 'text-right' }, 'Price'),
+        accessorKey: 'phones',
+        header: () => h('div', { class: 'text-right' }, 'Phones'),
         cell: ({ row }) => {
-            const amount = Number.parseFloat(row.getValue('price'))
-
-            // Format the amount as a dollar amount
-            const formatted = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'UAH',
-            }).format(amount)
-
-            return h('div', { class: 'text-right font-medium' }, formatted)
+            return h('div', { class: 'text-right font-medium' }, row.getValue('phones'))
         },
     },
     {
-        accessorKey: 'is_active',
-        header: 'Status',
+        accessorKey: 'social_links',
+        header: () => h('div', { class: 'text-right' }, 'Social Links'),
         cell: ({ row }) => {
-            const status = row.getValue('is_active');
-
-            return h('div', { class: 'capitalize' },  status ? 'Active' : 'Inactive');
-            // return h('div', { class: 'capitalize' }, h(Badge, !status ? { variant: 'outline' } : {}, status ? 'Active' : 'Inactive'));
-            // return h('div', { class: 'capitalize' }, 'Inactive');
+            return h('div', { class: 'text-right font-medium' }, row.getValue('social_links'))
         },
     },
+    {
+        accessorKey: 'working_hours',
+        header: () => h('div', { class: 'text-right' }, 'Working hours'),
+        cell: ({ row }) => {
+            return h('div', { class: 'text-right font-medium' }, row.getValue('working_hours'))
+        },
+    },
+    // {
+    //     accessorKey: 'price',
+    //     header: () => h('div', { class: 'text-right' }, 'Price'),
+    //     cell: ({ row }) => {
+    //         const amount = Number.parseFloat(row.getValue('price'))
+
+    //         // Format the amount as a dollar amount
+    //         const formatted = new Intl.NumberFormat('en-US', {
+    //             style: 'currency',
+    //             currency: 'UAH',
+    //         }).format(amount)
+
+    //         return h('div', { class: 'text-right font-medium' }, formatted)
+    //     },
+    // },
+    // {
+    //     accessorKey: 'is_active',
+    //     header: 'Status',
+    //     cell: ({ row }) => {
+    //         const status = row.getValue('is_active');
+
+    //         return h('div', { class: 'capitalize' }, status ? 'Active' : 'Inactive');
+    //     },
+    // },
     {
         id: 'actions',
         enableHiding: false,
@@ -231,20 +272,48 @@ const table = useVueTable({
         get expanded() { return expanded.value },
     },
 })
+
+const selectedField = ref('name')
+
+watch(selectedField, (newField, oldField) => {
+  if (oldField) {
+    table.getColumn(oldField)?.setFilterValue('');
+  }
+});
 </script>
 
 <template>
     <Layout>
         <template #title>
-            Procedures
+            Centers
         </template>
-        Procedures
+        Centers
 
         <div class="w-full">
             <div class="flex items-center py-4">
-                <Input class="max-w-sm" placeholder="Filter names..."
+                <!-- <Input class="max-w-sm" placeholder="Filter names..."
                     :model-value="table.getColumn('name')?.getFilterValue()"
-                    @update:model-value="table.getColumn('name')?.setFilterValue($event)" />
+                    @update:model-value="table.getColumn('name')?.setFilterValue($event)" /> -->
+                <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
+                    :model-value="table.getColumn(selectedField)?.getFilterValue()"
+                    @update:model-value="table.getColumn(selectedField)?.setFilterValue($event)" />
+                <DropdownMenu>
+                    <DropdownMenuTrigger as-child>
+                        <Button variant="outline" class="ml-2 min-w-[225px] justify-start">
+                            Filter By<span class="capitalize">{{ selectedField }}</span>
+                            <ChevronDown class="ml-2 h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuRadioGroup v-model="selectedField">
+                            <DropdownMenuRadioItem @select="(e) => { e.preventDefault() }"
+                                v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
+                                :key="column.id" :value="column.id" @update:model-value="() => selectedField = column.id" class="capitalize">
+                                {{ column.id }}
+                            </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <Button class="ml-2" variant="outline" @click="showCreateDialog">
                     <Plus class="h-5"></Plus>
                     Create New
@@ -257,7 +326,7 @@ const table = useVueTable({
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuCheckboxItem
+                        <DropdownMenuCheckboxItem @select="(e) => { e.preventDefault() }"
                             v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
                             :key="column.id" class="capitalize" :model-value="column.getIsVisible()"
                             @update:model-value="(value) => {
@@ -320,9 +389,12 @@ const table = useVueTable({
             </div>
         </div>
 
-        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog" :mainUrl="$page.props.main_url"/>
-        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog" :mainUrl="$page.props.main_url"/>
-        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell" v-model:open="deleteDialog" :mainUrl="$page.props.main_url"/>
+        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
+            :mainUrl="$page.props.main_url" />
+        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
+            :mainUrl="$page.props.main_url" />
+        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
+            v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
         <!-- <Dialog v-model:open="showDialog">
             <DialogTrigger as-child>
                 <Button variant="outline">

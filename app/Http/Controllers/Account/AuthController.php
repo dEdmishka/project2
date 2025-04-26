@@ -22,7 +22,7 @@ class AuthController extends Controller
         // } else {
         //     dd('user not logged');
         // }
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Account/Auth/Login');
     }
 
     /**
@@ -30,7 +30,7 @@ class AuthController extends Controller
      */
     public function signup()
     {
-        return Inertia::render('Auth/Signup');
+        return Inertia::render('Account/Auth/Signup');
     }
 
     /**

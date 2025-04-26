@@ -40,17 +40,17 @@ class Staff extends Model
 
     public function phoneNumbers()
     {
-        return $this->morphMany(Phone::class, 'owner');
+        return $this->morphMany(Phone::class, 'phoneable');
     }
 
     public function socialLinks()
     {
-        return $this->morphMany(SocialLink::class, 'owner');
+        return $this->morphMany(SocialLink::class, 'social_linkable');
     }
 
     public function workingHours()
     {
-        return $this->morphMany(WorkingHour::class, 'owner');
+        return $this->morphMany(WorkingHour::class, 'working_hourable');
     }
 
 }
