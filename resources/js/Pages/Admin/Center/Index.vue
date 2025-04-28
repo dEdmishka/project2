@@ -45,12 +45,12 @@ import {
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
-import { Badge } from '@/components/ui/badge';
 import { Plus } from 'lucide-vue-next';
 
 import CreateDialog from '@/components/admin/center/cud/CreateDialog.vue';
 import DeleteDialog from '@/components/admin/center/cud/DeleteDialog.vue';
 import EditDialog from '@/components/admin/center/cud/EditDialog.vue';
+import { dayName } from '@/helper';
 
 const props = defineProps({
     data: Array,
@@ -93,39 +93,6 @@ const closeDeleteDialog = () => {
 const setCurrentCell = (editData) => {
     currentCell.value = editData;
 }
-
-// const data = [
-// {
-//     id: 'm5gr84i9',
-//     amount: 316,
-//     status: 'success',
-//     email: 'ken99@yahoo.com',
-// },
-// {
-//     id: '3u1reuv4',
-//     amount: 242,
-//     status: 'success',
-//     email: 'Abe45@gmail.com',
-// },
-// {
-//     id: 'derv1ws0',
-//     amount: 837,
-//     status: 'processing',
-//     email: 'Monserrat44@gmail.com',
-// },
-// {
-//     id: '5kma53ae',
-//     amount: 874,
-//     status: 'success',
-//     email: 'Silas22@gmail.com',
-// },
-// {
-//     id: 'bhqecj4p',
-//     amount: 721,
-//     status: 'failed',
-//     email: 'carmella@hotmail.com',
-// },
-// ]
 
 const columns = [
     {
@@ -187,47 +154,74 @@ const columns = [
         accessorKey: 'phones',
         header: () => h('div', { class: 'text-right' }, 'Phones'),
         cell: ({ row }) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue('phones'))
+            return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('phones').map(phone =>
+                h('p', { class: 'text-right font-medium' }, phone.phone_number))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const phones = row.getValue(columnId) || [];
+
+            if (!Array.isArray(phones)) return false;
+            if (!filterValue) return true;
+
+            return phones.some(phone =>
+                phone.phone_number.toLowerCase().replace(/-/g, "").includes(filterValue.toLowerCase())
+            );
         },
     },
     {
         accessorKey: 'social_links',
         header: () => h('div', { class: 'text-right' }, 'Social Links'),
         cell: ({ row }) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue('social_links'))
+            return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('social_links').map(link =>
+                h('p', { class: 'text-right font-medium' }, link.url))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const socialLinks = row.getValue(columnId) || [];
+
+            if (!Array.isArray(socialLinks)) return false;
+            if (!filterValue) return true;
+
+            return socialLinks.some(link =>
+                link.url.toLowerCase().includes(filterValue.toLowerCase())
+            );
         },
     },
     {
         accessorKey: 'working_hours',
         header: () => h('div', { class: 'text-right' }, 'Working hours'),
         cell: ({ row }) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue('working_hours'))
+            return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('working_hours').map(hour =>
+                h('div', { class: `grid grid-cols-3 ${hour.is_day_off ? 'text-gray-300' : ''}` },
+                    h('p', { class: '' }, dayName(hour.day_of_week)),
+                    h('p', { class: '' }, hour.start_time ?? '00:00'),
+                    h('p', { class: '' }, hour.end_time ?? '00:00'),
+                ))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const workingHours = row.getValue(columnId) || [];
+
+            if (!Array.isArray(workingHours)) return false;
+            if (!filterValue) return true;
+
+            // return workingHours.some(hour =>
+            //     hour.start_time.toLowerCase().includes(filterValue.toLowerCase())
+            // );
+            const search = filterValue.toLowerCase();
+
+            return hours.some(hour => {
+                const open = hour.start_time ? hour.start_time.toLowerCase() : '';
+                const close = hour.end_time ? hour.end_time.toLowerCase() : '';
+
+                return (
+                    open.includes(search) ||
+                    close.includes(search)
+                );
+            });
         },
     },
-    // {
-    //     accessorKey: 'price',
-    //     header: () => h('div', { class: 'text-right' }, 'Price'),
-    //     cell: ({ row }) => {
-    //         const amount = Number.parseFloat(row.getValue('price'))
-
-    //         // Format the amount as a dollar amount
-    //         const formatted = new Intl.NumberFormat('en-US', {
-    //             style: 'currency',
-    //             currency: 'UAH',
-    //         }).format(amount)
-
-    //         return h('div', { class: 'text-right font-medium' }, formatted)
-    //     },
-    // },
-    // {
-    //     accessorKey: 'is_active',
-    //     header: 'Status',
-    //     cell: ({ row }) => {
-    //         const status = row.getValue('is_active');
-
-    //         return h('div', { class: 'capitalize' }, status ? 'Active' : 'Inactive');
-    //     },
-    // },
     {
         id: 'actions',
         enableHiding: false,
@@ -276,9 +270,9 @@ const table = useVueTable({
 const selectedField = ref('name')
 
 watch(selectedField, (newField, oldField) => {
-  if (oldField) {
-    table.getColumn(oldField)?.setFilterValue('');
-  }
+    if (oldField) {
+        table.getColumn(oldField)?.setFilterValue('');
+    }
 });
 </script>
 
@@ -288,12 +282,8 @@ watch(selectedField, (newField, oldField) => {
             Centers
         </template>
         Centers
-
         <div class="w-full">
             <div class="flex items-center py-4">
-                <!-- <Input class="max-w-sm" placeholder="Filter names..."
-                    :model-value="table.getColumn('name')?.getFilterValue()"
-                    @update:model-value="table.getColumn('name')?.setFilterValue($event)" /> -->
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
                     :model-value="table.getColumn(selectedField)?.getFilterValue()"
                     @update:model-value="table.getColumn(selectedField)?.setFilterValue($event)" />
@@ -308,7 +298,8 @@ watch(selectedField, (newField, oldField) => {
                         <DropdownMenuRadioGroup v-model="selectedField">
                             <DropdownMenuRadioItem @select="(e) => { e.preventDefault() }"
                                 v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
-                                :key="column.id" :value="column.id" @update:model-value="() => selectedField = column.id" class="capitalize">
+                                :key="column.id" :value="column.id"
+                                @update:model-value="() => selectedField = column.id" class="capitalize">
                                 {{ column.id }}
                             </DropdownMenuRadioItem>
                         </DropdownMenuRadioGroup>
@@ -395,39 +386,5 @@ watch(selectedField, (newField, oldField) => {
             :mainUrl="$page.props.main_url" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
             v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
-        <!-- <Dialog v-model:open="showDialog">
-            <DialogTrigger as-child>
-                <Button variant="outline">
-                    Edit Profile
-                </Button>
-            </DialogTrigger>
-            <DialogContent class="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
-                    <DialogDescription>
-                        Make changes to your profile here. Click save when you're done.
-                    </DialogDescription>
-                </DialogHeader>
-                <div class="grid gap-4 py-4">
-                    <div class="grid grid-cols-4 items-center gap-4">
-                        <Label for="name" class="text-right">
-                            Name
-                        </Label>
-                        <Input id="name" value="Pedro Duarte" class="col-span-3" />
-                    </div>
-                    <div class="grid grid-cols-4 items-center gap-4">
-                        <Label for="username" class="text-right">
-                            Username
-                        </Label>
-                        <Input id="username" value="@peduarte" class="col-span-3" />
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button type="submit">
-                        Save changes
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog> -->
     </Layout>
 </template>

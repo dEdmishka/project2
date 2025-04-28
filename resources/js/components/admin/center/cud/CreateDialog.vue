@@ -28,13 +28,14 @@ const props = defineProps({
 import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { dayName, formatPhoneNumber } from '@/helper'
 
 const form = useForm({
     name: '',
     email: '',
     description: '',
     address: '',
-    phones: [{ number: '' }],
+    phones: [{ phone_number: '' }],
     social_links: [{ url: '' }],
     working_hours: [
         { day_of_week: 0, start_time: '08:00', end_time: '18:00', is_day_off: false },
@@ -75,29 +76,11 @@ const submit = () => {
     })
 };
 
-const formatPhone = (event) => {
+const formatPhone = (event, index) => {
     const input = event.target;
-    let value = input.value.replace(/\D/g, '');
-    if (value.length > 3) {
-        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-    }
-    if (value.length > 9) {
-        value = `${value.slice(0, 9)}-${value.slice(9)}`;
-    }
-    if (value.length > 12) {
-        value = `${value.slice(0, 12)}-${value.slice(12)}`;
-    }
-    if (value.length > 15) {
-        value = `${value.slice(0, 15)}`;
-    }
-    input.value = value;
+    input.value = formatPhoneNumber(input.value);
+    form.phones[index].number = value;
 };
-
-const dayName = (day) => {
-    const days = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота', 'Неділя']
-    return days[day]
-}
-
 </script>
 
 <template>
@@ -162,9 +145,9 @@ const dayName = (day) => {
                         <div class="space-y-2">
                             <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
                                 <div class="flex flex-col items-start gap-1 flex-1">
-                                    <Input v-model="phone.number" @input="formatPhone" placeholder="(0XX)-XXX-XX-XX" />
-                                    <span v-if="errors[`phones.${index}.number`]" class="text-red-600 text-sm">
-                                        {{ errors[`phones.${index}.number`] }}
+                                    <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)" placeholder="(0XX)-XXX-XX-XX" />
+                                    <span v-if="errors[`phones.${index}.phone_number`]" class="text-red-600 text-sm">
+                                        {{ errors[`phones.${index}.phone_number`] }}
                                     </span>
                                 </div>
                                 <Button variant="destructive" size="icon" @click.prevent="form.phones.splice(index, 1)"
@@ -175,7 +158,7 @@ const dayName = (day) => {
                         </div>
 
                         <Button type="button" variant="outline" class="mt-2"
-                            @click="(form.phones.length < 3) ? form.phones.push({ number: '' }) : null">
+                            @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
                             <Plus class="h-4 w-4 mr-1" /> Додати Телефон
                         </Button>
                     </div>

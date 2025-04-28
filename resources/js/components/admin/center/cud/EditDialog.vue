@@ -8,6 +8,11 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog'
 
+import {
+    Plus,
+    Trash
+} from 'lucide-vue-next'
+
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -32,31 +37,50 @@ const props = defineProps({
 import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';
 import { watch, ref } from 'vue';
+import { dayName, formatPhoneNumber } from '@/helper'
 
 const form = useForm({
     name: '',
+    email: '',
     description: '',
-    duration: '',
-    price: '',
-    is_active: false,
+    address: '',
+    phones: [{ phone_number: '' }],
+    social_links: [{ url: '' }],
+    working_hours: [
+        { day_of_week: 0, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 1, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 2, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 3, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 4, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 5, start_time: '08:00', end_time: '16:00', is_day_off: false },
+        { day_of_week: 6, start_time: '00:00', end_time: '00:00', is_day_off: true },
+    ]
 });
+
+const emit = defineEmits(['update', 'close']);
+const errors = ref({});
+
+const formatPhone = (event, index) => {
+    const input = event.target;
+    input.value = formatPhoneNumber(input.value);
+    form.phones[index].number = value;
+};
 
 watch(
   () => props.currentCell,
   (newData) => {
     if (newData) {
       form.name = newData.name
+      form.email = newData.email
+      form.address = newData.address
       form.description = newData.description
-      form.duration = newData.duration
-      form.price = newData.price
-      form.is_active = !!newData.is_active
+      form.phones = newData.phones
+      form.social_links = newData.social_links
+      form.working_hours = newData.working_hours
     }
   },
   { immediate: true }
 )
-
-const emit = defineEmits(['update', 'close']);
-const errors = ref({});
 
 const submit = () => {
     form.put(`${props.mainUrl}/${props.currentCell.id}`, {
@@ -65,6 +89,7 @@ const submit = () => {
         },
         onSuccess: (event) => {
             const data = event.props.data;
+            // console.log(data);
             const successMessage = event.props.flash.success;
             toast('Success!', {
                 variant: 'default',
@@ -85,73 +110,140 @@ const submit = () => {
 
 <template>
     <Dialog :value="showDialog">
-        <DialogContent class="sm:max-w-[425px]">
+        <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Edit procedure</DialogTitle>
+                <DialogTitle>Створити центр</DialogTitle>
                 <DialogDescription>
-                    Make changes to your procedure here. Click save when you're done.
+                    Внесіть дані про центр, щоб створити новий запис.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
-                <div class="grid items-center gap-2">
-                    <Label for="name" class="text-right">
-                        Name
-                    </Label>
-                    <Input id="name" class="col-span-3" required v-model="form.name" />
-                    <span v-if="errors.name" class="text-red-600 text-sm">{{ errors.name }}</span>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="grid items-center gap-1">
+                        <Label for="name" class="text-right">
+                            Назва
+                        </Label>
+                        <Input id="name" class="col-span-3" required v-model="form.name" />
+                        <span v-if="errors.name" class="text-red-600 text-sm">{{ errors.name }}</span>
+                    </div>
+                    <div class="grid items-center gap-1">
+                        <Label for="email" class="text-right">
+                            Пошта
+                        </Label>
+                        <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
+                        <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
+                    </div>
                 </div>
-                <div class="grid items-center gap-2">
-                    <Label for="description" class="text-right">
-                        Description
-                    </Label>
-                    <Textarea v-model="form.description"></Textarea>
-                    <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
+                <div class="grid grid-cols-2 gap-4">
+
+                    <div class="grid items-center gap-1">
+                        <Label for="name" class="text-right">
+                            Соціальні мережі
+                        </Label>
+                        <div class="space-y-2">
+                            <div v-for="(social, index) in form.social_links" :key="'social-' + index"
+                                class="flex gap-2">
+                                <div class="flex flex-col items-start gap-1 flex-1">
+                                    <Input v-model="social.url"
+                                        placeholder="Social URL (e.g. https://instagram.com/center)" />
+                                    <span v-if="errors[`social_links.${index}.number`]" class="text-red-600 text-sm">
+                                        {{ errors[`social_links.${index}.number`] }}
+                                    </span>
+                                </div>
+                                <Button variant="destructive" size="icon"
+                                    @click.prevent="form.social_links.splice(index, 1)"
+                                    v-if="form.social_links.length > 1">
+                                    <Trash class="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+                        <Button type="button" variant="outline" class="mt-2"
+                            @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
+                            <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
+                        </Button>
+                    </div>
+
+                    <div class="grid items-center gap-1">
+                        <Label for="name" class="text-right">
+                            Телефони
+                        </Label>
+                        <div class="space-y-2">
+                            <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
+                                <div class="flex flex-col items-start gap-1 flex-1">
+                                    <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)" placeholder="(0XX)-XXX-XX-XX" />
+                                    <span v-if="errors[`phones.${index}.phone_number`]" class="text-red-600 text-sm">
+                                        {{ errors[`phones.${index}.phone_number`] }}
+                                    </span>
+                                </div>
+                                <Button variant="destructive" size="icon" @click.prevent="form.phones.splice(index, 1)"
+                                    v-if="form.phones.length > 1">
+                                    <Trash class="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+
+                        <Button type="button" variant="outline" class="mt-2"
+                            @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
+                            <Plus class="h-4 w-4 mr-1" /> Додати Телефон
+                        </Button>
+                    </div>
                 </div>
-                <div class="grid items-center gap-2">
-                    <Label for="duration" class="text-right">
-                        Duration
-                    </Label>
-                    <Input type="number" id="duration" class="col-span-3" required v-model="form.duration" />
-                    <span v-if="errors.duration" class="text-red-600 text-sm">{{ errors.price }}</span>
-                </div>
-                <div class="grid items-center gap-2">
-                    <Label for="price" class="text-right">
-                        Price
-                    </Label>
-                    <Input type="number" id="price" class="col-span-3" required v-model="form.price" />
-                    <span v-if="errors.price" class="text-red-600 text-sm">{{ errors.price }}</span>
-                </div>
-                <div class="grid items-center gap-2">
-                    <Label for="status" class="text-right">
-                        Status
-                    </Label>
-                    <Checkbox v-model="form.is_active" :checked="form.is_active == 1" />
-                </div>
-                <div class="grid gap-2">
-                    <Label for="select" class="text-right">
-                        Select
-                    </Label>
-                    <Select id="select">
-                        <SelectTrigger class="w-full">
-                            <SelectValue placeholder="Select a fruit" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Fruits</SelectLabel>
-                                <SelectItem value="apple">
-                                    Apple
-                                </SelectItem>
-                                <SelectItem value="banana">
-                                    Banana
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div class="grid items-start gap-1">
+                            <Label for="address" class="text-right">
+                                Адреса
+                            </Label>
+                            <Input id="address" class="col-span-3" required v-model="form.address" />
+                            <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
+                        </div>
+
+                        <div class="grid items-center gap-1">
+                            <Label for="description" class="text-right">
+                                Опис
+                            </Label>
+                            <Textarea id="description" v-model="form.description" class="max-h-[175px]"></Textarea>
+                            <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <div v-for="(hour, index) in form.working_hours" :key="index">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                                <div class="font-medium">{{ dayName(hour.day_of_week) }}</div>
+
+                                <div>
+                                    <Input v-model="hour.start_time" type="time" :disabled="!!hour.is_day_off" />
+                                </div>
+
+                                <div>
+                                    <Input v-model="hour.end_time" type="time" :disabled="!!hour.is_day_off" />
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <Checkbox :model-value="Boolean(hour.is_day_off)"
+                                    @update:model-value="val => hour.is_day_off = val ? 1 : 0" id="day-off-{{ index }}" />
+                                    <label :for="'day-off-' + index" class="text-sm">Вихідний</label>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-1 items-center">
+                                <span v-if="errors[`working_hours.${index}.start_time`]" class="text-red-600 text-sm">
+                                    {{ errors[`working_hours.${index}.start_time`] }}
+                                </span>
+                                <span v-if="errors[`working_hours.${index}.end_time`]" class="text-red-600 text-sm">
+                                    {{ errors[`working_hours.${index}.end_time`] }}
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                    </div>
                 </div>
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Save changes
+                    Зберегти
                 </Button>
             </DialogFooter>
         </DialogContent>
