@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             // $table->index('appointment_id');
             // $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
-            $table->foreignId('appoinment_id')->index()->onDelete('cascade');
+            $table->foreignId('appoinment_id')->constrained();
             $table->double('amount');
             $table->timestamp('payment_date');
             $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');

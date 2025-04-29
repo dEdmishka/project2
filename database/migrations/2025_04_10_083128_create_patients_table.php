@@ -17,12 +17,13 @@ return new class extends Migration
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // $table->index('center_id');
             // $table->foreign('center_id')->references('id')->on('centers')->onDelete('cascade');
-            $table->foreignId('user_id')->index()->onDelete('cascade');
-            $table->foreignId('center_id')->index()->onDelete('cascade');
-            $table->string('date_of_birth')->nullable() ;
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('center_id')->constrained();
+            $table->string('birth_date')->nullable() ;
             $table->enum('gender', ['F', 'M'])->default('M');
             $table->string('address')->nullable();
             $table->enum('status', ['active', 'discharge'])->default('active');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

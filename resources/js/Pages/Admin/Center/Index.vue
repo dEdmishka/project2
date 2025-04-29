@@ -138,7 +138,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Address', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('address')),
+        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('address')),
     },
     {
         accessorKey: 'description',
@@ -148,7 +148,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Description', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-75 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('description')),
+        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('description')),
     },
     {
         accessorKey: 'phones',
@@ -174,7 +174,7 @@ const columns = [
         header: () => h('div', { class: 'text-right' }, 'Social Links'),
         cell: ({ row }) => {
             return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('social_links').map(link =>
-                h('p', { class: 'text-right font-medium' }, link.url))
+                h('p', { class: 'text-right font-medium max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, link.url))
             );
         },
         filterFn: (row, columnId, filterValue) => {
@@ -192,7 +192,7 @@ const columns = [
         accessorKey: 'working_hours',
         header: () => h('div', { class: 'text-right' }, 'Working hours'),
         cell: ({ row }) => {
-            return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('working_hours').map(hour =>
+            return h('div', { class: 'text-right font-medium flex flex-col w-50' }, row.getValue('working_hours').map(hour =>
                 h('div', { class: `grid grid-cols-3 ${hour.is_day_off ? 'text-gray-300' : ''}` },
                     h('p', { class: '' }, dayName(hour.day_of_week)),
                     h('p', { class: '' }, hour.start_time ?? '00:00'),
@@ -282,7 +282,7 @@ watch(selectedField, (newField, oldField) => {
             Centers
         </template>
         Centers
-        <div class="w-full">
+        <div class="w-[calc(100dvw-325px)]">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
                     :model-value="table.getColumn(selectedField)?.getFilterValue()"

@@ -17,10 +17,13 @@ class Staff extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'specialization',
-        'date_of_birth',
+        'birth_date',
         'gender',
         'address',
+        'status',
+        'description',
+        'center_id',
+        'staff_type_id',
     ];
 
     public function user()
@@ -52,5 +55,4 @@ class Staff extends Model
     {
         return $this->morphMany(WorkingHour::class, 'working_hourable');
     }
-
 }

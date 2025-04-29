@@ -17,10 +17,11 @@ return new class extends Migration
             // $table->foreign('generated_by')->references('id')->on('staff')->onDelete('cascade');
             // $table->index('report_type_id');
             // $table->foreign('report_type_id')->references('id')->on('report_types')->onDelete('cascade');
-            $table->foreignId('staff_id')->index()->onDelete('cascade');
-            $table->foreignId('report_type_id')->index()->onDelete('cascade');
+            $table->foreignId('staff_id')->constrained();
+            $table->foreignId('report_type_id')->constrained();
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

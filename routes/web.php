@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ProcedureController as AdminProcedureController;
 use App\Http\Controllers\Admin\CenterController as AdminCenterController;
+use App\Http\Controllers\Admin\DepartmentController as AdminDepartmentController;
+use App\Http\Controllers\Admin\PatientController as AdminPatientController;
+use App\Http\Controllers\Admin\StaffController as AdminStaffController;
 use App\Http\Controllers\Pages\ContactsController;
 use App\Http\Controllers\Pages\HelpController;
 use App\Http\Controllers\Pages\HomeController;
@@ -59,17 +62,35 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'admin.auth'], function () {
         Route::get('/', [AdminDashboardController::class, 'home'])->name('admin.home');
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+        Route::group(['prefix' => 'centers'], function () {
+            Route::get('/', [AdminCenterController::class, 'index'])->name('admin.center.index');
+            Route::post('/', [AdminCenterController::class, 'store'])->name('admin.center.store');
+            Route::put('/{id}', [AdminCenterController::class, 'update'])->name('admin.center.update');
+            Route::delete('/{id}', [AdminCenterController::class, 'delete'])->name('admin.center.delete');
+        });
         Route::group(['prefix' => 'procedures'], function () {
             Route::get('/', [AdminProcedureController::class, 'index'])->name('admin.procedure.index');
             Route::post('/', [AdminProcedureController::class, 'store'])->name('admin.procedure.store');
             Route::put('/{id}', [AdminProcedureController::class, 'update'])->name('admin.procedure.update');
             Route::delete('/{id}', [AdminProcedureController::class, 'delete'])->name('admin.procedure.delete');
         });
-        Route::group(['prefix' => 'centers'], function () {
-            Route::get('/', [AdminCenterController::class, 'index'])->name('admin.center.index');
-            Route::post('/', [AdminCenterController::class, 'store'])->name('admin.center.store');
-            Route::put('/{id}', [AdminCenterController::class, 'update'])->name('admin.center.update');
-            Route::delete('/{id}', [AdminCenterController::class, 'delete'])->name('admin.center.delete');
+        Route::group(['prefix' => 'departments'], function () {
+            Route::get('/', [AdminDepartmentController::class, 'index'])->name('admin.department.index');
+            Route::post('/', [AdminDepartmentController::class, 'store'])->name('admin.department.store');
+            Route::put('/{id}', [AdminDepartmentController::class, 'update'])->name('admin.department.update');
+            Route::delete('/{id}', [AdminDepartmentController::class, 'delete'])->name('admin.department.delete');
+        });
+        Route::group(['prefix' => 'patients'], function () {
+            Route::get('/', [AdminPatientController::class, 'index'])->name('admin.patient.index');
+            Route::post('/', [AdminPatientController::class, 'store'])->name('admin.patient.store');
+            Route::put('/{id}', [AdminPatientController::class, 'update'])->name('admin.patient.update');
+            Route::delete('/{id}', [AdminPatientController::class, 'delete'])->name('admin.patient.delete');
+        });
+        Route::group(['prefix' => 'staff'], function () {
+            Route::get('/', [AdminStaffController::class, 'index'])->name('admin.staff.index');
+            Route::post('/', [AdminStaffController::class, 'store'])->name('admin.staff.store');
+            Route::put('/{id}', [AdminStaffController::class, 'update'])->name('admin.staff.update');
+            Route::delete('/{id}', [AdminStaffController::class, 'delete'])->name('admin.staff.delete');
         });
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     });

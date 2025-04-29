@@ -21,14 +21,14 @@ return new class extends Migration
             // $table->foreignId('users_id')->nullable()->index()->onDelete('cascade');
             $table->unsignedBigInteger('recipient_id');
             $table->unsignedBigInteger('sender_id')->nullable();
-            $table->foreign('recipient_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('recipient_id')->references('id')->on('users')->constrained();
+            $table->foreign('sender_id')->references('id')->on('users')->constrained();
 
             $table->text('content');
             $table->enum('status', ['pending', 'read'])->default('pending');
             // $table->index('notification_type_id')->nullable();
             // $table->foreignId('notification_type_id')->index()->onDelete('cascade');
-            $table->foreignId('notification_type_id')->nullable()->index()->onDelete('cascade');
+            $table->foreignId('notification_type_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

@@ -17,7 +17,10 @@ class CenterFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'email' => fake()->unique()->companyEmail(),
+            'address' => fake()->address(),
+            'description' => fake()->paragraph(),
         ];
     }
 }

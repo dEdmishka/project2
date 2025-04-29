@@ -37,4 +37,9 @@ class Center extends Model
     {
         return $this->morphMany(SocialLink::class, 'social_linkable');
     }
+
+    public function department()
+    {
+        return $this->hasMany(Department::class);
+    }
 }

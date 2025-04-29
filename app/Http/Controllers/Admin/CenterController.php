@@ -185,6 +185,6 @@ class CenterController extends Controller
             return redirect()->back()->with('success', 'Center has been successfully deleted!');
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no procedure to delete!']);
+        return redirect()->back()->withErrors(['msg' => 'There`s no center to delete!']);
     }
 }

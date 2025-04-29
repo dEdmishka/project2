@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->patient !== null;
     }
+
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

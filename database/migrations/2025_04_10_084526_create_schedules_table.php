@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             // $table->index('appointment_id');
             // $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
-            $table->foreignId('appoinment_id')->index()->onDelete('cascade');
+            $table->foreignId('appoinment_id')->constrained();
             // $table->index('ward_id');
             // $table->foreign('ward_id')->references('id')->on('wards')->onDelete('cascade');
-            $table->foreignId('ward_id')->index()->onDelete('cascade');
+            $table->foreignId('ward_id')->constrained();
             $table->timestamps();
         });
     }

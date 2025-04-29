@@ -21,6 +21,7 @@ class Patient extends Model
         'gender',
         'address',
         'status',
+        'center_id',
     ];
 
     public function user()
@@ -40,6 +41,6 @@ class Patient extends Model
 
     public function socialLinks()
     {
-        return $this->morphMany(SocialLink::class, 'socail_linkable');
+        return $this->morphMany(SocialLink::class, 'social_linkable');
     }
 }

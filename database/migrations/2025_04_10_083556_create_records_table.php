@@ -17,8 +17,9 @@ return new class extends Migration
             // $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             // $table->index('record_type_id');
             // $table->foreign('record_type_id')->references('id')->on('record_types')->onDelete('cascade');
-            $table->foreignId('patient_id')->index()->onDelete('cascade');
-            $table->foreignId('record_type_id')->index()->onDelete('cascade');
+            // $table->foreignId('patient_id')->index()->onDelete('cascade');
+            $table->morphs('recordable');
+            $table->foreignId('record_type_id')->constrained();
             $table->text('content');
             $table->timestamps();
             $table->softDeletes();

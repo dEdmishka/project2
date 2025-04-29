@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->primary();
             // $table->index('department_id');
             // $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->foreignId('department_id')->index()->onDelete('cascade');
+            // $table->foreignId('department_id')->index()->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('duration');

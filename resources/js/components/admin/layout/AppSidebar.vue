@@ -33,15 +33,58 @@ const data = {
         {
           title: "Dashboard",
           url: "/admin/dashboard",
-          // isActive: true,
+        },
+        {
+          title: "Centers",
+          url: "/admin/centers",
         },
         {
           title: "Procedures",
           url: "/admin/procedures",
         },
         {
-          title: "Centers",
-          url: "/admin/centers",
+          title: "Departments",
+          url: "/admin/departments",
+        },
+        {
+          title: "Patients",
+          url: "/admin/patients",
+        },
+        {
+          title: "Staff",
+          url: "/admin/staff",
+        },
+        {
+          title: "Appointments",
+          url: "/admin/appointments",
+        },
+        {
+          title: "Wards",
+          url: "/admin/wards",
+        },
+        {
+          title: "Records",
+          url: "/admin/records",
+        },
+        {
+          title: "Reports",
+          url: "/admin/reports",
+        },
+        {
+          title: "Posts",
+          url: "/admin/posts",
+        },
+        {
+          title: "Notifications",
+          url: "/admin/notifications",
+        },
+        {
+          title: "Documents",
+          url: "/admin/documents",
+        },
+        {
+          title: "Payments",
+          url: "/admin/payments",
         },
       ],
     },

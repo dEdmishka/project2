@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecordType extends Model
 {
-    //
+    protected $fillable = [
+        'type',
+    ];
 }
