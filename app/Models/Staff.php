@@ -24,6 +24,7 @@ class Staff extends Model
         'description',
         'center_id',
         'staff_type_id',
+        'user_id',
     ];
 
     public function user()

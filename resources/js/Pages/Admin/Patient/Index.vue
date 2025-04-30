@@ -12,18 +12,6 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -42,14 +30,15 @@ import {
     getSortedRowModel,
     useVueTable,
 } from '@tanstack/vue-table'
+
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/admin/department/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/department/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/department/cud/EditDialog.vue';
+import CreateDialog from '@/components/admin/patient/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/admin/patient/cud/DeleteDialog.vue';
+import EditDialog from '@/components/admin/patient/cud/EditDialog.vue';
 
 const props = defineProps({
     data: Array,
@@ -61,7 +50,6 @@ const currentCell = ref();
 const createDialog = ref(false);
 const editDialog = ref(false);
 const deleteDialog = ref(false);
-
 
 const showCreateDialog = () => {
     createDialog.value = true;
@@ -118,7 +106,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Center', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('center')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('center')),
     },
     {
         accessorKey: 'first_name',
@@ -128,7 +116,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['First name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('first_name')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('first_name')),
     },
     {
         accessorKey: 'last_name',
@@ -138,7 +126,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Last name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('last_name')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('last_name')),
     },
     {
         accessorKey: 'email',
@@ -148,7 +136,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Email', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('email')),
     },
     {
         accessorKey: 'birth_date',
@@ -158,32 +146,47 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Birth date', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('birth_date')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('birth_date')),
+    },
+    {
+        accessorKey: 'address',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Address', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('address')),
     },
     {
         accessorKey: 'gender',
-        header: 'Gender',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Gender', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
         cell: ({ row }) => {
             const gender = row.getValue('gender');
-
-            return h('div', { class: 'capitalize' },  (gender === "F") ? 'Female' : 'Male');
-        },
+            return h('div', { class: 'capitalize' }, (gender === "F") ? 'Female' : 'Male');
+        }
     },
     {
         accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-            const status = row.getValue('status');
-
-            return h('div', { class: 'capitalize' },  row.getValue('status'));
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Status', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('status')),
     },
     {
         accessorKey: 'phones',
-        header: () => h('div', { class: 'text-right' }, 'Phones'),
+        header: () => h('div', { class: 'text-center' }, 'Phones'),
         cell: ({ row }) => {
-            return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('phones')?.map(phone =>
-                h('p', { class: 'text-right font-medium' }, phone.phone_number))
+            return h('div', { class: 'flex flex-col' }, row.getValue('phones')?.map(phone =>
+                h('p', { class: '' }, phone.phone_number))
             );
         },
         filterFn: (row, columnId, filterValue) => {
@@ -199,10 +202,10 @@ const columns = [
     },
     {
         accessorKey: 'social_links',
-        header: () => h('div', { class: 'text-right' }, 'Social Links'),
+        header: () => h('div', { class: 'text-center' }, 'Social Links'),
         cell: ({ row }) => {
-            return h('div', { class: 'text-right font-medium flex flex-col' }, row.getValue('social_links')?.map(link =>
-                h('p', { class: 'text-right font-medium max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, link.url))
+            return h('div', { class: 'flex flex-col' }, row.getValue('social_links')?.map(link =>
+                h('p', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, link.url))
             );
         },
         filterFn: (row, columnId, filterValue) => {
@@ -377,7 +380,7 @@ watch(selectedField, (newField, oldField) => {
         </div>
 
         <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers" />
+            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :users="$page.props.users" />
         <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
             :mainUrl="$page.props.main_url" :centers="$page.props.centers" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"

@@ -79,7 +79,7 @@ const submit = () => {
 const formatPhone = (event, index) => {
     const input = event.target;
     input.value = formatPhoneNumber(input.value);
-    form.phones[index].number = value;
+    form.phones[index].phone_number = input.value;
 };
 </script>
 
@@ -121,8 +121,8 @@ const formatPhone = (event, index) => {
                                 <div class="flex flex-col items-start gap-1 flex-1">
                                     <Input v-model="social.url"
                                         placeholder="Social URL (e.g. https://instagram.com/center)" />
-                                    <span v-if="errors[`social_links.${index}.number`]" class="text-red-600 text-sm">
-                                        {{ errors[`social_links.${index}.number`] }}
+                                    <span v-if="errors[`social_links.${index}.url`]" class="text-red-600 text-sm">
+                                        {{ errors[`social_links.${index}.url`] }}
                                     </span>
                                 </div>
                                 <Button variant="destructive" size="icon"

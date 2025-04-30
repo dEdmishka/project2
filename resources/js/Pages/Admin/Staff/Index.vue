@@ -12,18 +12,6 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -42,14 +30,15 @@ import {
     getSortedRowModel,
     useVueTable,
 } from '@tanstack/vue-table'
+
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/admin/department/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/department/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/department/cud/EditDialog.vue';
+import CreateDialog from '@/components/admin/staff/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/admin/staff/cud/DeleteDialog.vue';
+import EditDialog from '@/components/admin/staff/cud/EditDialog.vue';
 import { dayName } from '@/helper';
 
 const props = defineProps({
@@ -62,7 +51,6 @@ const currentCell = ref();
 const createDialog = ref(false);
 const editDialog = ref(false);
 const deleteDialog = ref(false);
-
 
 const showCreateDialog = () => {
     createDialog.value = true;
@@ -119,48 +107,160 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Center', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('center')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('center')),
     },
     {
-        accessorKey: 'departmentType',
-        accessorFn: row => row.departmentType?.type ?? '—',
+        accessorKey: 'staffType',
+        accessorFn: row => row.staffType?.type ?? '—',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Department Type', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Staff Type', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('departmentType')),
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('staffType')),
     },
     {
-        accessorKey: 'name',
+        accessorKey: 'first_name',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['First name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('name')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('first_name')),
     },
     {
-        accessorKey: 'description',
+        accessorKey: 'last_name',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Description', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Last name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('description')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('last_name')),
     },
     {
-        accessorKey: 'floor',
+        accessorKey: 'email',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Floor', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Email', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('floor')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('email')),
+    },
+    {
+        accessorKey: 'birth_date',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Birth date', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('birth_date')),
+    },
+    {
+        accessorKey: 'address',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Address', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('address')),
+    },
+    {
+        accessorKey: 'gender',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Gender', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => {
+            const gender = row.getValue('gender');
+            return h('div', { class: 'capitalize' }, (gender === "F") ? 'Female' : 'Male');
+        }
+    },
+    {
+        accessorKey: 'status',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Status', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
+        cell: ({ row }) => h('div', { class: 'capitalize' }, row.getValue('status')),
+    },
+    {
+        accessorKey: 'phones',
+        header: () => h('div', { class: 'text-center' }, 'Phones'),
+        cell: ({ row }) => {
+            return h('div', { class: 'flex flex-col' }, row.getValue('phones')?.map(phone =>
+                h('p', { class: '' }, phone.phone_number))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const phones = row.getValue(columnId) || [];
+
+            if (!Array.isArray(phones)) return false;
+            if (!filterValue) return true;
+
+            return phones.some(phone =>
+                phone.phone_number.toLowerCase().replace(/-/g, "").includes(filterValue.toLowerCase())
+            );
+        },
+    },
+    {
+        accessorKey: 'social_links',
+        header: () => h('div', { class: 'text-center' }, 'Social Links'),
+        cell: ({ row }) => {
+            return h('div', { class: 'flex flex-col' }, row.getValue('social_links')?.map(link =>
+                h('p', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, link.url))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const socialLinks = row.getValue(columnId) || [];
+
+            if (!Array.isArray(socialLinks)) return false;
+            if (!filterValue) return true;
+
+            return socialLinks.some(link =>
+                link.url.toLowerCase().includes(filterValue.toLowerCase())
+            );
+        },
+    },
+    {
+        accessorKey: 'working_hours',
+        header: () => h('div', { class: 'text-center' }, 'Working hours'),
+        cell: ({ row }) => {
+            return h('div', { class: 'text-center font-medium flex flex-col w-50' }, row.getValue('working_hours').map(hour =>
+                h('div', { class: `grid grid-cols-3 ${hour.is_day_off ? 'text-gray-300' : ''}` },
+                    h('p', { class: '' }, dayName(hour.day_of_week)),
+                    h('p', { class: '' }, hour.start_time ?? '00:00'),
+                    h('p', { class: '' }, hour.end_time ?? '00:00'),
+                ))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const workingHours = row.getValue(columnId) || [];
+
+            if (!Array.isArray(workingHours)) return false;
+            if (!filterValue) return true;
+
+            const search = filterValue.toLowerCase();
+
+            return hours.some(hour => {
+                const open = hour.start_time ? hour.start_time.toLowerCase() : '';
+                const close = hour.end_time ? hour.end_time.toLowerCase() : '';
+
+                return (
+                    open.includes(search) ||
+                    close.includes(search)
+                );
+            });
+        },
     },
     {
         id: 'actions',
@@ -207,7 +307,7 @@ const table = useVueTable({
     },
 })
 
-const selectedField = ref('name')
+const selectedField = ref('first_name')
 
 watch(selectedField, (newField, oldField) => {
     if (oldField) {
@@ -219,11 +319,10 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            Departments
+            Staff
         </template>
-        Departments
+        Staff
 
-        <!-- {{ $props.data }} -->
         <div class="w-[calc(100dvw-325px)]">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
@@ -323,9 +422,9 @@ watch(selectedField, (newField, oldField) => {
         </div>
 
         <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :departmentTypes="$page.props.departmentTypes" />
+            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :users="$page.props.users" :staffTypes="$page.props.staffTypes" />
         <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :departmentTypes="$page.props.departmentTypes" />
+            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :staffTypes="$page.props.staffTypes" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
             v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
     </Layout>

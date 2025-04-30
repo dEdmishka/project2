@@ -17,11 +17,12 @@ class Patient extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'date_of_birth',
+        'birth_date',
         'gender',
         'address',
         'status',
         'center_id',
+        'user_id',
     ];
 
     public function user()

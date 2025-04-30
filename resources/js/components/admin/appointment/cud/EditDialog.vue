@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from '@/components/ui/dialog'
 
 import { Label } from '@/components/ui/label'
@@ -25,15 +24,6 @@ import {
     CommandInput,
     CommandItem,
 } from '@/components/ui/command'
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
 
 import {
     ChevronDown,
@@ -41,29 +31,46 @@ import {
 } from 'lucide-vue-next'
 
 const props = defineProps({
+    currentCell: Object,
     showDialog: Boolean,
     mainUrl: String,
-    centers: Array,
-    departmentTypes: Array,
+    departments: Array,
+    procedures: Array,
 })
 
 import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { watch, ref, computed } from 'vue';
 
 const form = useForm({
     name: '',
     description: '',
-    floor: '',
-    center: '',
-    department_type: '',
+    ward_number: '',
+    capacity: '',
+    department: '',
+    procedure: '',
 });
+
+watch(
+    () => props.currentCell,
+    (newData) => {
+        if (newData) {
+            form.name = newData.name
+            form.description = newData.description
+            form.ward_number = newData.ward_number
+            form.capacity = newData.capacity
+            form.department = newData.department.id
+            form.procedure = newData.procedure.id
+        }
+    },
+    { immediate: true }
+)
 
 const emit = defineEmits(['update', 'close']);
 const errors = ref({});
 
 const submit = () => {
-    form.post(`${props.mainUrl}`, {
+    form.put(`${props.mainUrl}/${props.currentCell.id}`, {
         onError: (error) => {
             errors.value = error;
         },
@@ -86,34 +93,34 @@ const submit = () => {
     })
 };
 
-const openCenter = ref(false)
-const searchCenter = ref('')
-const selectedCenter = computed(() =>
-    props.centers.find((u) => u.id === form.center)
+const openDepartment = ref(false)
+const searchDepartment = ref('')
+const selectedDepartment = computed(() =>
+    props.departments.find((u) => u.id === form.department)
 )
-const filteredCenters = computed(() =>
-    props.centers.filter(
-        (center) => center.name.toLowerCase().includes(search.value.toLowerCase())
+const filteredDepartments = computed(() =>
+    props.departments.filter(
+        (department) => department.name.toLowerCase().includes(search.value.toLowerCase())
     )
 )
-function selectCenter(center) {
-    form.center = center.id
-    openCenter.value = false
+function selectDepartment(department) {
+    form.department = department.id
+    openDepartment.value = false
 }
 
-const openDepartmentType = ref(false)
-const searchDepartmentType = ref('')
-const selectedDepartmentType = computed(() =>
-    props.departmentTypes.find((u) => u.id === form.department_type)
+const openProcedure = ref(false)
+const searchProcedure = ref('')
+const selectedProcedure = computed(() =>
+    props.procedures.find((u) => u.id === form.procedure)
 )
-const filteredDepartmentType = computed(() =>
-    props.departmentTypes.filter(
-        (departmentType) => departmentType.type.toLowerCase().includes(search.value.toLowerCase())
+const filteredProcedure = computed(() =>
+    props.procedures.filter(
+        (procedure) => procedure.name.toLowerCase().includes(search.value.toLowerCase())
     )
 )
-function selectDepartmentType(departmentType) {
-    form.department_type = departmentType.id
-    openDepartmentType.value = false
+function selectProcedure(procedure) {
+    form.procedure = procedure.id
+    openProcedure.value = false
 }
 </script>
 
@@ -121,9 +128,9 @@ function selectDepartmentType(departmentType) {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Create department</DialogTitle>
+                <DialogTitle>Edit ward</DialogTitle>
                 <DialogDescription>
-                    Make changes to your department here. Click save when you're done.
+                    Make changes to your ward here. Click save when you're done.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
@@ -142,68 +149,74 @@ function selectDepartmentType(departmentType) {
                     <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
                 </div>
                 <div class="grid items-center gap-2">
-                    <Label for="duration" class="text-right">
-                        Floor
+                    <Label for="ward_number" class="text-right">
+                        Ward Number
                     </Label>
-                    <Input type="number" id="duration" class="col-span-3" required v-model="form.floor" />
-                    <span v-if="errors.duration" class="text-red-600 text-sm">{{ errors.floor }}</span>
+                    <Input type="number" id="ward_number" class="col-span-3" required v-model="form.ward_number" />
+                    <span v-if="errors.ward_number" class="text-red-600 text-sm">{{ errors.ward_number }}</span>
+                </div>
+                <div class="grid items-center gap-2">
+                    <Label for="capacity" class="text-right">
+                        Capacity
+                    </Label>
+                    <Input type="number" id="capacity" class="col-span-3" required v-model="form.capacity" />
+                    <span v-if="errors.capacity" class="text-red-600 text-sm">{{ errors.capacity }}</span>
                 </div>
                 <div class="grid gap-2">
-                    <Label for="select" class="text-right">
-                        Center
+                    <Label for="department" class="text-right">
+                        Department
                     </Label>
-                    <Popover id="center" v-model:open="openCenter">
+                    <Popover id="department" v-model:open="openDepartment">
                         <PopoverTrigger as-child>
                             <Button variant="outline" role="combobox" class="justify-between">
-                                {{ selectedCenter?.name || 'Select center...' }}
+                                {{ selectedDepartment?.name || 'Select department...' }}
                                 <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent class="p-0 overflow-y-auto max-h-70">
                             <Command>
-                                <CommandInput placeholder="Search centers..." v-model="searchCenter" />
-                                <CommandEmpty>No centers found.</CommandEmpty>
+                                <CommandInput placeholder="Search departments..." v-model="searchDepartment" />
+                                <CommandEmpty>No departments found.</CommandEmpty>
                                 <CommandGroup>
-                                    <CommandItem v-for="center in filteredCenters" :key="center.id" :value="center.name"
-                                        @select="() => selectCenter(center)">
-                                        {{ center.name }}
+                                    <CommandItem v-for="department in filteredDepartments" :key="department.id"
+                                        :value="department.name" @select="() => selectDepartment(department)">
+                                        {{ department.name }}
                                         <Check class="ml-auto h-4 w-4"
-                                            :class="{ 'opacity-100': form.center === center.id, 'opacity-0': form.center !== center.id }" />
+                                            :class="{ 'opacity-100': form.department === department.id, 'opacity-0': form.department !== department.id }" />
                                     </CommandItem>
                                 </CommandGroup>
                             </Command>
                         </PopoverContent>
                     </Popover>
-                    <span v-if="errors.center" class="text-red-600 text-sm">{{ errors.center }}</span>
+                    <span v-if="errors.department" class="text-red-600 text-sm">{{ errors.department }}</span>
                 </div>
                 <div class="grid gap-2">
-                    <Label for="select" class="text-right">
-                        Department type
+                    <Label for="procedure" class="text-right">
+                        Procedure
                     </Label>
-                    <Popover id="departmentType" v-model:open="openDepartmentType">
+                    <Popover id="procedure" v-model:open="openProcedure">
                         <PopoverTrigger as-child>
                             <Button variant="outline" role="combobox" class="justify-between">
-                                {{ selectedDepartmentType?.type || 'Select department type...' }}
+                                {{ selectedProcedure?.name || 'Select procedure...' }}
                                 <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent class="p-0 overflow-y-auto max-h-70">
                             <Command>
-                                <CommandInput placeholder="Search department type..." v-model="searchDepartmentType" />
-                                <CommandEmpty>No department types found.</CommandEmpty>
+                                <CommandInput placeholder="Search procedure type..." v-model="searchProcedure" />
+                                <CommandEmpty>No procedures types found.</CommandEmpty>
                                 <CommandGroup>
-                                    <CommandItem v-for="departmentType in filteredDepartmentType"
-                                        :key="departmentType.id" :value="departmentType.type"
-                                        @select="() => selectDepartmentType(departmentType)">
-                                        {{ departmentType.type }}
+                                    <CommandItem v-for="procedure in filteredProcedure" :key="procedure.id"
+                                        :value="procedure.name" @select="() => selectProcedure(procedure)">
+                                        {{ procedure.name }}
                                         <Check class="ml-auto h-4 w-4"
-                                            :class="{ 'opacity-100': form.department_type === departmentType.id, 'opacity-0': form.department_type !== departmentType.id }" />
+                                            :class="{ 'opacity-100': form.procedure === procedure.id, 'opacity-0': form.procedure !== procedure.id }" />
                                     </CommandItem>
                                 </CommandGroup>
                             </Command>
                         </PopoverContent>
                     </Popover>
-                    <span v-if="errors.department_type" class="text-red-600 text-sm">{{ errors.department_type }}</span>
+                    <span v-if="errors.procedure" class="text-red-600 text-sm">{{ errors.procedure }}</span>
                 </div>
             </div>
             <DialogFooter>

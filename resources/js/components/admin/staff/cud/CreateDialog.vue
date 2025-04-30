@@ -31,12 +31,14 @@ import {
     CommandInput,
     CommandItem,
 } from '@/components/ui/command'
+import { Checkbox } from '@/components/ui/checkbox'
 
 const props = defineProps({
     showDialog: Boolean,
     mainUrl: String,
     centers: Array,
     users: Array,
+    staffTypes: Array,
 })
 
 import { toast } from 'vue-sonner';
@@ -50,8 +52,18 @@ const form = useForm({
     status: 'active',
     user: '',
     center: '',
+    staff_type: '',
     phones: [{ phone_number: '' }],
     social_links: [{ url: '' }],
+    working_hours: [
+        { day_of_week: 0, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 1, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 2, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 3, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 4, start_time: '08:00', end_time: '18:00', is_day_off: false },
+        { day_of_week: 5, start_time: '08:00', end_time: '16:00', is_day_off: false },
+        { day_of_week: 6, start_time: '00:00', end_time: '00:00', is_day_off: true },
+    ]
 });
 
 const emit = defineEmits(['update', 'close']);
@@ -81,7 +93,7 @@ const submit = () => {
     })
 };
 
-import { formatPhoneNumber } from '@/helper'
+import { dayName, formatPhoneNumber } from '@/helper'
 
 const formatPhone = (event, index) => {
     const input = event.target;
@@ -119,6 +131,21 @@ const filteredCenters = computed(() =>
 function selectCenter(center) {
     form.center = center.id
     openCenter.value = false
+}
+
+const openStaffType = ref(false)
+const searchStaffType = ref('')
+const selectedStaffType = computed(() =>
+    props.staffTypes.find((u) => u.id === form.staff_type)
+)
+const filteredStaffType = computed(() =>
+    props.staffTypes.filter(
+        (staffType) => staffType.type.toLowerCase().includes(search.value.toLowerCase())
+    )
+)
+function selectStaffType(staffType) {
+    form.staff_type = staffType.id
+    openStaffType.value = false
 }
 </script>
 
@@ -191,37 +218,7 @@ function selectCenter(center) {
                         <span v-if="errors.center" class="text-red-600 text-sm">{{ errors.center }}</span>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 gap-2">
-                    <div class="grid grid-cols-2 items-center gap-2">
-                        <Label for="gender" class="text-right">
-                            Gender: {{ form.gender === 'M' ? 'Male' : 'Female' }}
-                        </Label>
-                        <Label for="status" class="text-right">
-                            Status: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
-                        </Label>
-                        <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
-                            <div class="flex items-center space-x-2">
-                                <RadioGroupItem id="M" value="M" />
-                                <Label for="M">Male</Label>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <RadioGroupItem id="F" value="F" />
-                                <Label for="F">Female</Label>
-                            </div>
-                        </RadioGroup>
-                        <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
-                            <div class="flex items-center space-x-2">
-                                <RadioGroupItem id="active" value="active" />
-                                <Label for="active">Active</Label>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <RadioGroupItem id="discharge" value="discharge" />
-                                <Label for="discharge">Discharge</Label>
-                            </div>
-                        </RadioGroup>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-2">
                     <div class="grid items-center gap-2">
                         <Label for="birth_date" class="text-right">
                             Birth Date
@@ -289,6 +286,85 @@ function selectCenter(center) {
                             @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
                             <Plus class="h-4 w-4 mr-1" /> Додати Телефон
                         </Button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="space-y-4">
+                        <div class="grid items-center gap-2">
+                            <Label for="staffType" class="text-right">
+                                Staff Type
+                            </Label>
+                            <Popover id="staffType" v-model:open="openStaffType">
+                                <PopoverTrigger as-child>
+                                    <Button variant="outline" role="combobox" class="justify-between">
+                                        {{ selectedStaffType?.type || 'Select staff type...' }}
+                                        <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent class="p-0 overflow-y-auto max-h-70">
+                                    <Command>
+                                        <CommandInput placeholder="Search staff type..." v-model="searchStaffType" />
+                                        <CommandEmpty>No staff types found.</CommandEmpty>
+                                        <CommandGroup>
+                                            <CommandItem v-for="staffType in filteredStaffType" :key="staffType.id"
+                                                :value="staffType.type" @select="() => selectStaffType(staffType)">
+                                                {{ staffType.type }}
+                                                <Check class="ml-auto h-4 w-4"
+                                                    :class="{ 'opacity-100': form.staff_type === staffType.id, 'opacity-0': form.staff_type !== staffType.id }" />
+                                            </CommandItem>
+                                        </CommandGroup>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                            <span v-if="errors.staff_type" class="text-red-600 text-sm">{{ errors.staff_type }}</span>
+                        </div>
+                        <div class="grid grid-cols-2 items-center gap-2">
+                            <Label for="gender" class="text-right">
+                                Gender: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                            </Label>
+                            <Label for="status" class="text-right">
+                                Status: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                            </Label>
+                            <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
+                                <div class="flex items-center space-x-2">
+                                    <RadioGroupItem id="M" value="M" />
+                                    <Label for="M">Male</Label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <RadioGroupItem id="F" value="F" />
+                                    <Label for="F">Female</Label>
+                                </div>
+                            </RadioGroup>
+                            <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
+                                <div class="flex items-center space-x-2">
+                                    <RadioGroupItem id="active" value="active" />
+                                    <Label for="active">Active</Label>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <RadioGroupItem id="discharge" value="discharge" />
+                                    <Label for="discharge">Discharge</Label>
+                                </div>
+                            </RadioGroup>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <div v-for="(hour, index) in form.working_hours" :key="index"
+                            class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                            <div class="font-medium">{{ dayName(hour.day_of_week) }}</div>
+
+                            <div>
+                                <Input v-model="hour.start_time" type="time" :disabled="hour.is_day_off" />
+                            </div>
+
+                            <div>
+                                <Input v-model="hour.end_time" type="time" :disabled="hour.is_day_off" />
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <Checkbox v-model:model-value="hour.is_day_off" id="day-off-{{ index }}" />
+                                <label :for="'day-off-' + index" class="text-sm">Вихідний</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

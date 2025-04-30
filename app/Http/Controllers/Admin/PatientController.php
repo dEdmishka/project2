@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Center;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,6 +28,7 @@ class PatientController extends Controller
         ])->get();
 
         $centers = Center::all();
+        $users = User::where('role', 'regular')->whereDoesntHave('staff')->whereDoesntHave('patient')->get();
 
         $patients = $patients->map(function ($item) {
             return [
@@ -34,6 +37,7 @@ class PatientController extends Controller
                 'last_name' => $item->user->last_name,
                 'email' => $item->user->email,
                 'birth_date' => $item->birth_date,
+                'address' => $item->address,
                 'gender' => $item->gender,
                 'status' => $item->status,
                 'center' => $item->center,
@@ -46,151 +50,126 @@ class PatientController extends Controller
             'data' => $patients,
             'user' => $user,
             'centers' => $centers,
-            'main_url' => route('admin.center.index'),
+            'users' => $users,
+            'main_url' => route('admin.patient.index'),
         ]);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|unique:centers,email|email',
-            'description' => 'required',
+            'user' => 'required|exists:users,id',
+            'center' => 'required|exists:centers,id',
+            'birth_date' => 'required',
             'address' => 'required',
-            'phones' => 'required|array|min:1',
-            'phones.*.phone_number' => 'required|string|max:20',
-            'social_links' => 'required|array|min:1',
-            'social_links.*.url' => 'required|string',
-            'working_hours' => 'required|array|size:7',
-            'working_hours.*.day_of_week' => 'required|integer|min:0|max:6',
-            'working_hours.*.start_time' => 'required_if:working_hours.*.is_day_off,false',
-            'working_hours.*.end_time' => 'required_if:working_hours.*.is_day_off,false',
-            'working_hours.*.is_day_off' => 'required|boolean',
+            'gender' => 'required',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = Center::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'description' => $request->description,
-            'address' => $request->address,
-        ]);
-
-        foreach ($request->phones as $phone) {
-            $center->phoneNumbers()->create([
-                'phone_number' => $phone['phone_number'],
+        DB::transaction(function () use ($request) {
+            $patient = Patient::create([
+                'user_id' => $request->user,
+                'center_id' => $request->center,
+                'birth_date' => $request->birth_date,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'status' => $request->status,
             ]);
-        }
 
-        foreach ($request->social_links as $link) {
-            $center->socialLinks()->create([
-                'url' => $link['url'],
-                'platform' => detectPlatformFromUrl($link['url']),
-            ]);
-        }
+            foreach ($request->phones as $phone) {
+                $patient->phoneNumbers()->create([
+                    'phone_number' => $phone['phone_number'],
+                ]);
+            }
 
-        foreach ($request->working_hours as $hours) {
-            $center->workingHours()->create([
-                'day_of_week' => (string) $hours['day_of_week'],
-                'start_time' => $hours['is_day_off'] ? null : $hours['start_time'],
-                'end_time' => $hours['is_day_off'] ? null : $hours['end_time'],
-                'is_day_off' => $hours['is_day_off'],
-            ]);
-        }
+            foreach ($request->social_links as $link) {
+                $patient->socialLinks()->create([
+                    'url' => $link['url'],
+                    'platform' => detectPlatformFromUrl($link['url']),
+                ]);
+            }
+        });
 
-        return redirect()->back()->with('success', 'Center has been successfully created!');
+        return redirect()->back()->with('success', 'Patient has been successfully created!');
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|unique:centers,email,' . $id,
-            'description' => 'required',
-            'address' => 'required',
-            'phones' => 'required|array|min:1',
-            'phones.*.phone_number' => 'required|string|max:20',
-            'social_links' => 'required|array|min:1',
-            'social_links.*.url' => 'required|string',
-            'working_hours' => 'required|array|size:7',
-            'working_hours.*.day_of_week' => 'required|integer|min:0|max:6',
-            'working_hours.*.start_time' => 'required_if:working_hours.*.is_day_off,false',
-            'working_hours.*.end_time' => 'required_if:working_hours.*.is_day_off,false',
-            'working_hours.*.is_day_off' => 'required|boolean',
-        ]);
+        $patient = Patient::findOrFail($id);
 
-        // dd($request->working_hours);
+        $validator = Validator::make($request->all(), [
+            'center' => 'required|exists:centers,id',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|unique:users,email,' . $patient->user->id,
+            'birth_date' => 'required',
+            'address' => 'required',
+            'gender' => 'required',
+            'status' => 'required',
+        ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = Center::findOrFail($id);
-
-        DB::transaction(function () use ($center, $request) {
-            $center->update([
-                'name' => $request->name,
+        DB::transaction(function () use ($patient, $request) {
+            $patient->user()->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' => $request->email,
-                'description' =>  $request->description,
-                'address' => $request->address,
             ]);
 
-            $center->phoneNumbers()->delete();
+            $patient->update([
+                'center_id' => $request->center,
+                'birth_date' => $request->birth_date,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'status' => $request->status,
+            ]);
+
+            $patient->phoneNumbers()->delete();
             if (!empty($request->phones)) {
                 foreach ($request->phones as $phone) {
-                    $center->phoneNumbers()->create([
+                    $patient->phoneNumbers()->create([
                         'phone_number' => $phone['phone_number'],
                     ]);
                 }
             }
 
-            $center->socialLinks()->delete();
+            $patient->socialLinks()->delete();
             if (!empty($request->social_links)) {
                 foreach ($request->social_links as $link) {
-                    $center->socialLinks()->create([
+                    $patient->socialLinks()->create([
                         'url' => $link['url'],
                         'platform' => detectPlatformFromUrl($link['url']),
                     ]);
                 }
             }
-
-            $center->workingHours()->delete();
-            if (!empty($request->working_hours)) {
-                foreach ($request->working_hours as $hour) {
-                    $center->workingHours()->create([
-                        'day_of_week' => $hour['day_of_week'],
-                        'start_time' => $hour['start_time'] ?? null,
-                        'end_time' => $hour['end_time'] ?? null,
-                        'is_day_off' => $hour['is_day_off'],
-                    ]);
-                }
-            }
         });
 
-        return redirect()->back()->with('success', 'Center has been successfully edited!');
+        return redirect()->back()->with('success', 'Patient has been successfully edited!');
     }
 
     public function delete($id)
     {
-        $center = Center::findOrFail($id);
+        $patient = Patient::findOrFail($id);
 
-        if ($center) {
-            DB::transaction(function () use ($center) {
-                $center->delete();
+        if ($patient) {
+            DB::transaction(function () use ($patient) {
+                $patient->delete();
 
-                $center->phoneNumbers()->delete();
+                $patient->phoneNumbers()->delete();
 
-                $center->socialLinks()->delete();
-
-                $center->workingHours()->delete();
+                $patient->socialLinks()->delete();
             });
 
-            return redirect()->back()->with('success', 'Center has been successfully deleted!');
+            return redirect()->back()->with('success', 'Patient has been successfully deleted!');
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no center to delete!']);
+        return redirect()->back()->withErrors(['msg' => 'There`s no patient to delete!']);
     }
 }

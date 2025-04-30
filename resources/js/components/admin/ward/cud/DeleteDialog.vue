@@ -65,7 +65,7 @@ const submit = () => {
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
-                <h3>You are sure want to delete {{ currentCell.first_name }}?</h3>
+                <h3>You are sure want to delete {{ currentCell.name }}?</h3>
                 <span v-if="errors" class="text-red-600 text-sm">{{ errors.msg }}</span>
             </div>
             <DialogFooter>

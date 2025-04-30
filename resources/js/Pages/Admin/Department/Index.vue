@@ -119,7 +119,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Center', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('center')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('center')),
     },
     {
         accessorKey: 'departmentType',
@@ -130,7 +130,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Department Type', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('departmentType')),
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('departmentType')),
     },
     {
         accessorKey: 'name',
@@ -140,7 +140,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('name')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('name')),
     },
     {
         accessorKey: 'description',
@@ -150,7 +150,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Description', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('description')),
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('description')),
     },
     {
         accessorKey: 'floor',
@@ -160,7 +160,7 @@ const columns = [
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
             }, () => ['Floor', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'lowercase max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('floor')),
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('floor')),
     },
     {
         id: 'actions',

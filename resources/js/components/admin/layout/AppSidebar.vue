@@ -23,7 +23,7 @@ const data = {
   centers: ["MedicineCenter", "RehabCenter", "SomeOtherCenter"],
   navMain: [
     {
-      title: "Getting Started",
+      title: "Office",
       url: "#",
       items: [
         {
@@ -47,14 +47,6 @@ const data = {
           url: "/admin/departments",
         },
         {
-          title: "Patients",
-          url: "/admin/patients",
-        },
-        {
-          title: "Staff",
-          url: "/admin/staff",
-        },
-        {
           title: "Appointments",
           url: "/admin/appointments",
         },
@@ -62,6 +54,30 @@ const data = {
           title: "Wards",
           url: "/admin/wards",
         },
+        {
+          title: "Schedules",
+          url: "/admin/schedules",
+        },
+      ],
+    },
+    {
+      title: "Users",
+      url: "#",
+      items: [
+        {
+          title: "Patients",
+          url: "/admin/patients",
+        },
+        {
+          title: "Staff",
+          url: "/admin/staff",
+        },
+      ],
+    },
+    {
+      title: "Services",
+      url: "#",
+      items: [
         {
           title: "Records",
           url: "/admin/records",
@@ -88,30 +104,6 @@ const data = {
         },
       ],
     },
-    {
-      title: "Building Your Application",
-      url: "#",
-      items: [
-        {
-          title: "Routing",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "API Reference",
-      url: "#",
-      items: [
-        {
-          title: "Components",
-          url: "#",
-        },
-        {
-          title: "File Conventions",
-          url: "#",
-        },
-      ],
-    },
   ],
 }
 </script>
@@ -128,7 +120,7 @@ const data = {
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
               <Link :href="item.url" class="font-medium">
-                {{ item.title }}
+              {{ item.title }}
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="gap-4">

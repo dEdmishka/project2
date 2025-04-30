@@ -47,9 +47,9 @@ import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/admin/center/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/center/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/center/cud/EditDialog.vue';
+import CreateDialog from '@/components/admin/ward/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/admin/ward/cud/DeleteDialog.vue';
+import EditDialog from '@/components/admin/ward/cud/EditDialog.vue';
 import { dayName } from '@/helper';
 
 const props = defineProps({
@@ -111,116 +111,75 @@ const columns = [
         enableHiding: false,
     },
     {
-        accessorKey: 'name',
+        accessorKey: 'patient',
+        accessorFn: row => {
+            const first = row.patient?.first_name ?? '';
+            const last = row.patient?.last_name ?? '';
+            return first || last ? `${first} ${last}`.trim() : '—';
+        },
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Patient', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: '' }, row.getValue('name')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('patient')),
     },
     {
-        accessorKey: 'email',
+        accessorKey: 'staff',
+        accessorFn: row => {
+            const first = row.staff?.first_name ?? '';
+            const last = row.staff?.last_name ?? '';
+            return first || last ? `${first} ${last}`.trim() : '—';
+        },
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Email', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Staff', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: '' }, row.getValue('email')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('staff')),
     },
     {
-        accessorKey: 'address',
+        accessorKey: 'procedure',
+        accessorFn: row => row.procedure?.name ?? '—',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Address', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Procedure', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('address')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('procedure')),
     },
     {
-        accessorKey: 'description',
+        accessorKey: 'time',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Description', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Time', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('description')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('time')),
     },
     {
-        accessorKey: 'phones',
-        header: () => h('div', { class: 'text-center' }, 'Phones'),
-        cell: ({ row }) => {
-            return h('div', { class: 'flex flex-col' }, row.getValue('phones').map(phone =>
-                h('p', { class: '' }, phone.phone_number))
-            );
+        accessorKey: 'notes',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Notes', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        filterFn: (row, columnId, filterValue) => {
-            const phones = row.getValue(columnId) || [];
-
-            if (!Array.isArray(phones)) return false;
-            if (!filterValue) return true;
-
-            return phones.some(phone =>
-                phone.phone_number.toLowerCase().replace(/-/g, "").includes(filterValue.toLowerCase())
-            );
-        },
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('notes')),
     },
     {
-        accessorKey: 'social_links',
-        header: () => h('div', { class: 'text-center' }, 'Social Links'),
-        cell: ({ row }) => {
-            return h('div', { class: 'flex flex-col' }, row.getValue('social_links').map(link =>
-                h('p', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, link.url))
-            );
+        accessorKey: 'status',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Status', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        filterFn: (row, columnId, filterValue) => {
-            const socialLinks = row.getValue(columnId) || [];
-
-            if (!Array.isArray(socialLinks)) return false;
-            if (!filterValue) return true;
-
-            return socialLinks.some(link =>
-                link.url.toLowerCase().includes(filterValue.toLowerCase())
-            );
-        },
-    },
-    {
-        accessorKey: 'working_hours',
-        header: () => h('div', { class: 'text-center' }, 'Working hours'),
-        cell: ({ row }) => {
-            return h('div', { class: 'text-center font-medium flex flex-col w-50' }, row.getValue('working_hours').map(hour =>
-                h('div', { class: `grid grid-cols-3 ${hour.is_day_off ? 'text-gray-300' : ''}` },
-                    h('p', { class: '' }, dayName(hour.day_of_week)),
-                    h('p', { class: '' }, hour.start_time ?? '00:00'),
-                    h('p', { class: '' }, hour.end_time ?? '00:00'),
-                ))
-            );
-        },
-        filterFn: (row, columnId, filterValue) => {
-            const workingHours = row.getValue(columnId) || [];
-
-            if (!Array.isArray(workingHours)) return false;
-            if (!filterValue) return true;
-
-            // return workingHours.some(hour =>
-            //     hour.start_time.toLowerCase().includes(filterValue.toLowerCase())
-            // );
-            const search = filterValue.toLowerCase();
-
-            return hours.some(hour => {
-                const open = hour.start_time ? hour.start_time.toLowerCase() : '';
-                const close = hour.end_time ? hour.end_time.toLowerCase() : '';
-
-                return (
-                    open.includes(search) ||
-                    close.includes(search)
-                );
-            });
-        },
+        cell: ({ row }) => h('div', { class: 'max-w-50 w-full' }, row.getValue('status')),
     },
     {
         id: 'actions',
@@ -279,9 +238,11 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            Centers
+            Appointments
         </template>
-        Centers
+        Appointments
+
+        <!-- {{ $props.data }} -->
         <div class="w-[calc(100dvw-325px)]">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
@@ -381,9 +342,11 @@ watch(selectedField, (newField, oldField) => {
         </div>
 
         <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" />
+            :mainUrl="$page.props.main_url" :patients="$page.props.patients" :staff="$page.props.staff"
+            :procedures="$page.props.procedures" />
         <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
-            :mainUrl="$page.props.main_url" />
+            :mainUrl="$page.props.main_url" :patients="$page.props.patients" :staff="$page.props.staff"
+            :procedures="$page.props.procedures" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
             v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
     </Layout>

@@ -66,34 +66,36 @@ class CenterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = Center::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'description' => $request->description,
-            'address' => $request->address,
-        ]);
-
-        foreach ($request->phones as $phone) {
-            $center->phoneNumbers()->create([
-                'phone_number' => $phone['phone_number'],
+        DB::transaction(function () use ($request) {
+            $center = Center::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'description' => $request->description,
+                'address' => $request->address,
             ]);
-        }
 
-        foreach ($request->social_links as $link) {
-            $center->socialLinks()->create([
-                'url' => $link['url'],
-                'platform' => detectPlatformFromUrl($link['url']),
-            ]);
-        }
+            foreach ($request->phones as $phone) {
+                $center->phoneNumbers()->create([
+                    'phone_number' => $phone['phone_number'],
+                ]);
+            }
 
-        foreach ($request->working_hours as $hours) {
-            $center->workingHours()->create([
-                'day_of_week' => (string) $hours['day_of_week'],
-                'start_time' => $hours['is_day_off'] ? null : $hours['start_time'],
-                'end_time' => $hours['is_day_off'] ? null : $hours['end_time'],
-                'is_day_off' => $hours['is_day_off'],
-            ]);
-        }
+            foreach ($request->social_links as $link) {
+                $center->socialLinks()->create([
+                    'url' => $link['url'],
+                    'platform' => detectPlatformFromUrl($link['url']),
+                ]);
+            }
+
+            foreach ($request->working_hours as $hours) {
+                $center->workingHours()->create([
+                    'day_of_week' => (string) $hours['day_of_week'],
+                    'start_time' => $hours['is_day_off'] ? null : $hours['start_time'],
+                    'end_time' => $hours['is_day_off'] ? null : $hours['end_time'],
+                    'is_day_off' => $hours['is_day_off'],
+                ]);
+            }
+        });
 
         return redirect()->back()->with('success', 'Center has been successfully created!');
     }

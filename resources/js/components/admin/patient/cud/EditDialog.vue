@@ -8,53 +8,71 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog'
 
+import {
+    Plus,
+    Trash,
+    ChevronDown,
+    Check,
+} from 'lucide-vue-next'
+
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover'
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from '@/components/ui/command'
 
 const props = defineProps({
     currentCell: Object,
     showDialog: Boolean,
     mainUrl: String,
     centers: Array,
-    departmentTypes: Array,
 })
 
 import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';
-import { watch, ref } from 'vue';
+import { watch, ref, computed } from 'vue';
 
 const form = useForm({
-    name: '',
-    description: '',
-    floor: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    birth_date: '',
+    address: '',
+    gender: '',
+    status: '',
+    phones: [{ phone_number: '' }],
+    social_links: [{ url: '' }],
     center: '',
-    department_type: '',
 });
 
 watch(
-  () => props.currentCell,
-  (newData) => {
-    if (newData) {
-      form.name = newData.name
-      form.description = newData.description
-      form.floor = newData.floor
-      form.center = newData.center.id
-      form.department_type = newData.departmentType.id
-    }
-  },
-  { immediate: true }
+    () => props.currentCell,
+    (newData) => {
+        if (newData) {
+            form.first_name = newData.first_name
+            form.last_name = newData.last_name
+            form.email = newData.email
+            form.birth_date = newData.birth_date
+            form.address = newData.address
+            form.gender = newData.gender
+            form.status = newData.status
+            form.phones = newData.phones
+            form.social_links = newData.social_links
+            form.center = newData.center.id
+        }
+    },
+    { immediate: true }
 )
 
 const emit = defineEmits(['update', 'close']);
@@ -83,74 +101,194 @@ const submit = () => {
         }
     })
 };
+
+import { formatPhoneNumber } from '@/helper'
+
+const formatPhone = (event, index) => {
+    const input = event.target;
+    input.value = formatPhoneNumber(input.value);
+    form.phones[index].phone_number = input.value;
+};
+
+const openCenter = ref(false)
+const searchCenter = ref('')
+const selectedCenter = computed(() =>
+    props.centers.find((u) => u.id === form.center)
+)
+const filteredCenters = computed(() =>
+    props.centers.filter(
+        (center) => center.name.toLowerCase().includes(search.value.toLowerCase())
+    )
+)
+function selectCenter(center) {
+    form.center = center.id
+    openCenter.value = false
+}
 </script>
 
 <template>
     <Dialog :value="showDialog">
-        <DialogContent class="sm:max-w-[425px]">
+        <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Edit procedure</DialogTitle>
+                <DialogTitle>Edit patient</DialogTitle>
                 <DialogDescription>
-                    Make changes to your procedure here. Click save when you're done.
+                    Make changes to your patient here. Click save when you're done.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
-                <div class="grid items-center gap-2">
-                    <Label for="name" class="text-right">
-                        Name
-                    </Label>
-                    <Input id="name" class="col-span-3" required v-model="form.name" />
-                    <span v-if="errors.name" class="text-red-600 text-sm">{{ errors.name }}</span>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="grid items-center gap-2">
+                        <Label for="first_name" class="text-right">
+                            First name
+                        </Label>
+                        <Input id="first_name" class="col-span-3" required v-model="form.first_name" />
+                        <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
+                    </div>
+                    <div class="grid items-center gap-2">
+                        <Label for="last_name" class="text-right">
+                            Last name
+                        </Label>
+                        <Input id="last_name" class="col-span-3" required v-model="form.last_name" />
+                        <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
+                    </div>
                 </div>
-                <div class="grid items-center gap-2">
-                    <Label for="description" class="text-right">
-                        Description
-                    </Label>
-                    <Textarea v-model="form.description"></Textarea>
-                    <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="grid items-center gap-2">
+                        <Label for="Email" class="text-right">
+                            Email
+                        </Label>
+                        <Input type="email" id="email" class="col-span-3" required v-model="form.email" />
+                        <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
+                    </div>
+                    <div class="grid items-center gap-2">
+                        <Label for="center" class="text-right">
+                            Center
+                        </Label>
+                        <Popover id="center" v-model:open="openCenter">
+                            <PopoverTrigger as-child>
+                                <Button variant="outline" role="combobox" class="justify-between">
+                                    {{ selectedCenter?.name || 'Select center...' }}
+                                    <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent class="p-0 overflow-y-auto max-h-70">
+                                <Command>
+                                    <CommandInput placeholder="Search centers..." v-model="searchCenter" />
+                                    <CommandEmpty>No centers found.</CommandEmpty>
+                                    <CommandGroup>
+                                        <CommandItem v-for="center in filteredCenters" :key="center.id"
+                                            :value="center.name" @select="() => selectCenter(center)">
+                                            {{ center.name }}
+                                            <Check class="ml-auto h-4 w-4"
+                                                :class="{ 'opacity-100': form.center === center.id, 'opacity-0': form.center !== center.id }" />
+                                        </CommandItem>
+                                    </CommandGroup>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                        <span v-if="errors.center" class="text-red-600 text-sm">{{ errors.center }}</span>
+                    </div>
                 </div>
-                <div class="grid items-center gap-2">
-                    <Label for="duration" class="text-right">
-                        Floor
-                    </Label>
-                    <Input type="number" id="duration" class="col-span-3" required v-model="form.floor" />
-                    <span v-if="errors.duration" class="text-red-600 text-sm">{{ errors.floor }}</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div class="grid items-center gap-2">
+                        <Label for="birth_date" class="text-right">
+                            Birth Date
+                        </Label>
+                        <Input id="birth_date" type="date" class="col-span-3" required v-model="form.birth_date" />
+                        <span v-if="errors.birth_date" class="text-red-600 text-sm">{{ errors.birth_date }}</span>
+                    </div>
+                    <div class="grid items-center gap-2">
+                        <Label for="address" class="text-right">
+                            Address
+                        </Label>
+                        <Input id="address" class="col-span-3" required v-model="form.address" />
+                        <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
+                    </div>
                 </div>
-                <div class="grid gap-2">
-                    <Label for="select" class="text-right">
-                        Select
-                    </Label>
-                    <Select id="center" v-model="form.center">
-                        <SelectTrigger class="w-full">
-                            <SelectValue placeholder="Select a center" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Centers</SelectLabel>
-                                <SelectItem v-for="(center, index) in centers" :value="center.id" :key="index">
-                                    {{ center.name }}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                <div class="grid grid-cols-1 gap-2">
+                    <div class="grid grid-cols-2 items-center gap-2">
+                        <Label for="gender" class="text-right">
+                            Gender: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                        </Label>
+                        <Label for="status" class="text-right">
+                            Status: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                        </Label>
+                        <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
+                            <div class="flex items-center space-x-2">
+                                <RadioGroupItem id="M" value="M" />
+                                <Label for="M">Male</Label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <RadioGroupItem id="F" value="F" />
+                                <Label for="F">Female</Label>
+                            </div>
+                        </RadioGroup>
+                        <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
+                            <div class="flex items-center space-x-2">
+                                <RadioGroupItem id="active" value="active" />
+                                <Label for="active">Active</Label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <RadioGroupItem id="discharge" value="discharge" />
+                                <Label for="discharge">Discharge</Label>
+                            </div>
+                        </RadioGroup>
+                    </div>
                 </div>
-                <div class="grid gap-2">
-                    <Label for="select" class="text-right">
-                        Select
-                    </Label>
-                    <Select id="department_type" v-model="form.department_type">
-                        <SelectTrigger class="w-full">
-                            <SelectValue placeholder="Select a department type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Department Types</SelectLabel>
-                                <SelectItem v-for="(departmentType, index) in departmentTypes" :value="departmentType.id" :key="index">
-                                    {{ departmentType.type }}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="grid items-center gap-1">
+                        <Label for="name" class="text-right">
+                            Соціальні мережі
+                        </Label>
+                        <div class="space-y-2">
+                            <div v-for="(social, index) in form.social_links" :key="'social-' + index"
+                                class="flex gap-2">
+                                <div class="flex flex-col items-start gap-1 flex-1">
+                                    <Input v-model="social.url"
+                                        placeholder="Social URL (e.g. https://instagram.com/center)" />
+                                    <span v-if="errors[`social_links.${index}.url`]" class="text-red-600 text-sm">
+                                        {{ errors[`social_links.${index}.url`] }}
+                                    </span>
+                                </div>
+                                <Button variant="destructive" size="icon"
+                                    @click.prevent="form.social_links.splice(index, 1)"
+                                    v-if="form.social_links.length > 1">
+                                    <Trash class="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+                        <Button type="button" variant="outline" class="mt-2"
+                            @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
+                            <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
+                        </Button>
+                    </div>
+
+                    <div class="grid items-center gap-1">
+                        <Label for="name" class="text-right">
+                            Телефони
+                        </Label>
+                        <div class="space-y-2">
+                            <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
+                                <div class="flex flex-col items-start gap-1 flex-1">
+                                    <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)"
+                                        placeholder="(0XX)-XXX-XX-XX" />
+                                    <span v-if="errors[`phones.${index}.phone_number`]" class="text-red-600 text-sm">
+                                        {{ errors[`phones.${index}.phone_number`] }}
+                                    </span>
+                                </div>
+                                <Button variant="destructive" size="icon" @click.prevent="form.phones.splice(index, 1)"
+                                    v-if="form.phones.length > 1">
+                                    <Trash class="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+
+                        <Button type="button" variant="outline" class="mt-2"
+                            @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
+                            <Plus class="h-4 w-4 mr-1" /> Додати Телефон
+                        </Button>
+                    </div>
                 </div>
             </div>
             <DialogFooter>

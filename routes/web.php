@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\CenterController as AdminCenterController;
 use App\Http\Controllers\Admin\DepartmentController as AdminDepartmentController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\StaffController as AdminStaffController;
+use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
+use App\Http\Controllers\Admin\WardController as AdminWardController;
 use App\Http\Controllers\Pages\ContactsController;
 use App\Http\Controllers\Pages\HelpController;
 use App\Http\Controllers\Pages\HomeController;
@@ -91,6 +93,18 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('/', [AdminStaffController::class, 'store'])->name('admin.staff.store');
             Route::put('/{id}', [AdminStaffController::class, 'update'])->name('admin.staff.update');
             Route::delete('/{id}', [AdminStaffController::class, 'delete'])->name('admin.staff.delete');
+        });
+        Route::group(['prefix' => 'appointments'], function () {
+            Route::get('/', [AdminAppointmentController::class, 'index'])->name('admin.appointment.index');
+            Route::post('/', [AdminAppointmentController::class, 'store'])->name('admin.appointment.store');
+            Route::put('/{id}', [AdminAppointmentController::class, 'update'])->name('admin.appointment.update');
+            Route::delete('/{id}', [AdminAppointmentController::class, 'delete'])->name('admin.appointment.delete');
+        });
+        Route::group(['prefix' => 'wards'], function () {
+            Route::get('/', [AdminWardController::class, 'index'])->name('admin.ward.index');
+            Route::post('/', [AdminWardController::class, 'store'])->name('admin.ward.store');
+            Route::put('/{id}', [AdminWardController::class, 'update'])->name('admin.ward.update');
+            Route::delete('/{id}', [AdminWardController::class, 'delete'])->name('admin.ward.delete');
         });
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     });
