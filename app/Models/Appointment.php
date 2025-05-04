@@ -11,8 +11,7 @@ class Appointment extends Model
         'status',
         'notes',
         'patient_id',
-        'staff_id',
-        'procedure_id',
+        'ward_id',
     ];
 
     public function patient()
@@ -22,11 +21,11 @@ class Appointment extends Model
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsToMany(Staff::class);
     }
 
-    public function procedure()
+    public function ward()
     {
-        return $this->belongsTo(Procedure::class);
+        return $this->belongsTo(Ward::class);
     }
 }

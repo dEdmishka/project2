@@ -13,17 +13,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -43,21 +32,57 @@ import {
     useVueTable,
 } from '@tanstack/vue-table'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref, watch } from 'vue'
+import { h, ref, watch, onBeforeMount, computed } from 'vue'
+import { router } from '@inertiajs/vue3'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
 import CreateDialog from '@/components/admin/department/cud/CreateDialog.vue';
 import DeleteDialog from '@/components/admin/department/cud/DeleteDialog.vue';
 import EditDialog from '@/components/admin/department/cud/EditDialog.vue';
-import { dayName } from '@/helper';
+
+import VersionSwitcher from "@/components/blocks/VersionSwitcher.vue"
 
 const props = defineProps({
     data: Array,
+    centers: Array,
+    departmentTypes: Array,
+    main_url: String,
 })
 
-const data = ref(props.data);
+const data = computed(() => props.data);
 const currentCell = ref();
+const centerId = ref(localStorage.getItem('selectedCenterId'));
+
+const getData = () => {
+    let params = buildParams();
+
+    router.visit(props.main_url, {
+        only: ['data'],
+        data: params,
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+            // console.log('it works')
+        }
+    })
+}
+
+const selectCenter = (center) => {
+    centerId.value = center.id
+    localStorage.setItem('selectedCenterId', center.id)
+    getData()
+}
+
+const buildParams = () => {
+    let params = {};
+    if (centerId.value) params.center = centerId.value
+    return params;
+}
+
+onBeforeMount(() => {
+    getData()
+})
 
 const createDialog = ref(false);
 const editDialog = ref(false);
@@ -221,9 +246,11 @@ watch(selectedField, (newField, oldField) => {
         <template #title>
             Departments
         </template>
-        Departments
-
-        <!-- {{ $props.data }} -->
+        <div class="grid max-w-[275px]">
+            <VersionSwitcher @change="selectCenter" :versions="props.centers"
+                :default-version="props.centers[centerId - 1]" />
+        </div>
+        <!-- {{ $props?.centers }} -->
         <div class="w-[calc(100dvw-325px)]">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
@@ -323,9 +350,11 @@ watch(selectedField, (newField, oldField) => {
         </div>
 
         <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :departmentTypes="$page.props.departmentTypes" />
+            :mainUrl="$page.props.main_url" :centers="$page.props.centers"
+            :departmentTypes="$page.props.departmentTypes" />
         <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :departmentTypes="$page.props.departmentTypes" />
+            :mainUrl="$page.props.main_url" :centers="$page.props.centers"
+            :departmentTypes="$page.props.departmentTypes" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
             v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
     </Layout>

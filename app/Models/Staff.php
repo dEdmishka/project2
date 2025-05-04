@@ -42,6 +42,11 @@ class Staff extends Model
         return $this->belongsTo(StaffType::class);
     }
 
+    public function appointments()
+    {
+        return $this->belongsToMany(Appointment::class);
+    }
+
     public function phoneNumbers()
     {
         return $this->morphMany(Phone::class, 'phoneable');

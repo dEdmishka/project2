@@ -8,6 +8,7 @@ use App\Models\StaffType;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class StaffSeeder extends Seeder
 {
@@ -16,24 +17,40 @@ class StaffSeeder extends Seeder
      */
     public function run(): void
     {
-        $centers = Center::all();
-        $genders = ['F', 'M'];
-        $types = StaffType::all();
+        Staff::factory()->create([
+            'user_id' => 4,
+        ]);
 
-        foreach ($centers as $center) {
-            $randomGender = $genders[array_rand($genders)];
-            $type = $types->random();
+        Staff::factory()->count(15)->create()->each(function ($staff) {
+            $staff->phoneNumbers()->createMany(
+                collect(range(1, rand(1, 3)))->map(function () {
+                    return ['phone_number' => fake()->numerify('0##-###-##-##')];
+                })->toArray()
+            );
 
-            Staff::create([
-                'user_id' => User::factory()->create()->id,
-                'center_id' => $center->id,
-                'birth_date' => fake()->date('Y-m-d', '-18 years'),
-                'gender' => $randomGender,
-                'address' => fake()->address(),
-                'status' => 'active',
-                'description' => fake()->paragraph(),
-                'staff_type_id' => $type->id,
-            ]);
-        }
+            $socialPlatforms = ['facebook', 'instagram', 'linkedin', 'tiktok'];
+            $staff->socialLinks()->createMany(
+                collect($socialPlatforms)
+                    ->random(rand(1, 3))
+                    ->map(function ($platform) {
+                        $url = "https://{$platform}.com/" . Str::slug(fake()->company);
+                        return [
+                            'url' => $url,
+                            'platform' => detectPlatformFromUrl($url),
+                        ];
+                    })
+                    ->toArray()
+            );
+
+            foreach (range(0, 6) as $day) {
+                $isDayOff = $day === 6;
+                $staff->workingHours()->create([
+                    'day_of_week' => (string) $day,
+                    'start_time' => $isDayOff ? null : '08:00:00',
+                    'end_time' => $isDayOff ? null : '18:00:00',
+                    'is_day_off' => $isDayOff,
+                ]);
+            }
+        });
     }
 }

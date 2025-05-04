@@ -124,7 +124,7 @@ function selectCenter(center) {
 
 <template>
     <Dialog :value="showDialog">
-        <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
+        <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-hidden">
             <DialogHeader>
                 <DialogTitle>Create patient</DialogTitle>
                 <DialogDescription>

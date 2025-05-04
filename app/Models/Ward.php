@@ -24,4 +24,9 @@ class Ward extends Model
     {
         return $this->belongsTo(Procedure::class);
     }
+
+    public function appointment()
+    {
+        return $this->belongsToMany(Appointment::class);
+    }
 }

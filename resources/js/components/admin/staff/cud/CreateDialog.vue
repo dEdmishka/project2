@@ -322,8 +322,8 @@ function selectStaffType(staffType) {
                             <Label for="gender" class="text-right">
                                 Gender: {{ form.gender === 'M' ? 'Male' : 'Female' }}
                             </Label>
-                            <Label for="status" class="text-right">
-                                Status: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                            <Label for="status" class="text-right capitalize">
+                                Status: {{ form.status }}
                             </Label>
                             <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
                                 <div class="flex items-center space-x-2">

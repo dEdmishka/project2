@@ -29,6 +29,20 @@ class UserSeeder extends Seeder
             'role' => 'regular',
         ]);
 
+        User::factory()->create([
+            'first_name' => 'patient',
+            'last_name' => 'patientovich',
+            'email' => 'patient@patient.com',
+            'role' => 'regular',
+        ]);
+
+        User::factory()->create([
+            'first_name' => 'staff',
+            'last_name' => 'staffovich',
+            'email' => 'staff@staff.com',
+            'role' => 'regular',
+        ]);
+
         User::factory(10)->create();
     }
 }

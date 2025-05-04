@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Center;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,19 @@ class PatientFactory extends Factory
      */
     public function definition(): array
     {
+        $centers = Center::all();
+        $genders = ['F', 'M'];
+
+        $randomGender = $genders[array_rand($genders)];
+        $center = $centers->random();
+
         return [
-            //
+            'user_id' => User::factory()->create()->id,
+            'center_id' => $center->id,
+            'birth_date' => fake()->date('Y-m-d', '-18 years'),
+            'gender' => $randomGender,
+            'address' => fake()->address(),
+            'status' => 'active',
         ];
     }
 }

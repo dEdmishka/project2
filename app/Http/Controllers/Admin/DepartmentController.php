@@ -14,16 +14,18 @@ use Inertia\Inertia;
 
 class DepartmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         Auth::shouldUse('admin');
 
         $user = Auth::user();
 
+        $centerId = $request->query('center');
+
         $departments = Department::with([
             'center',
             'departmentType',
-        ])->get();
+        ])->where('center_id', $centerId ?? null)->get();
 
         $centers = Center::all();
         $departmentTypes = DepartmentType::all();
@@ -40,7 +42,8 @@ class DepartmentController extends Controller
         });
 
         return Inertia::render('Admin/Department/Index', [
-            'data' => $departments,
+            // 'data' => $departments,
+            'data' => Inertia::lazy(fn() => $departments),
             'user' => $user,
             'centers' => $centers,
             'departmentTypes' => $departmentTypes,

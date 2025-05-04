@@ -162,10 +162,10 @@ const columns = [
         cell: ({ row }) => h('div', { class: 'lowercase max-w-75 w-full text-ellipsis whitespace-nowrap overflow-hidden' }, row.getValue('description')),
     },
     {
-        accessorKey: 'price',
-        header: () => h('div', { class: 'text-right' }, 'Price'),
+        accessorKey: 'cost',
+        header: () => h('div', { class: 'text-right' }, 'Cost'),
         cell: ({ row }) => {
-            const amount = Number.parseFloat(row.getValue('price'))
+            const amount = Number.parseFloat(row.getValue('cost'))
 
             // Format the amount as a dollar amount
             const formatted = new Intl.NumberFormat('en-US', {

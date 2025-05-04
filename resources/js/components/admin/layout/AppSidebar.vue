@@ -1,6 +1,5 @@
 <script setup>
 import SearchForm from "@/components/blocks/SearchForm.vue"
-import VersionSwitcher from "@/components/blocks/VersionSwitcher.vue"
 import {
   Sidebar,
   SidebarContent,
@@ -53,10 +52,6 @@ const data = {
         {
           title: "Wards",
           url: "/admin/wards",
-        },
-        {
-          title: "Schedules",
-          url: "/admin/schedules",
         },
       ],
     },
@@ -111,7 +106,6 @@ const data = {
 <template>
   <Sidebar v-bind="props">
     <SidebarHeader>
-      <VersionSwitcher :versions="data.centers" :default-version="data.centers[0]" />
       <SearchForm />
     </SidebarHeader>
     <SidebarContent class="text-xl text-gray-700 dark:text-gray-100">

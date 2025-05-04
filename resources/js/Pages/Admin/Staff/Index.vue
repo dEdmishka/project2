@@ -32,7 +32,8 @@ import {
 } from '@tanstack/vue-table'
 
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref, watch } from 'vue'
+import { h, ref, watch, onBeforeMount, computed } from 'vue'
+import { router } from '@inertiajs/vue3'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
@@ -40,13 +41,49 @@ import CreateDialog from '@/components/admin/staff/cud/CreateDialog.vue';
 import DeleteDialog from '@/components/admin/staff/cud/DeleteDialog.vue';
 import EditDialog from '@/components/admin/staff/cud/EditDialog.vue';
 import { dayName } from '@/helper';
+import VersionSwitcher from '@/components/blocks/VersionSwitcher.vue';
 
 const props = defineProps({
     data: Array,
+    centers: Array,
+    users: Array,
+    staffTypes: Array,
+    main_url: String,
 })
 
-const data = ref(props.data);
+const data = computed(() => props.data);
 const currentCell = ref();
+const centerId = ref(localStorage.getItem('selectedCenterId'));
+
+const getData = () => {
+    let params = buildParams();
+
+    router.visit(props.main_url, {
+        only: ['data'],
+        data: params,
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+            // console.log('it works')
+        }
+    })
+}
+
+const selectCenter = (center) => {
+    centerId.value = center.id
+    localStorage.setItem('selectedCenterId', center.id)
+    getData()
+}
+
+const buildParams = () => {
+    let params = {};
+    if (centerId.value) params.center = centerId.value
+    return params;
+}
+
+onBeforeMount(() => {
+    getData()
+})
 
 const createDialog = ref(false);
 const editDialog = ref(false);
@@ -321,8 +358,11 @@ watch(selectedField, (newField, oldField) => {
         <template #title>
             Staff
         </template>
-        Staff
-
+        <div class="grid max-w-[275px]">
+            <VersionSwitcher @change="selectCenter" :versions="props.centers"
+                :default-version="props.centers[centerId - 1]" />
+        </div>
+        <!-- {{ props.data }} -->
         <div class="w-[calc(100dvw-325px)]">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
@@ -422,7 +462,8 @@ watch(selectedField, (newField, oldField) => {
         </div>
 
         <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :users="$page.props.users" :staffTypes="$page.props.staffTypes" />
+            :mainUrl="$page.props.main_url" :centers="$page.props.centers" :users="$page.props.users"
+            :staffTypes="$page.props.staffTypes" />
         <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
             :mainUrl="$page.props.main_url" :centers="$page.props.centers" :staffTypes="$page.props.staffTypes" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"

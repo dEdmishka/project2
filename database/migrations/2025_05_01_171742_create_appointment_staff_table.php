@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('appointment_staff', function (Blueprint $table) {
             $table->id();
-            // $table->index('appointment_id');
-            // $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
             $table->foreignId('appointment_id')->constrained();
-            $table->double('amount');
-            $table->timestamp('payment_date');
-            $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');
+            $table->foreignId('staff_id')->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('appointment_staff');
     }
 };

@@ -15,11 +15,13 @@ use Inertia\Inertia;
 
 class StaffController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         Auth::shouldUse('admin');
 
         $user = Auth::user();
+
+        $centerId = $request->query('center');
 
         $staff = Staff::with([
             'center',
@@ -28,7 +30,7 @@ class StaffController extends Controller
             'phoneNumbers',
             'socialLinks',
             'workingHours',
-        ])->get();
+        ])->where('center_id', $centerId ?? null)->get();
 
         $centers = Center::all();
         $users = User::where('role', 'regular')->whereDoesntHave('staff')->whereDoesntHave('patient')->get();
@@ -53,7 +55,7 @@ class StaffController extends Controller
         });
 
         return Inertia::render('Admin/Staff/Index', [
-            'data' => $staff,
+            'data' => Inertia::lazy(fn() => $staff),
             'user' => $user,
             'centers' => $centers,
             'users' => $users,

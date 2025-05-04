@@ -24,7 +24,12 @@ const data = {
     {
       title: "Профіль",
       url: "/account",
-      items: [],
+      items: [
+        {
+          title: "Чати",
+          url: "/chat",
+        }
+      ],
     },
   ],
 }
@@ -41,7 +46,7 @@ const data = {
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
               <Link :href="item.url" class="font-medium">
-                {{ item.title }}
+              {{ item.title }}
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="gap-4">

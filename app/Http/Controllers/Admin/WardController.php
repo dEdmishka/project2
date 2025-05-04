@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Center;
 use App\Models\Department;
 use App\Models\Procedure;
 use App\Models\Ward;
@@ -12,16 +13,22 @@ use Inertia\Inertia;
 
 class WardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         Auth::shouldUse('admin');
 
         $user = Auth::user();
 
+        $centerId = $request->query('center');
+
         $wards = Ward::with([
             'department',
             'procedure',
-        ])->get();
+        ])->whereHas('department', function ($query) use ($centerId) {
+            $query->where('center_id', $centerId);
+        })->get();
+
+        $centers = Center::all();
 
         $departments = Department::all();
         $procedures = Procedure::all();
@@ -39,8 +46,9 @@ class WardController extends Controller
         });
 
         return Inertia::render('Admin/Ward/Index', [
-            'data' => $wards,
+            'data' => Inertia::lazy(fn() => $wards),
             'user' => $user,
+            'centers' => $centers,
             'departments' => $departments,
             'procedures' => $procedures,
             'main_url' => route('admin.ward.index'),

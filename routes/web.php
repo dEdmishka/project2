@@ -3,6 +3,7 @@
 use App\Http\Controllers\Pages\AboutController;
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AuthController;
+use App\Http\Controllers\Account\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -49,6 +50,7 @@ Route::group([], function () {
     // Authenticate middleware
     Route::group(['middleware' => 'auth'], function () {
         Route::get('account', [AccountController::class, 'index'])->name('account');
+        Route::get('chat', [ChatController::class, 'index'])->name('chat');
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });

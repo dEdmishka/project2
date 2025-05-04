@@ -32,20 +32,56 @@ import {
 } from '@tanstack/vue-table'
 
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref, watch } from 'vue'
+import { h, ref, watch, onBeforeMount, computed } from 'vue'
+import { router } from '@inertiajs/vue3'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
 import CreateDialog from '@/components/admin/patient/cud/CreateDialog.vue';
 import DeleteDialog from '@/components/admin/patient/cud/DeleteDialog.vue';
 import EditDialog from '@/components/admin/patient/cud/EditDialog.vue';
+import VersionSwitcher from '@/components/blocks/VersionSwitcher.vue';
 
 const props = defineProps({
     data: Array,
+    centers: Array,
+    users: Array,
+    main_url: String,
 })
 
-const data = ref(props.data);
+const data = computed(() => props.data);
 const currentCell = ref();
+const centerId = ref(localStorage.getItem('selectedCenterId'));
+
+const getData = () => {
+    let params = buildParams();
+
+    router.visit(props.main_url, {
+        only: ['data'],
+        data: params,
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+            // console.log('it works')
+        }
+    })
+}
+
+const selectCenter = (center) => {
+    centerId.value = center.id
+    localStorage.setItem('selectedCenterId', center.id)
+    getData()
+}
+
+const buildParams = () => {
+    let params = {};
+    if (centerId.value) params.center = centerId.value
+    return params;
+}
+
+onBeforeMount(() => {
+    getData()
+})
 
 const createDialog = ref(false);
 const editDialog = ref(false);
@@ -278,8 +314,11 @@ watch(selectedField, (newField, oldField) => {
         <template #title>
             Patients
         </template>
-        Patients
-
+        <div class="grid max-w-[275px]">
+            <VersionSwitcher @change="selectCenter" :versions="props.centers"
+                :default-version="props.centers[centerId - 1]" />
+        </div>
+        
         <!-- {{ $props.data }} -->
         <div class="w-[calc(100dvw-325px)]">
             <div class="flex items-center py-4">

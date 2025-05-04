@@ -20,7 +20,7 @@ class ProcedureFactory extends Factory
             'name' => fake()->word(),
             'description' => fake()->paragraph(),
             'cost' => fake()->randomFloat(2, 10, 1000),
-            'duration' => fake()->numberBetween(1, 999999),
+            'duration' => fake()->numberBetween(1, 360),
             'is_active' => fake()->boolean(90),
         ];
     }

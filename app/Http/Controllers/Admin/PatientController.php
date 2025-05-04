@@ -14,21 +14,24 @@ use Inertia\Inertia;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         Auth::shouldUse('admin');
 
         $user = Auth::user();
+
+        $centerId = $request->query('center');
 
         $patients = Patient::with([
             'center',
             'user',
             'phoneNumbers',
             'socialLinks',
-        ])->get();
+        ])->where('center_id', $centerId ?? null)->get();
+
+        $users = User::where('role', 'regular')->whereDoesntHave('staff')->whereDoesntHave('patient')->get();
 
         $centers = Center::all();
-        $users = User::where('role', 'regular')->whereDoesntHave('staff')->whereDoesntHave('patient')->get();
 
         $patients = $patients->map(function ($item) {
             return [
@@ -47,7 +50,7 @@ class PatientController extends Controller
         });
 
         return Inertia::render('Admin/Patient/Index', [
-            'data' => $patients,
+            'data' => Inertia::lazy(fn() => $patients),
             'user' => $user,
             'centers' => $centers,
             'users' => $users,

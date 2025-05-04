@@ -16,12 +16,20 @@ import { ref } from 'vue'
 
 const props = defineProps({
     versions: { type: Array, required: true, },
-    defaultVersion: String
+    defaultVersion: String | Object
 })
+const emit = defineEmits(['change'])
+
 const selectedVersion = ref(props.defaultVersion);
 
 const selectVersion = (version) => {
-    selectedVersion.value = version;
+    console.log(selectedVersion.value.id)
+    console.log(version.id)
+
+    if (selectedVersion.value.id != version.id) {
+        selectedVersion.value = version;
+        emit('change', version)
+    }
     // Emit an event to notify the parent component about the version change
     // emit('update:version', version);
 }
@@ -40,14 +48,14 @@ const selectVersion = (version) => {
                         </div>
                         <div class="flex flex-col gap-0.5 leading-none">
                             <span class="font-semibold">Current Center</span>
-                            <span class="">{{ selectedVersion }}</span>
+                            <span v-if=selectedVersion class="">{{ selectedVersion?.name }}</span>
                         </div>
                         <ChevronsUpDown class="ml-auto" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent class="w-[--reka-dropdown-menu-trigger-width]" align="start">
                     <DropdownMenuItem v-for="version in versions" :key="version" @select="selectVersion(version)">
-                        {{ version }}
+                        {{ version.name }}
                         <Check v-if="version === selectedVersion" class="ml-auto" />
                     </DropdownMenuItem>
                 </DropdownMenuContent>

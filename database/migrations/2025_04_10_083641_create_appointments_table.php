@@ -18,12 +18,9 @@ return new class extends Migration
             // $table->index('staff_id');
             // $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
             $table->foreignId('patient_id')->constrained();
-            $table->foreignId('staff_id')->constrained();
             $table->datetime('time');
-            $table->enum('status', ['active', 'closed', 'canceled'])->default('active');
-            // $table->index('procedure_id');
-            // $table->foreign('procedure_id')->references('id')->on('procedures')->onDelete('cascade');
-            $table->foreignId('procedure_id')->constrained();
+            $table->enum('status', ['active', 'closed', 'cancelled'])->default('active');
+            $table->foreignId('ward_id')->constrained();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

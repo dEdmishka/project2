@@ -15,20 +15,10 @@ class PatientSeeder extends Seeder
      */
     public function run(): void
     {
-        $centers = Center::all();
-        $genders = ['F', 'M'];
-
-        foreach ($centers as $center) {
-            $randomGender = $genders[array_rand($genders)];
-
-            Patient::create([
-                'user_id' => User::factory()->create()->id,
-                'center_id' => $center->id,
-                'birth_date' => fake()->date('Y-m-d', '-18 years'),
-                'gender' => $randomGender,
-                'address' => fake()->address(),
-                'status' => 'active',
-            ]);
-        }
+        Patient::factory()->create([
+            'user_id' => 3,
+        ]);
+        
+        Patient::factory()->count(50)->create();
     }
 }

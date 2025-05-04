@@ -13,17 +13,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -43,21 +32,58 @@ import {
     useVueTable,
 } from '@tanstack/vue-table'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref, watch } from 'vue'
+import { h, ref, watch, onBeforeMount, computed } from 'vue'
+import { router } from '@inertiajs/vue3'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 
-import CreateDialog from '@/components/admin/ward/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/ward/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/ward/cud/EditDialog.vue';
-import { dayName } from '@/helper';
+import CreateDialog from '@/components/admin/appointment/cud/CreateDialog.vue';
+import DeleteDialog from '@/components/admin/appointment/cud/DeleteDialog.vue';
+import EditDialog from '@/components/admin/appointment/cud/EditDialog.vue';
+import VersionSwitcher from '@/components/blocks/VersionSwitcher.vue';
 
 const props = defineProps({
     data: Array,
+    centers: Array,
+    patients: Array,
+    staff: Array,
+    wards: Array,
+    main_url: String,
 })
 
-const data = ref(props.data);
+const data = computed(() => props.data);
 const currentCell = ref();
+const centerId = ref(localStorage.getItem('selectedCenterId'));
+
+const getData = () => {
+    let params = buildParams();
+
+    router.visit(props.main_url, {
+        only: ['data'],
+        data: params,
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+            // console.log('it works')
+        }
+    })
+}
+
+const selectCenter = (center) => {
+    centerId.value = center.id
+    localStorage.setItem('selectedCenterId', center.id)
+    getData()
+}
+
+const buildParams = () => {
+    let params = {};
+    if (centerId.value) params.center = centerId.value
+    return params;
+}
+
+onBeforeMount(() => {
+    getData()
+})
 
 const createDialog = ref(false);
 const editDialog = ref(false);
@@ -113,8 +139,8 @@ const columns = [
     {
         accessorKey: 'patient',
         accessorFn: row => {
-            const first = row.patient?.first_name ?? '';
-            const last = row.patient?.last_name ?? '';
+            const first = row.patient?.user?.first_name ?? '';
+            const last = row.patient?.user?.last_name ?? '';
             return first || last ? `${first} ${last}`.trim() : '—';
         },
         header: ({ column }) => {
@@ -127,22 +153,38 @@ const columns = [
     },
     {
         accessorKey: 'staff',
-        accessorFn: row => {
-            const first = row.staff?.first_name ?? '';
-            const last = row.staff?.last_name ?? '';
-            return first || last ? `${first} ${last}`.trim() : '—';
+        header: () => h('div', { class: 'text-center' }, 'Staff'),
+        cell: ({ row }) => {
+            return h('div', { class: 'flex flex-col' }, row.getValue('staff').map(staff =>
+                h('p', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, staff.user?.first_name + ' ' + staff.user?.last_name))
+            );
         },
+        filterFn: (row, columnId, filterValue) => {
+            const staff = row.getValue(columnId) || [];
+
+            if (!Array.isArray(staff)) return false;
+            if (!filterValue) return true;
+
+            return staff.some(staffItem =>
+                staffItem?.user?.first_name.toLowerCase().includes(filterValue.toLowerCase()) ||
+                staffItem?.user?.last_name.toLowerCase().includes(filterValue.toLowerCase())
+            );
+        },
+    },
+    {
+        accessorKey: 'ward',
+        accessorFn: row => { return row.ward?.name ?? '—' },
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Staff', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Ward', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: '' }, row.getValue('staff')),
+        cell: ({ row }) => h('div', { class: '' }, row.getValue('ward')),
     },
     {
         accessorKey: 'procedure',
-        accessorFn: row => row.procedure?.name ?? '—',
+        accessorFn: row => { return row.ward.procedure?.name ?? '—' },
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
@@ -226,7 +268,7 @@ const table = useVueTable({
     },
 })
 
-const selectedField = ref('name')
+const selectedField = ref('notes')
 
 watch(selectedField, (newField, oldField) => {
     if (oldField) {
@@ -240,7 +282,10 @@ watch(selectedField, (newField, oldField) => {
         <template #title>
             Appointments
         </template>
-        Appointments
+        <div class="grid max-w-[275px]">
+            <VersionSwitcher @change="selectCenter" :versions="props.centers"
+                :default-version="props.centers[centerId - 1]" />
+        </div>
 
         <!-- {{ $props.data }} -->
         <div class="w-[calc(100dvw-325px)]">
@@ -343,10 +388,10 @@ watch(selectedField, (newField, oldField) => {
 
         <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
             :mainUrl="$page.props.main_url" :patients="$page.props.patients" :staff="$page.props.staff"
-            :procedures="$page.props.procedures" />
+            :wards="$page.props.wards" />
         <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
             :mainUrl="$page.props.main_url" :patients="$page.props.patients" :staff="$page.props.staff"
-            :procedures="$page.props.procedures" />
+            :wards="$page.props.wards" />
         <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
             v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
     </Layout>
