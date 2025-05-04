@@ -26,9 +26,13 @@ const data = {
       url: "/account",
       items: [
         {
+          title: "Центри",
+          url: "/account/centers",
+        },
+        {
           title: "Чати",
-          url: "/chat",
-        }
+          url: "/account/chat",
+        },
       ],
     },
   ],

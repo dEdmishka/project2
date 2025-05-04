@@ -12,15 +12,17 @@ class ChatController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::user()->load('image');
 
-        $users = User::all();
+        $users = User::with([
+            'image',
+        ])->get();
 
         if ($user->is_patient) {
             return Inertia::render('Account/User/Chat/Index', [
                 'user' => $user,
                 'users' => $users,
-                'main_url' => route('chat'),
+                'main_url' => route('account.chat'),
             ]);
         }
 
@@ -28,14 +30,14 @@ class ChatController extends Controller
             return Inertia::render('Account/Staff/Chat/Index', [
                 'user' => $user,
                 'users' => $users,
-                'main_url' => route('chat'),
+                'main_url' => route('account.chat'),
             ]);
         }
         
         return Inertia::render('Account/User/Chat/Index', [
             'user' => $user,
             'users' => $users,
-            'main_url' => route('chat'),
+            'main_url' => route('account.chat'),
         ]);
     }
 }

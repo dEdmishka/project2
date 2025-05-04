@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Center;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Center>

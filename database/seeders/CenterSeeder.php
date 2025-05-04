@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Center;
+use App\Models\Image;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CenterSeeder extends Seeder
@@ -45,5 +47,24 @@ class CenterSeeder extends Seeder
                 ]);
             }
         });
+
+        $imageFiles = Storage::disk('public')->files('center/images');
+
+        if (!empty($imageFiles)) {
+            Center::all()->each(function ($center) use ($imageFiles) {
+                $count = rand(3, 6);
+                $chosenImages = collect($imageFiles)->random($count);
+
+                foreach ($chosenImages as $path) {
+                    // $fileName = basename($path);
+
+                    Image::create([
+                        'url' => 'storage/' . $path,
+                        'imageable_id' => $center->id,
+                        'imageable_type' => Center::class,
+                    ]);
+                }
+            });
+        }
     }
 }

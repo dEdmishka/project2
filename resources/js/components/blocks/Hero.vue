@@ -55,24 +55,20 @@ const features = [
             Rehabilitation
           </span>
           <br />
-          <!-- {{" "}}
-            landing page -->
         </h1>
-        <!-- {{" "}}
-          for{{" "}} -->
         <h2 class="inline">
           <span class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
             System
           </span>
-          <!-- {{" "}}
-            developers -->
         </h2>
       </div>
 
       <p class="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
         <!-- Build your React landing page effortlessly with the required sections
           to your project. -->
-        This is a simple landing page template built with Vue 3 and Tailwind CSS.
+        Вітаємо у нашій системі!
+        <br />
+        В ній ви маєте змогу знайти необхідну допомогу у відновленні Вашого здоров`я!
       </p>
 
       <div class="space-y-6 md:space-y-0 md:space-x-4">
@@ -97,7 +93,7 @@ const features = [
 
     <div class="text-center space-y-6">
       <div class="text-2xl md:text-3xl font-bold">
-        <h6>New to the system? Choose your guideline!</h6>
+        <h6>Новенький у системі? Оберіть свій шлях!</h6>
       </div>
       <div class="text-2sm sm:text-1xl font-bold">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">

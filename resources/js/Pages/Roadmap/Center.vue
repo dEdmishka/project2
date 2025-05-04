@@ -1,7 +1,7 @@
 <script setup>
 import Layout from '@/Layout/App.vue'
-import RoadmapTitle from '@/components/blocks/roamap/RoadmapTitle.vue'
-import RoadmapCard from '@/components/blocks/roamap/RoadmapCard.vue'
+import RoadmapTitle from '@/components/blocks/roadmap/RoadmapTitle.vue'
+import RoadmapCard from '@/components/blocks/roadmap/RoadmapCard.vue'
 
 const roadmap = [
   {

@@ -1,7 +1,5 @@
 <script setup>
-import {
-    Github
-} from 'lucide-vue-next';
+import { Link } from "@inertiajs/vue3"
 </script>
 <template>
     <footer id="footer">
@@ -9,10 +7,16 @@ import {
 
         <section class="container mx-auto py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
             <div class="col-span-full xl:col-span-2">
-                <a rel="noreferrer noopener" href="/" class="font-bold text-xl flex">
-                    <Github />
-                    ShadcnUI/React
-                </a>
+                <Link rel="noreferrer noopener" href="/" class="ml-2 font-bold text-xl flex">
+                <div class="text-2xl font-bold">
+                    <h1 class="inline">
+                        <span
+                            class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                        <span
+                            class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                    </h1>
+                </div>
+                </Link>
             </div>
 
             <div class="flex flex-col gap-2">

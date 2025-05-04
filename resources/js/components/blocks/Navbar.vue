@@ -46,12 +46,18 @@ import NavActions from '@/components/account/layout/NavActions.vue'
     <header class="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
         <NavigationMenu class="mx-auto">
             <NavigationMenuList class="container h-14 px-4 w-screen flex justify-between">
-                <NavigationMenuItem  class="font-bold flex items-center">
+                <NavigationMenuItem class="font-bold flex items-center">
                     <Link rel="noreferrer noopener" href="/" class="ml-2 font-bold text-xl flex">
-                        <Github />
-                        ShadcnUI/Vue
+                    <div class="text-2xl font-bold">
+                        <h1 class="inline">
+                            <span
+                                class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                            <span
+                                class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                        </h1>
+                    </div>
                     </Link>
-                </NavigationMenuItem >
+                </NavigationMenuItem>
 
                 <!-- mobile -->
                 <span class="flex items-center md:hidden">
@@ -73,10 +79,9 @@ import NavActions from '@/components/account/layout/NavActions.vue'
                             <nav class="flex flex-col justify-center items-center gap-2 mt-4">
                                 <Link v-for="route in routeList" :key="route.label" :href="route.href"
                                     rel="noreferrer noopener" :class="buttonVariants({ variant: 'ghost' })">
-                                    {{ route.label }}
+                                {{ route.label }}
                                 </Link>
-                                <a rel="noreferrer noopener"
-                                    href="https://github.com/leoMirandaa/shadcn-landing-page.git" target="_blank"
+                                <a rel="noreferrer noopener" href="https://github.com/dEdmishka" target="_blank"
                                     :class="`w-[110px] border ${buttonVariants({ variant: 'secondary' })}`">
                                     <Github class="mr-2 w-5 h-5" />
                                     Github
@@ -92,13 +97,13 @@ import NavActions from '@/components/account/layout/NavActions.vue'
                 <nav class="hidden md:flex items-center gap-2">
                     <Link v-for="(route, i) in routeList" :key="i" :href="route.href" rel="noreferrer noopener"
                         :class="`text-[17px] ${buttonVariants({ variant: 'ghost' })}`">
-                        {{ route.label }}
+                    {{ route.label }}
                     </Link>
                 </nav>
 
                 <div class="hidden md:flex items-center gap-2">
-                    <a rel="noreferrer noopener" href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-                        target="_blank" :class="`border ${buttonVariants({ variant: 'secondary' })}`">
+                    <a rel="noreferrer noopener" href="https://github.com/dEdmishka" target="_blank"
+                        :class="`border ${buttonVariants({ variant: 'secondary' })}`">
                         <Github class="mr-2 w-5 h-5" />
                         Github
                     </a>

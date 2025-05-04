@@ -3,6 +3,7 @@
 use App\Http\Controllers\Pages\AboutController;
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AuthController;
+use App\Http\Controllers\Account\CenterController;
 use App\Http\Controllers\Account\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -49,8 +50,13 @@ Route::group([], function () {
     });
     // Authenticate middleware
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('account', [AccountController::class, 'index'])->name('account');
-        Route::get('chat', [ChatController::class, 'index'])->name('chat');
+        Route::group(['prefix' => 'account'], function () {
+            Route::get('/', [AccountController::class, 'index'])->name('account.index');
+            Route::post('/', [AccountController::class, 'update'])->name('account.update');
+            Route::get('/chat', [ChatController::class, 'index'])->name('account.chat');
+            Route::get('/centers', [CenterController::class, 'index'])->name('account.center');
+            Route::get('/centers/{id}', [CenterController::class, 'show'])->name('account.center.show');
+        });
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });
