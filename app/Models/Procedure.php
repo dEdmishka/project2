@@ -18,4 +18,9 @@ class Procedure extends Model
         'duration',
         'is_active',
     ];
+
+    public function wards()
+    {
+        return $this->hasMany(Ward::class);
+    }
 }

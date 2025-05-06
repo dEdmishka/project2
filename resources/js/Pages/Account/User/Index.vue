@@ -74,16 +74,15 @@ const previewImage = (e) => {
 
 <template>
   <Layout>
-    <div class="w-[calc(100dvw-325px)] text-start">
-      Hiiiii our user {{ $page['props']['user'] }}
-      <h1 class="text-lg font-semibold md:text-2xl pb-4">
-        Profile
-      </h1>
-      <Separator />
+    <template #title>
+      Profile
+    </template>
+    <div class=" text-start">
+      <!-- Hiiiii our user {{ $page['props']['user'] }} -->
       <div class="grid gap-4 py-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="grid items-center gap-1">
-            <Label for="File">Аватар</Label>
+            <Label for="File" class="ml-[32px] pb-2">Аватар</Label>
             <div class="text-center relative">
               <Input id="image" type="file" @change="previewImage"
                 class="w-[120px] h-[120px] rounded-[100%] opacity-0 cursor-pointer p-0" required />

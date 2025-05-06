@@ -48,12 +48,11 @@ import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
 import { Link } from "@inertiajs/vue3"
 
-import CreateDialog from '@/components/admin/center/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/center/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/center/cud/EditDialog.vue';
+import CreateDialog from '@/Pages/Account/User/Center/CreateDialog.vue';
 import { dayName } from '@/helper';
 
 const props = defineProps({
+    user: Object,
     data: Array,
     main_url: String,
 })
@@ -62,34 +61,14 @@ const data = ref(props.data);
 const currentCell = ref();
 
 const createDialog = ref(false);
-const editDialog = ref(false);
-const deleteDialog = ref(false);
 
 
 const showCreateDialog = () => {
     createDialog.value = true;
 };
-const showEditDialog = () => {
-    editDialog.value = true;
-};
-const showDeleteDialog = () => {
-    deleteDialog.value = true;
-};
-
-const updateData = (newData) => {
-    data.value = newData;
-}
 
 const closeCreateDialog = () => {
     createDialog.value = false;
-};
-
-const closeEditDialog = () => {
-    editDialog.value = false;
-};
-
-const closeDeleteDialog = () => {
-    deleteDialog.value = false;
 };
 
 const setCurrentCell = (editData) => {
@@ -103,10 +82,13 @@ const columns = [
         cell: ({ row }) => {
             const objData = row.original
 
-            return h('div', { class: 'grid gap-4' },
-                h(Button, { class: '' }, h(Link, { class: '', href: `${props.main_url}/${objData.id}` }, 'Переглянути центр'),),
-                h(Button, { class: 'cursor-pointer', variant: "outline", onClick: showCreateDialog }, 'Хочу до вас!'),
-            )
+            return h('div', { class: 'grid gap-4' }, 
+            {
+                default: () => [
+                    h(Button, { class: '', variant: "outline"}, h(Link, { class: '', href: `${props.main_url}/${objData.id}` }, 'Переглянути центр')),
+                    h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Хочу до вас!')
+                ],
+            })
         },
     },
     {
@@ -221,21 +203,21 @@ const columns = [
             });
         },
     },
-    {
-        id: 'actions',
-        enableHiding: false,
-        cell: ({ row }) => {
-            const objData = row.original
+    // {
+    //     id: 'actions',
+    //     enableHiding: false,
+    //     cell: ({ row }) => {
+    //         const objData = row.original
 
-            return h(DropdownAction, {
-                objData,
-                editDialog,
-                deleteDialog,
-                onExpand: row.toggleExpanded,
-                onCurrent: setCurrentCell,
-            })
-        },
-    },
+    //         return h(DropdownAction, {
+    //             objData,
+    //             editDialog,
+    //             deleteDialog,
+    //             onExpand: row.toggleExpanded,
+    //             onCurrent: setCurrentCell,
+    //         })
+    //     },
+    // },
 ]
 
 const sorting = ref([])
@@ -280,8 +262,7 @@ watch(selectedField, (newField, oldField) => {
         <template #title>
             Centers
         </template>
-        Centers
-        <div class="w-[calc(100dvw-325px)]">
+        <div class="">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
                     :model-value="table.getColumn(selectedField)?.getFilterValue()"
@@ -304,10 +285,6 @@ watch(selectedField, (newField, oldField) => {
                         </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <Button class="ml-2" variant="outline" @click="showCreateDialog">
-                    <Plus class="h-5"></Plus>
-                    Create New
-                </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto">
@@ -380,11 +357,7 @@ watch(selectedField, (newField, oldField) => {
             </div>
         </div>
 
-        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" />
-        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
-            :mainUrl="$page.props.main_url" />
-        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
-            v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
+        <CreateDialog :center="currentCell" :user="$page.props.user" @close="closeCreateDialog"
+            v-model:open="createDialog" :mainUrl="$page.props.main_url" />
     </Layout>
 </template>

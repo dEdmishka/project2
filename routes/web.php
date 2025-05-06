@@ -4,6 +4,8 @@ use App\Http\Controllers\Pages\AboutController;
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AuthController;
 use App\Http\Controllers\Account\CenterController;
+use App\Http\Controllers\Account\ProcedureController;
+use App\Http\Controllers\Account\AppointmentController;
 use App\Http\Controllers\Account\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -53,9 +55,17 @@ Route::group([], function () {
         Route::group(['prefix' => 'account'], function () {
             Route::get('/', [AccountController::class, 'index'])->name('account.index');
             Route::post('/', [AccountController::class, 'update'])->name('account.update');
+
             Route::get('/chat', [ChatController::class, 'index'])->name('account.chat');
+
             Route::get('/centers', [CenterController::class, 'index'])->name('account.center');
             Route::get('/centers/{id}', [CenterController::class, 'show'])->name('account.center.show');
+            Route::post('/centers', [CenterController::class, 'store'])->name('account.center.store');
+
+            Route::get('/procedures', [ProcedureController::class, 'index'])->name('account.procedure');
+            Route::post('/procedures', [ProcedureController::class, 'store'])->name('account.procedure.store');
+
+            Route::get('/appointments', [AppointmentController::class, 'index'])->name('account.appointment');
         });
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');

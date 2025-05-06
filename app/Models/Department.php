@@ -23,4 +23,9 @@ class Department extends Model
     {
         return $this->belongsTo(DepartmentType::class);
     }
+
+    public function wards()
+    {
+        return $this->hasMany(Ward::class);
+    }
 }

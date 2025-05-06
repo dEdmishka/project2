@@ -318,7 +318,7 @@ function selectStaffType(staffType) {
                                 </PopoverContent>
                             </Popover>
                             <span v-if="errors.staff_type" class="text-red-600 text-sm">{{ errors.staff_type
-                            }}</span>
+                                }}</span>
                         </div>
                         <div class="grid grid-cols-2 items-center gap-2">
                             <Label for="gender" class="text-right">
@@ -363,7 +363,9 @@ function selectStaffType(staffType) {
                             </div>
 
                             <div class="flex items-center gap-2">
-                                <Checkbox v-model:model-value="hour.is_day_off" id="day-off-{{ index }}" />
+                                <Checkbox :model-value="Boolean(hour.is_day_off)"
+                                    @update:model-value="val => hour.is_day_off = val ? 1 : 0"
+                                    id="day-off-{{ index }}" />
                                 <label :for="'day-off-' + index" class="text-sm">Вихідний</label>
                             </div>
                         </div>

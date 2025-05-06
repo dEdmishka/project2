@@ -4,10 +4,12 @@ import { cn } from '@/lib/utils';
 const props = defineProps({
   class: { type: null, required: false },
 });
+
+import { motion } from 'motion-v'
 </script>
 
 <template>
-  <div
+  <motion.div
     data-slot="card"
     :class="
       cn(
@@ -17,5 +19,5 @@ const props = defineProps({
     "
   >
     <slot />
-  </div>
+  </motion.div>
 </template>

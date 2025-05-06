@@ -14,6 +14,36 @@ import {
   Building2,
 } from 'lucide-vue-next'
 
+import { motion } from 'motion-v'
+import { animate, stagger } from "motion"
+import { splitText } from "motion-plus"
+import { ref, onMounted } from "vue"
+
+const containerRef = ref(null)
+
+onMounted(() => {
+  document.fonts.ready.then(() => {
+    if (!containerRef.value) return
+
+    containerRef.value.style.visibility = "visible"
+
+    const { words } = splitText(
+      containerRef.value.querySelector('h6')
+    )
+
+    animate(
+      words,
+      { opacity: [0, 1], y: [10, 0] },
+      {
+        type: "spring",
+        duration: 3,
+        bounce: 0,
+        delay: stagger(0.3),
+      }
+    )
+  })
+})
+
 const features = [
   {
     icon: CircleUserRound,
@@ -21,6 +51,15 @@ const features = [
     description:
       "Roadmap for patient",
     href: "/roadmap/patient",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 0.3
+      }
+    }
   },
   {
     icon: BookHeart,
@@ -28,6 +67,15 @@ const features = [
     description:
       "Roadmap for employee",
     href: "/roadmap/employee",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 0.5
+      }
+    }
   },
   {
     icon: ShieldUser,
@@ -35,6 +83,15 @@ const features = [
     description:
       "Roadmap for administrator",
     href: "/roadmap/administrator",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 1.3
+      }
+    }
   },
   {
     icon: Building2,
@@ -42,6 +99,15 @@ const features = [
     description:
       "Roadmap for center",
     href: "/roadmap/center",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 1.8
+      }
+    }
   },
 ];
 </script>
@@ -49,7 +115,15 @@ const features = [
 <template>
   <section class="grid lg:grid-cols-2 place-items-center py-20 md:py-40 gap-10 px-4">
     <div class="text-center lg:text-start space-y-6">
-      <div class="text-5xl md:text-6xl font-bold">
+      <motion.div class="text-5xl md:text-6xl font-bold" :animate="{
+        opacity: [0, 1],
+        y: [10, 0],
+        transition: {
+          type: 'spring',
+          duration: 2,
+          delay: 0.05
+        }
+      }">
         <h1 class="inline">
           <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
             Rehabilitation
@@ -61,17 +135,33 @@ const features = [
             System
           </span>
         </h2>
-      </div>
+      </motion.div>
 
-      <p class="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
+      <motion.p class="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0" :animate="{
+        opacity: [0, 1],
+        x: [100, 0],
+        transition: {
+          type: 'spring',
+          duration: 2,
+          delay: 0.05
+        }
+      }">
         <!-- Build your React landing page effortlessly with the required sections
           to your project. -->
         Вітаємо у нашій системі!
         <br />
         В ній ви маєте змогу знайти необхідну допомогу у відновленні Вашого здоров`я!
-      </p>
+      </motion.p>
 
-      <div class="space-y-6 md:space-y-0 md:space-x-4">
+      <motion.div class="space-y-6 md:space-y-0 md:space-x-4" :animate="{
+        opacity: [0, 1],
+        x: [-100, 0],
+        transition: {
+          type: 'spring',
+          duration: 2,
+          delay: 0.3
+        }
+      }">
         <Link href="/signup" :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'default' })}`">Signup</Link>
 
         <Link href="/login" :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`">Login</Link>
@@ -84,20 +174,28 @@ const features = [
             Github Repository
             <Github class="ml-2 w-5 h-5" />
           </Link> -->
-      </div>
+      </motion.div>
 
-      <div class="space-y-4 md:space-y-0 md:space-x-4 md:px-4">
+      <motion.div class="space-y-4 md:space-y-0 md:space-x-4 md:px-4" :animate="{
+        opacity: [0, 1],
+        x: [-100, 0],
+        transition: {
+          type: 'spring',
+          duration: 2,
+          delay: 0.3
+        }
+      }">
         <Link href="/contacts" :class="`w-full md:w-2/3 ${buttonVariants({ variant: 'outline' })}`">Our contacts</Link>
-      </div>
+      </motion.div>
     </div>
 
-    <div class="text-center space-y-6">
+    <div class="text-center space-y-6" ref="containerRef">
       <div class="text-2xl md:text-3xl font-bold">
         <h6>Новенький у системі? Оберіть свій шлях!</h6>
       </div>
       <div class="text-2sm sm:text-1xl font-bold">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50">
+          <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50" :animate=feature.animation :whilePress="{ scale: 1.05 }">
             <Link :href="feature.href">
             <CardHeader>
               <CardTitle class="grid gap-2 place-items-center">

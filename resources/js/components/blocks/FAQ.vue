@@ -6,6 +6,8 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { motion } from 'motion-v'
+
 const FAQList = [
     {
         question: "Is this template free?",
@@ -41,7 +43,15 @@ const FAQList = [
 </script>
 
 <template>
-    <section id="faq" class="py-24 sm:py-32">
+    <motion.section id="faq" class="py-24 sm:py-32" initial="hidden" whileInView="visible" :viewport="{ once: true }"
+        :variants="{
+            visible: { opacity: 1, y: 0 },
+            hidden: { opacity: 0, y: 100 }
+        }" :transition="{
+        type: 'spring',
+        duration: 3,
+        delay: 0.05
+    }">
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
             Frequently Asked{{ " " }}
             <span class="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
@@ -64,5 +74,5 @@ const FAQList = [
                 Contact us
             </a>
         </h3>
-    </section>
+    </motion.section>
 </template>

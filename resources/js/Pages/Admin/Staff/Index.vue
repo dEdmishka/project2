@@ -363,7 +363,7 @@ watch(selectedField, (newField, oldField) => {
                 :default-version="props.centers[centerId - 1]" />
         </div>
         <!-- {{ props.data }} -->
-        <div class="w-[calc(100dvw-325px)]">
+        <div class="">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
                     :model-value="table.getColumn(selectedField)?.getFilterValue()"

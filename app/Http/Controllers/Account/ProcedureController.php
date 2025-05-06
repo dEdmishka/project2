@@ -3,95 +3,75 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Center;
 use App\Models\Patient;
+use App\Models\Procedure;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
-class CenterController extends Controller
+class ProcedureController extends Controller
 {
     public function index()
     {
         $user = Auth::user()->load('image');
 
-        if ($user->is_patient || $user->is_staff) {
+        if (!$user->is_patient) {
             return redirect()->back();
         }
 
-        $centers = Center::with([
-            'phoneNumbers',
-            'socialLinks',
-            'workingHours',
-            'images',
-        ])->get();
+        $centerId = $user->patient->center_id;
 
-        $centers = $centers->map(function ($item) {
+        $procedures = Procedure::with(['wards.department' => function ($query) use ($centerId) {
+            $query->where('center_id', $centerId);
+        }])->where('is_active', true)->get();
+
+        $procedures = $procedures->filter(function ($item) {
+            return $item->wards->isNotEmpty();
+        })->values();
+
+        // $appointments = Appointment::with(['ward.procedure' => function ($query) use ($centerId) {
+        //     $query->where('center_id', $centerId);
+        // }])->get();
+
+        // dd($appointments);
+
+        $procedures = $procedures->map(function ($item) {
             return [
                 'id' => $item->id,
                 'name' => $item->name,
-                'email' => $item->email,
                 'description' => $item->description,
-                'address' => $item->address,
-                'images' => $item->images,
-                'phones' => $item->phoneNumbers,
-                'social_links' => $item->socialLinks,
-                'working_hours' => $item->workingHours,
+                'cost' => $item->cost,
+                'duration' => $item->duration,
+                'wards' => $item->wards,
             ];
         });
 
-        return Inertia::render('Account/User/Center/Index', [
+        return Inertia::render('Account/Patient/Procedure/Index', [
             'user' => $user,
-            'data' => $centers,
-            'main_url' => route('account.center'),
-        ]);
-    }
-
-    public function show(Request $request, $id)
-    {
-        // dd($id);
-        $user = Auth::user()->load('image');
-
-        if ($user->is_patient) {
-            return redirect()->back();
-        }
-
-        if ($user->is_staff) {
-            return redirect()->back();
-        }
-
-        $center = Center::with([
-            'phoneNumbers',
-            'socialLinks',
-            'workingHours',
-            'images',
-        ])->findOrFail($id);
-
-        return Inertia::render('Account/User/Center/Show', [
-            'user' => $user,
-            'center' => $center,
-            'main_url' => route('account.center'),
+            'data' => $procedures,
+            // 'appointments' => $appointments,
+            'main_url' => route('account.procedure'),
         ]);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'birth_date' => 'required',
-            'address' => 'required',
-            'gender' => 'required',
-            'phones' => 'required|array|min:1',
-            'phones.*.phone_number' => 'required|string|max:20',
-            'social_links' => 'required|array|min:1',
-            'social_links.*.url' => 'required|string',
+            'time' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        $appointmentTime = Carbon::parse($request->time);
+        $appointmentTimeEnd = $appointmentTime->copy()->addMinutes($request->duration);
 
         // DB::transaction(function () use ($request) {
         //     $patient = Patient::create([
@@ -117,6 +97,6 @@ class CenterController extends Controller
         //     }
         // });
 
-        return redirect()->route('account.index')->with('success', 'Patient has been successfully created!');
+        return redirect()->route('account.appointment')->with('success', 'Appointment has been successfully created!');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Patient;
 use App\Models\Record;
@@ -33,6 +34,8 @@ class DatabaseSeeder extends Seeder
             PatientSeeder::class,
             StaffSeeder::class,
             ProcedureSeeder::class,
+            WardSeeder::class,
+            AppointmentSeeder::class,
         );
 
         foreach ($seeders as $seeder)

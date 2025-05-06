@@ -15,7 +15,15 @@ defineProps({
 </script>
 
 <template>
-    <Card class="p-4 md:w-75 lg:w-100 gap-8 bg-muted/25">
+    <Card class="p-4 md:w-75 lg:w-100 gap-8 bg-muted/25" :whileHover="{ scale: 1.05 }" :animate="{
+        opacity: [0, 1],
+        y: [100, 0],
+        transition: {
+            type: 'spring',
+            duration: 1,
+            delay: 0.05
+        }
+    }">
         <CardHeader>
             <CardTitle
                 class="inline font-bold text-3xl md:text-6xl py-1 bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">

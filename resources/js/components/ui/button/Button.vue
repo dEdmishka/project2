@@ -2,6 +2,7 @@
 import { cn } from '@/lib/utils';
 import { Primitive } from 'reka-ui';
 import { buttonVariants } from '.';
+import { motion } from "motion-v"
 
 const props = defineProps({
   variant: { type: null, required: false },
@@ -13,12 +14,14 @@ const props = defineProps({
 </script>
 
 <template>
-  <Primitive
+  <motion.Primitive
     data-slot="button"
     :as="as"
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"
+    :whilePress="{ scale: 0.85 }"
+    :whileHover="{ scale: 1.03 }"
   >
     <slot />
-  </Primitive>
+  </motion.Primitive>
 </template>

@@ -51,7 +51,7 @@ const roadmap = [
 
 <template>
   <Layout>
-    <section id="patient" class="grid grid-cols-1 place-items-center text-center py-12 sm:py-16 ">
+    <section id="patient" class="grid grid-cols-1 place-items-center text-center py-12 sm:py-16">
       <RoadmapTitle>
         <template #title>
           <h1 class="inline">
@@ -65,8 +65,6 @@ const roadmap = [
           </h1>
         </template>
       </RoadmapTitle>
-
-
 
       <div v-if="$page['props']['auth_user']" class="flex flex-wrap justify-center text-start gap-10">
         <!-- Hiiiii authorized {{  $page['props']['auth_user']['first_name'] }} -->

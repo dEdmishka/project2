@@ -1,5 +1,5 @@
 <script setup>
-import Layout from '@/Layout/Dashboard/Index.vue';
+import Layout from "@/Layout/Dashboard/Index.vue";
 
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,17 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog'
+
+import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -32,87 +43,31 @@ import {
     useVueTable,
 } from '@tanstack/vue-table'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref, watch, onBeforeMount, computed } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
 import { Plus } from 'lucide-vue-next';
+import { Link } from "@inertiajs/vue3"
 
-import CreateDialog from '@/components/admin/department/cud/CreateDialog.vue';
-import DeleteDialog from '@/components/admin/department/cud/DeleteDialog.vue';
-import EditDialog from '@/components/admin/department/cud/EditDialog.vue';
-
-import VersionSwitcher from "@/components/blocks/VersionSwitcher.vue"
+import CreateDialog from '@/Pages/Account/Patient/Procedure/CreateDialog.vue';
+import { dayName } from '@/helper';
 
 const props = defineProps({
+    user: Object,
     data: Array,
-    centers: Array,
-    departmentTypes: Array,
     main_url: String,
 })
 
-const data = computed(() => props.data);
+const data = ref(props.data);
 const currentCell = ref();
-const centerId = ref(localStorage.getItem('selectedCenterId'));
-
-const getData = () => {
-    let params = buildParams();
-
-    router.visit(props.main_url, {
-        only: ['data'],
-        data: params,
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: () => {
-            // console.log('it works')
-        }
-    })
-}
-
-const selectCenter = (center) => {
-    centerId.value = center.id
-    localStorage.setItem('selectedCenterId', center.id)
-    getData()
-}
-
-const buildParams = () => {
-    let params = {};
-    if (centerId.value) params.center = centerId.value
-    return params;
-}
-
-onBeforeMount(() => {
-    getData()
-})
 
 const createDialog = ref(false);
-const editDialog = ref(false);
-const deleteDialog = ref(false);
-
 
 const showCreateDialog = () => {
     createDialog.value = true;
 };
-const showEditDialog = () => {
-    editDialog.value = true;
-};
-const showDeleteDialog = () => {
-    deleteDialog.value = true;
-};
-
-const updateData = (newData) => {
-    data.value = newData;
-}
 
 const closeCreateDialog = () => {
     createDialog.value = false;
-};
-
-const closeEditDialog = () => {
-    editDialog.value = false;
-};
-
-const closeDeleteDialog = () => {
-    deleteDialog.value = false;
 };
 
 const setCurrentCell = (editData) => {
@@ -121,41 +76,13 @@ const setCurrentCell = (editData) => {
 
 const columns = [
     {
-        id: 'select',
-        header: ({ table }) => h(Checkbox, {
-            'modelValue': table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate'),
-            'onUpdate:modelValue': value => table.toggleAllPageRowsSelected(!!value),
-            'ariaLabel': 'Select all',
-        }),
-        cell: ({ row }) => h(Checkbox, {
-            'modelValue': row.getIsSelected(),
-            'onUpdate:modelValue': value => row.toggleSelected(!!value),
-            'ariaLabel': 'Select row',
-        }),
-        enableSorting: false,
+        id: 'actions',
         enableHiding: false,
-    },
-    {
-        accessorKey: 'center',
-        accessorFn: row => row.center?.name ?? '—',
-        header: ({ column }) => {
-            return h(Button, {
-                variant: 'ghost',
-                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Center', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        cell: ({ row }) => {
+            const objData = row.original
+
+            return h('div', { class: 'grid py-4 px-2' }, h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Записатися!'))
         },
-        cell: ({ row }) => h('div', { class: '' }, row.getValue('center')),
-    },
-    {
-        accessorKey: 'departmentType',
-        accessorFn: row => row.departmentType?.type ?? '—',
-        header: ({ column }) => {
-            return h(Button, {
-                variant: 'ghost',
-                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Department Type', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
-        },
-        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('departmentType')),
     },
     {
         accessorKey: 'name',
@@ -178,28 +105,51 @@ const columns = [
         cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('description')),
     },
     {
-        accessorKey: 'floor',
+        accessorKey: 'duration',
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',
                 onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-            }, () => ['Floor', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+            }, () => ['Duration', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
         },
-        cell: ({ row }) => h('div', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('floor')),
+        cell: ({ row }) => h('div', { class: 'pl-2 max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, row.getValue('duration') + " minutes"),
     },
     {
-        id: 'actions',
-        enableHiding: false,
+        accessorKey: 'cost',
+        header: ({ column }) => {
+            return h(Button, {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+            }, () => ['Cost', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
+        },
         cell: ({ row }) => {
-            const objData = row.original
+            const amount = Number.parseFloat(row.getValue('cost'))
 
-            return h(DropdownAction, {
-                objData,
-                editDialog,
-                deleteDialog,
-                onExpand: row.toggleExpanded,
-                onCurrent: setCurrentCell,
-            })
+            const formatted = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'UAH',
+            }).format(amount)
+
+            return h('div', { class: 'font-medium' }, formatted)
+        },
+    },
+    {
+        accessorKey: 'wards',
+        header: () => h('div', { class: 'text-center' }, 'Wards'),
+        cell: ({ row }) => {
+            return h('div', { class: 'flex' }, row.getValue('wards').map(ward =>
+                h('p', { class: 'max-w-50 w-full text-ellipsis whitespace-nowrap overflow-hidden hover:whitespace-normal hover:overflow-visible' }, ward.ward_number))
+            );
+        },
+        filterFn: (row, columnId, filterValue) => {
+            const wards = row.getValue(columnId) || [];
+
+            if (!Array.isArray(wards)) return false;
+            if (!filterValue) return true;
+
+            return wards.some(ward =>
+                ward.ward_number.toLowerCase().includes(filterValue.toLowerCase())
+            );
         },
     },
 ]
@@ -244,13 +194,8 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            Departments
+            Procedures
         </template>
-        <div class="grid max-w-[275px]">
-            <VersionSwitcher @change="selectCenter" :versions="props.centers"
-                :default-version="props.centers[centerId - 1]" />
-        </div>
-        <!-- {{ $props?.centers }} -->
         <div class="">
             <div class="flex items-center py-4">
                 <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
@@ -274,10 +219,7 @@ watch(selectedField, (newField, oldField) => {
                         </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <Button class="ml-2" variant="outline" @click="showCreateDialog">
-                    <Plus class="h-5"></Plus>
-                    Create New
-                </Button>
+
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto">
@@ -297,6 +239,7 @@ watch(selectedField, (newField, oldField) => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
+
             <div class="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -349,13 +292,7 @@ watch(selectedField, (newField, oldField) => {
             </div>
         </div>
 
-        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers"
-            :departmentTypes="$page.props.departmentTypes" />
-        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
-            :mainUrl="$page.props.main_url" :centers="$page.props.centers"
-            :departmentTypes="$page.props.departmentTypes" />
-        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
-            v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
+        <CreateDialog :procedure="currentCell" :user="$page.props.user" @close="closeCreateDialog"
+            v-model:open="createDialog" :mainUrl="$page.props.main_url" />
     </Layout>
 </template>

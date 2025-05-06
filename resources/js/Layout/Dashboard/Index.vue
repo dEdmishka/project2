@@ -80,6 +80,12 @@ const components = {
 // })
 
 const isLoading = ref(false)
+const isSidebarOpen = ref(false)
+
+const toggleSidebar = () => {
+    isSidebarOpen.value = !isSidebarOpen.value
+    console.log('opened!')
+}
 
 onBeforeMount(() => {
     router.on('start', () => {
@@ -91,31 +97,34 @@ onBeforeMount(() => {
     })
 })
 
+import { cn } from '@/lib/utils';
 </script>
 
 <template>
     <Loader :show="isLoading" />
     <Toaster />
 
-    <SidebarProvider>
+    <SidebarProvider @update:open="toggleSidebar">
         <component :is="components[appSidebar]" v-if="appSidebar" />
         <!-- <AdminAppSidebar /> -->
-        <SidebarInset>
+        <SidebarInset :class="cn({ 'md:max-w-[calc(100dvw-17rem)]': !isSidebarOpen })">
             <header
-                class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                <div class="flex items-center gap-2 px-5">
+                class="flex h-16 shrink-0 items-center transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+                <div class="flex px-5">
                     <SidebarTrigger class="" />
                 </div>
-                <div class="ml-auto px-3">
+                <div class="ml-auto flex-1">
                     <!-- <AdminNavActions /> -->
                     <component :is="components[navActions]" v-if="navActions" />
                 </div>
             </header>
             <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                <div class="flex items-center">
-                    <h1 class="text-lg font-semibold md:text-2xl">
+                <div class="flex flex-col">
+                    <h1
+                        class="inline text-left font-bold text-2xl md:text-4xl py-2 bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
                         <slot name="title"></slot>
                     </h1>
+                    <Separator class="" />
                 </div>
                 <div>
                     <!-- <div class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"> -->

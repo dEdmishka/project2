@@ -33,6 +33,10 @@ const data = {
           title: "Чати",
           url: "/account/chat",
         },
+        {
+          title: "Повідомлення",
+          url: "/account/notifications",
+        },
       ],
     },
   ],

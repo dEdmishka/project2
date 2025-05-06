@@ -1,20 +1,10 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/Index.vue";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog'
-
-import {
-    Plus,
-    Trash
-} from 'lucide-vue-next'
 
 import { Link } from "@inertiajs/vue3"
+
+import CreateDialog from '@/Pages/Account/User/Center/CreateDialog.vue';
+
 import {
     Card,
     CardTitle,
@@ -52,6 +42,14 @@ const props = defineProps({
 })
 
 const center = ref(props.center)
+
+const createDialog = ref(false);
+const showCreateDialog = () => {
+    createDialog.value = true;
+};
+const closeCreateDialog = () => {
+    createDialog.value = false;
+};
 
 import {
     Medal,
@@ -112,46 +110,38 @@ const features = [
             </CardHeader>
             <CardContent class="grid grid-cols-2 gap-4">
                 <div class="grid">
-                    <CardDescription
-                        class="text-xl font-bold inline py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
+                    <CardDescription class="text-xl font-bold inline text-black">
                         {{ center.description }}
                     </CardDescription>
-                    <CardDescription
-                        class="text-xl font-bold inline py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-                        Пошта: <p
-                            class="inline bg-gradient-to-r from-[#e43333] via-[#f11f1f] to-[#d70303] text-transparent bg-clip-text">
+                    <CardDescription class="text-xl font-bold inline text-black">
+                        Пошта: <p class="inline italic">
                             {{ center.email }}</p>
                     </CardDescription>
-                    <CardDescription
-                        class="text-xl font-bold inline py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-                        Адреса: <p
-                            class="inline bg-gradient-to-r from-[#e43333] via-[#f11f1f] to-[#d70303] text-transparent bg-clip-text">
+                    <CardDescription class="text-xl font-bold inline text-black">
+                        Адреса: <p class="inline italic">
                             {{ center.address }}</p>
                     </CardDescription>
                     <!-- {{ center }} -->
-                    <CardDescription
-                        class="text-xl font-bold flex gap-2 py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-                        Телефон: <p v-for="(phone, index) in center.phone_numbers"
-                            class="inline bg-gradient-to-r from-[#e43333] via-[#f11f1f] to-[#d70303] text-transparent bg-clip-text">
+                    <CardDescription class="text-xl font-bold flex gap-2 text-black">
+                        Телефон: <p v-for="(phone, index) in center.phone_numbers" class="inline italic">
                             {{ phone.phone_number }}</p>
                     </CardDescription>
-                    <CardDescription
-                        class="text-xl capitalize font-bold flex gap-2 py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
+                    <CardDescription class="text-xl capitalize font-bold flex gap-2 text-black">
                         Соц. мережі: <a v-for="(link, index) in center.social_links" :href="link.url"
-                            class="inline bg-gradient-to-r from-[#e43333] via-[#f11f1f] to-[#d70303] text-transparent bg-clip-text">
+                            target="_blank" rel="noopener" class="inline italic underline text-blue-600 hover:text-blue-800">
                             {{ link.platform }}</a>
                     </CardDescription>
                     <div class="grid grid-cols-2">
                         <div class="col-span-1">
-                            <div class="text-start font-medium grid grid-cols-3 gap-4"
-                                v-for="(hour, index) in center.working_hours" :key="index">
-                                <p>{{ dayName(hour.day_of_week) }}</p>
-                                <p class="text-center">{{ hour.start_time ?? '--:--' }}</p>
-                                <p class="text-center">{{ hour.end_time ?? '--:--' }}</p>
+                            <div v-for="(hour, index) in center.working_hours" :key="index"
+                                :class="`text-start font-medium grid grid-cols-3 gap-4 ${hour.is_day_off ? 'text-gray-300' : ''}`">
+                                <p class="italic">{{ dayName(hour.day_of_week) }}</p>
+                                <p class="text-center">{{ hour.start_time ?? '00:00' }}</p>
+                                <p class="text-center">{{ hour.end_time ?? '00:00' }}</p>
                             </div>
                         </div>
                     </div>
-                    <CardFooter class="font-bold uppercase items-end p-0">
+                    <CardFooter class="font-bold uppercase items-end p-0 grid">
                         <Button class="cursor-pointer" @click="showCreateDialog">Хочу до
                             вас!</Button>
                     </CardFooter>
@@ -174,5 +164,8 @@ const features = [
                 </div>
             </CardContent>
         </Card>
+
+        <CreateDialog :center="center" :user="$page.props.user" @close="closeCreateDialog" v-model:open="createDialog"
+            :mainUrl="$page.props.main_url" />
     </Layout>
 </template>

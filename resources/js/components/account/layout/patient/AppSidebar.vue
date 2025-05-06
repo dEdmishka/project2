@@ -30,6 +30,10 @@ const data = {
           url: "/account/record",
         },
         {
+          title: "Процедури",
+          url: "/account/procedures",
+        },
+        {
           title: "Заплановані сеанси",
           url: "/account/appointments",
         },
@@ -46,12 +50,16 @@ const data = {
           url: "/account/documents",
         },
         {
-          title: "Повідомлення",
-          url: "/account/notifications",
-        },
-        {
           title: "Рахунок",
           url: "/account/billing",
+        },
+        {
+          title: "Чати",
+          url: "/account/chat",
+        },
+        {
+          title: "Повідомлення",
+          url: "/account/notifications",
         },
       ],
     },
@@ -70,7 +78,7 @@ const data = {
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
               <Link :href="item.url" class="font-medium">
-                {{ item.title }}
+              {{ item.title }}
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="gap-4">

@@ -36,52 +36,86 @@ import SheetDescription from '@/components/ui/sheet/SheetDescription.vue';
 
 const form = useForm({});
 
+
+const routeList = [
+    {
+        href: "/",
+        label: "Home",
+    },
+    {
+        href: "/about",
+        label: "About",
+    },
+    {
+        href: "/contacts",
+        label: "Contacts",
+    },
+    {
+        href: "/help",
+        label: "Help",
+    },
+];
+
 const logout = () => {
     form.post('/logout');
 }
 </script>
 
 <template>
-    <NavigationMenu class="">
-        <NavigationMenuList class="container h-14 px-4 flex justify-between">
-            <!-- <NavigationMenuItem class="font-bold flex items-center">
+    <NavigationMenu class="max-w-full">
+        <div class="container h-14 px-4 w-full flex justify-between gap-2">
+            <NavigationMenuItem class="font-bold flex justify-between">
                 <Link rel="noreferrer noopener" href="/" class="ml-2 font-bold text-xl flex">
-                <Github />
-                ShadcnUI/Vue
+                <div class="text-2xl font-bold my-auto">
+                    <h1 class="inline">
+                        <span
+                            class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                        <span
+                            class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                    </h1>
+                </div>
                 </Link>
-            </NavigationMenuItem> -->
+            </NavigationMenuItem>
 
             <!-- mobile -->
-            <span class="flex items-center md:hidden">
+            <span class="flex items-center xl:hidden">
                 <ThemeModeToggler />
 
                 <Sheet>
                     <SheetTrigger class="px-2">
-                        <Menu class="flex md:hidden h-5 w-5">
+                        <Menu class="flex xl:hidden h-5 w-5">
                             <span class="sr-only">Menu Icon</span>
                         </Menu>
                     </SheetTrigger>
 
                     <SheetContent side="left">
-                        <SheetHeader>
-                            <SheetTitle class="font-bold text-xl">
-                                Shadcn/Vue
-                            </SheetTitle>
-                        </SheetHeader>
-                        <!-- <nav class="flex flex-col justify-center items-center gap-2 mt-4">
-                            <Link v-for="route in routeList" :key="route.label" :href="route.href"
-                                rel="noreferrer noopener" :class="buttonVariants({ variant: 'ghost' })">
-                            {{ route.label }}
-                            </Link>
-                            <a rel="noreferrer noopener" href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-                                target="_blank" :class="`w-[110px] border ${buttonVariants({ variant: 'secondary' })}`">
-                                <Github class="mr-2 w-5 h-5" />
-                                Github
-                            </a>
-                        </nav> -->
-                        <SheetDescription>
-                            afafa
-                        </SheetDescription>
+                        <SheetTrigger class="px-2">
+                            <Menu class="flex xl:hidden h-5 w-5">
+                                <span class="sr-only">Menu Icon</span>
+                            </Menu>
+                        </SheetTrigger>
+
+                        <SheetContent side="left">
+                            <SheetHeader>
+                                <SheetTitle class="font-bold text-xl inline">
+                                    <span
+                                        class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                                    <span
+                                        class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                                </SheetTitle>
+                            </SheetHeader>
+                            <nav class="flex flex-col justify-center items-center gap-2 mt-4">
+                                <Link v-for="route in routeList" :key="route.label" :href="route.href"
+                                    rel="noreferrer noopener" :class="buttonVariants({ variant: 'ghost' })">
+                                {{ route.label }}
+                                </Link>
+                                <a rel="noreferrer noopener" href="https://github.com/dEdmishka" target="_blank"
+                                    :class="`w-[110px] border ${buttonVariants({ variant: 'secondary' })}`">
+                                    <Github class="mr-2 w-5 h-5" />
+                                    Github
+                                </a>
+                            </nav>
+                        </SheetContent>
                     </SheetContent>
                 </Sheet>
 
@@ -91,7 +125,7 @@ const logout = () => {
                             <MoreHorizontal />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent class="w-56 rounded-lg mr-4">
+                    <DropdownMenuContent class="w-56 rounded-xl mr-4">
                         <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem>
                                 <Link href="/account" class="flex gap-2 p-2">
@@ -125,7 +159,14 @@ const logout = () => {
                 </Link>
             </nav> -->
 
-            <div class="hidden md:flex items-center gap-2">
+            <nav class="hidden xl:flex flex-1 items-center justify-center gap-2">
+                <Link v-for="(route, i) in routeList" :key="i" :href="route.href" rel="noreferrer noopener"
+                    :class="`text-[17px] ${buttonVariants({ variant: 'ghost' })}`">
+                {{ route.label }}
+                </Link>
+            </nav>
+
+            <div class="hidden xl:flex items-center gap-2">
                 <a rel="noreferrer noopener" href="https://github.com/leoMirandaa/shadcn-landing-page.git"
                     target="_blank" :class="`border ${buttonVariants({ variant: 'secondary' })}`">
                     <Github class="mr-2 w-5 h-5" />
@@ -139,7 +180,7 @@ const logout = () => {
                             <MoreHorizontal />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent class="w-56 rounded-lg mr-4">
+                    <DropdownMenuContent class="w-56 rounded-xl mr-4">
                         <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem>
                                 <Link href="/account" class="flex gap-2 p-2">
@@ -164,6 +205,6 @@ const logout = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-        </NavigationMenuList>
+        </div>
     </NavigationMenu>
 </template>

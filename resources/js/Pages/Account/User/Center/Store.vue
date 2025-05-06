@@ -167,7 +167,7 @@ function selectUser(user) {
 
 <template>
   <Layout>
-    <div class="w-[calc(100dvw-325px)]">
+    <div class="">
       <h1 class="text-lg font-semibold md:text-2xl">
         Chat
       </h1>

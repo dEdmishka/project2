@@ -46,12 +46,16 @@ const data = {
           url: "/account/documents",
         },
         {
-          title: "Повідомлення",
-          url: "/account/notifications",
-        },
-        {
           title: "Зарплата",
           url: "/account/billing",
+        },
+        {
+          title: "Чати",
+          url: "/account/chat",
+        },
+        {
+          title: "Повідомлення",
+          url: "/account/notifications",
         },
       ],
     },
