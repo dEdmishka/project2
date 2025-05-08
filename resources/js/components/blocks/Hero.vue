@@ -162,18 +162,12 @@ const features = [
           delay: 0.3
         }
       }">
-        <Link href="/signup" :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'default' })}`">Signup</Link>
+        <motion.Link href="/signup" :class="`cursor-pointer w-full md:w-1/3 ${buttonVariants({ variant: 'default' })}`"
+          :whileHover="{ scale: 1.05 }">Signup</motion.Link>
 
-        <Link href="/login" :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`">Login</Link>
-        <!-- <Link
-            rel="noreferrer noopener"
-            href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-            target="_blank"
-            :class="`w-full md:w-1/3 ${buttonVariants({variant: 'outline'})}`"
-          >
-            Github Repository
-            <Github class="ml-2 w-5 h-5" />
-          </Link> -->
+        <motion.Link href="/login" :class="`cursor-pointer w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`"
+          :whileHover="{ scale: 1.05 }">Login
+        </motion.Link>
       </motion.div>
 
       <motion.div class="space-y-4 md:space-y-0 md:space-x-4 md:px-4" :animate="{
@@ -185,7 +179,8 @@ const features = [
           delay: 0.3
         }
       }">
-        <Link href="/contacts" :class="`w-full md:w-2/3 ${buttonVariants({ variant: 'outline' })}`">Our contacts</Link>
+        <motion.Link href="/contacts" :class="`cursor-pointer w-full md:w-2/3 ${buttonVariants({ variant: 'outline' })}`"
+          :whileHover="{ scale: 1.05 }">Our contacts</motion.Link>
       </motion.div>
     </div>
 
@@ -195,7 +190,8 @@ const features = [
       </div>
       <div class="text-2sm sm:text-1xl font-bold">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50" :animate=feature.animation :whilePress="{ scale: 1.05 }">
+          <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50" :animate=feature.animation
+            :whilePress="{ scale: 1.05 }">
             <Link :href="feature.href">
             <CardHeader>
               <CardTitle class="grid gap-2 place-items-center">

@@ -98,6 +98,7 @@ onBeforeMount(() => {
 })
 
 import { cn } from '@/lib/utils';
+import { motion } from 'motion-v'
 </script>
 
 <template>
@@ -119,13 +120,21 @@ import { cn } from '@/lib/utils';
                 </div>
             </header>
             <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                <div class="flex flex-col">
+                <motion.div class="flex flex-col" :animate="{
+                    opacity: [0, 1],
+                    x: [50, 0],
+                    transition: {
+                        type: 'linear',
+                        duration: 0.5,
+                        delay: 0.05
+                    }
+                }">
                     <h1
                         class="inline text-left font-bold text-2xl md:text-4xl py-2 bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
                         <slot name="title"></slot>
                     </h1>
                     <Separator class="" />
-                </div>
+                </motion.div>
                 <div>
                     <!-- <div class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"> -->
                     <slot />

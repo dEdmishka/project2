@@ -6,12 +6,22 @@ import {
     Github
 } from 'lucide-vue-next'
 import ContactForm from "./ContactForm.vue";
+
+import { motion } from 'motion-v'
 </script>
 
 <template>
     <section class="grid lg:grid-cols-2 place-items-center py-20 md:py-40 gap-10 px-4">
         <div class="text-center lg:text-start space-y-6">
-            <div class="text-5xl md:text-6xl font-bold">
+            <motion.div class="text-5xl md:text-6xl font-bold" :animate="{
+                opacity: [0, 1],
+                y: [10, 0],
+                transition: {
+                    type: 'spring',
+                    duration: 2,
+                    delay: 0.05
+                }
+            }">
                 <h1 class="inline">
                     <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
                         Contact
@@ -23,15 +33,31 @@ import ContactForm from "./ContactForm.vue";
                         Us
                     </span>
                 </h2>
-            </div>
+            </motion.div>
 
-            <p class="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
+            <motion.p class="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0" :animate="{
+                opacity: [0, 1],
+                x: [100, 0],
+                transition: {
+                    type: 'spring',
+                    duration: 2,
+                    delay: 0.05
+                }
+            }">
                 Зверніться до нас у будь-який момент!
                 <br />
                 Вкажіть тему Вашого звернення та зміст у формі, або напишіть нам в особисті!
-            </p>
+            </motion.p>
 
-            <div class="space-y-6 md:space-y-0 md:space-x-4">
+            <motion.div class="space-y-6 md:space-y-0 md:space-x-4" :animate="{
+                opacity: [0, 1],
+                x: [-100, 0],
+                transition: {
+                    type: 'spring',
+                    duration: 2,
+                    delay: 0.3
+                }
+            }">
                 <Link rel="noreferrer noopener" href="https://github.com/dEdmishka" target="_blank"
                     :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`">
                 Github Repository
@@ -42,7 +68,7 @@ import ContactForm from "./ContactForm.vue";
                 Telegram
                 <Send class="ml-2 w-5 h-5" />
                 </Link>
-            </div>
+            </motion.div>
         </div>
         <ContactForm />
     </section>

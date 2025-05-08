@@ -9,6 +9,8 @@ import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+import { motion } from 'motion-v'
+
 const form = useForm({
     email: '',
     description: '',
@@ -43,7 +45,15 @@ const submit = () => {
 </script>
 
 <template>
-    <section class="grid grid-cols-1 py-20 gap-10 px-4 w-full">
+    <motion.section class="grid grid-cols-1 py-20 gap-10 px-4 w-full" :animate="{
+        opacity: [0, 1],
+        x: [100, 0],
+        transition: {
+          type: 'spring',
+          duration: 2,
+          delay: 1
+        }
+      }">
         <div class="text-center lg:text-start space-y-6">
             <div class="grid grid-cols-1 gap-4">
                 <div class="grid items-center gap-1">
@@ -65,5 +75,5 @@ const submit = () => {
                 Надіслати
             </Button>
         </div>
-    </section>
+    </motion.section>
 </template>

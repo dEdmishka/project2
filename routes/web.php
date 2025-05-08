@@ -1,13 +1,26 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\Pages\AboutController;
+use App\Http\Controllers\Pages\ContactsController;
+use App\Http\Controllers\Pages\HelpController;
+use App\Http\Controllers\Pages\HomeController;
+use App\Http\Controllers\Pages\RoadmapController;
+
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AuthController;
 use App\Http\Controllers\Account\CenterController;
 use App\Http\Controllers\Account\ProcedureController;
 use App\Http\Controllers\Account\AppointmentController;
+use App\Http\Controllers\Account\BillingController;
 use App\Http\Controllers\Account\ChatController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Account\DocumentController;
+use App\Http\Controllers\Account\NotificationController;
+use App\Http\Controllers\Account\PatientController;
+use App\Http\Controllers\Account\ScheduleController;
+use App\Http\Controllers\Account\TreatmentController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ProcedureController as AdminProcedureController;
@@ -17,10 +30,7 @@ use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\StaffController as AdminStaffController;
 use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\Admin\WardController as AdminWardController;
-use App\Http\Controllers\Pages\ContactsController;
-use App\Http\Controllers\Pages\HelpController;
-use App\Http\Controllers\Pages\HomeController;
-use App\Http\Controllers\Pages\RoadmapController;
+
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -66,6 +76,22 @@ Route::group([], function () {
             Route::post('/procedures', [ProcedureController::class, 'store'])->name('account.procedure.store');
 
             Route::get('/appointments', [AppointmentController::class, 'index'])->name('account.appointment');
+
+            Route::get('/patients', [PatientController::class, 'index'])->name('account.patient');
+
+            Route::get('/treatments', [TreatmentController::class, 'index'])->name('account.treatment');
+
+            Route::get('/billing', [BillingController::class, 'index'])->name('account.billing');
+
+            Route::get('/documents', [DocumentController::class, 'index'])->name('account.document');
+
+            Route::get('/medcard', [DocumentController::class, 'medcard'])->name('account.document.medcard');
+
+            Route::get('/diagnosis', [DocumentController::class, 'diagnosis'])->name('account.document.diagnosis');
+
+            Route::get('/schedule', [ScheduleController::class, 'index'])->name('account.schedule');
+
+            Route::get('/notifications', [NotificationController::class, 'index'])->name('account.notification');
         });
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');

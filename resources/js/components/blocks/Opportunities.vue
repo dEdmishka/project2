@@ -61,9 +61,11 @@ const features = [
         <CardContent class="text-2xl md:text-3xl font-bold">
           <p>{{ feature.description }}</p>
         </CardContent>
-        <CardFooter class="grid grid-cols-4 gap-8 items-center font-bold uppercase">
-          <Link :href="feature.href">Details</Link>
-          <MoveRight class="h-4 w-4 inline-block" />
+        <CardFooter class="grid grid-cols-2 gap-8 items-center font-bold uppercase">
+          <div>
+            <Link :href="feature.href" class="a-animate">Details</Link>
+            <MoveRight class="ml-2 h-4 w-4 inline-block" />
+          </div>
         </CardFooter>
       </Card>
     </div>

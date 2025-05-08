@@ -52,7 +52,7 @@ const submit = () => {
                     <div class="grid gap-2">
                         <div class="flex items-center">
                             <Label for="password">Password</Label>
-                            <a href="#" class="ml-auto inline-block text-sm underline">
+                            <a href="#" class="ml-auto inline-block text-sm a-animate">
                                 Forgot your password?
                             </a>
                         </div>
@@ -67,7 +67,7 @@ const submit = () => {
                 </div>
                 <div class="mt-4 text-center text-sm">
                     Don't have an account?
-                    <Link href="/signup" class="underline">
+                    <Link href="/signup" class="a-animate">
                     Sign up
                     </Link>
                 </div>

@@ -22,20 +22,20 @@ import { Link } from "@inertiajs/vue3"
             <div class="flex flex-col gap-2">
                 <h3 class="font-bold text-lg">Follow US</h3>
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Github
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
-                        Twitter
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
+                        Instagram
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
-                        Dribbble
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
+                        Telegram
                     </a>
                 </div>
             </div>
@@ -43,19 +43,19 @@ import { Link } from "@inertiajs/vue3"
             <div class="flex flex-col gap-2">
                 <h3 class="font-bold text-lg">Platforms</h3>
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Web
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Mobile
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Desktop
                     </a>
                 </div>
@@ -64,19 +64,19 @@ import { Link } from "@inertiajs/vue3"
             <div class="flex flex-col gap-2">
                 <h3 class="font-bold text-lg">About</h3>
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Features
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Pricing
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         FAQ
                     </a>
                 </div>
@@ -85,19 +85,19 @@ import { Link } from "@inertiajs/vue3"
             <div class="flex flex-col gap-2">
                 <h3 class="font-bold text-lg">Community</h3>
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Youtube
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Discord
                     </a>
                 </div>
 
                 <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100">
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
                         Twitch
                     </a>
                 </div>
@@ -106,10 +106,10 @@ import { Link } from "@inertiajs/vue3"
 
         <section class="container pb-14 text-center">
             <h3>
-                &copy; 2024 Landing page made by{{ " " }}
+                &copy; 2025 Landing page made by{{ " " }}
                 <a rel="noreferrer noopener" target="_blank" href="https://www.linkedin.com/in/leopoldo-miranda/"
-                    class="text-primary transition-all border-primary hover:border-b-2">
-                    Leo Miranda
+                    class="text-primary transition-all border-primary hover:border-b-2 a-animate">
+                    Melnyk Mykhailo
                 </a>
             </h3>
         </section>

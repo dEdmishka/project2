@@ -1,6 +1,5 @@
 <script setup>
 import Layout from '@/Layout/Dashboard/Index.vue';
-
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -12,18 +11,13 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -42,11 +36,10 @@ import {
     getSortedRowModel,
     useVueTable,
 } from '@tanstack/vue-table'
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { h, ref, watch, onBeforeMount, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
-import { Plus } from 'lucide-vue-next';
+import { Plus, ArrowUpDown, ChevronDown, ChevronsRight, ChevronsLeft } from 'lucide-vue-next';
 
 import CreateDialog from '@/components/admin/ward/cud/CreateDialog.vue';
 import DeleteDialog from '@/components/admin/ward/cud/DeleteDialog.vue';
@@ -253,6 +246,22 @@ const table = useVueTable({
     },
 })
 
+import { motion } from 'motion-v'
+
+const INITIAL_PAGE_INDEX = 0
+const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1)
+const pageSizes = [5, 10, 20, 30, 40, 50]
+
+const handleGoToPage = (e) => {
+    const page = e ? Number(e) - 1 : 0
+    goToPageNumber.value = page + 1
+    table.setPageIndex(page)
+}
+
+const handlePageSizeChange = (e) => {
+    table.setPageSize(Number(e))
+}
+
 const selectedField = ref('name')
 
 watch(selectedField, (newField, oldField) => {
@@ -331,7 +340,15 @@ watch(selectedField, (newField, oldField) => {
                     </TableHeader>
                     <TableBody>
                         <template v-if="table.getRowModel().rows?.length">
-                            <template v-for="row in table.getRowModel().rows" :key="row.id">
+                            <motion.template v-for="(row, index) in table.getRowModel().rows" :key="row.id" :animate="{
+                                opacity: [0, 1],
+                                y: [100, 0],
+                                transition: {
+                                    type: 'linear',
+                                    duration: 1,
+                                    delay: 0.1 + 0.05 * index
+                                }
+                            }">
                                 <TableRow :data-state="row.getIsSelected() && 'selected'">
                                     <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
                                         <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
@@ -342,7 +359,7 @@ watch(selectedField, (newField, oldField) => {
                                         {{ JSON.stringify(row.original) }}
                                     </TableCell>
                                 </TableRow>
-                            </template>
+                            </motion.template>
                         </template>
 
                         <TableRow v-else>
@@ -359,13 +376,48 @@ watch(selectedField, (newField, oldField) => {
                     {{ table.getFilteredSelectedRowModel().rows.length }} of
                     {{ table.getFilteredRowModel().rows.length }} row(s) selected.
                 </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="flex items-center gap-1">
+                            <div>Page</div>
+                            <strong>
+                                {{ table.getState().pagination.pageIndex + 1 }} of
+                                {{ table.getPageCount() }}
+                            </strong>
+                        </span>
+                        <span class="flex items-center gap-1">
+                            | Go to page:
+                            <Input type="number" :min="1" :max="table.getPageCount()" v-model="goToPageNumber"
+                                @update:modelValue="handleGoToPage" class="w-16" />
+                        </span>
+                        <Select v-model="table.getState().pagination.pageSize"
+                            @update:modelValue="handlePageSizeChange">
+                            <SelectTrigger class="w-[180px]">
+                                <SelectValue placeholder="Select a pagesize" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem :key="pageSize" :value="pageSize" v-for="pageSize in pageSizes">
+                                    Show {{ pageSize }}
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
                 <div class="space-x-2">
+                    <Button variant="outline" size="sm" @click="() => table.setPageIndex(0)"
+                        :disabled="!table.getCanPreviousPage()">
+                        <ChevronsLeft class="h-4 w-4" />
+                    </Button>
                     <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
                         @click="table.previousPage()">
                         Previous
                     </Button>
                     <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()">
                         Next
+                    </Button>
+                    <Button variant="outline" size="sm" @click="() => table.setPageIndex(table.getPageCount() - 1)"
+                        :disabled="!table.getCanNextPage()">
+                        <ChevronsRight class="h-4 w-4" />
                     </Button>
                 </div>
             </div>

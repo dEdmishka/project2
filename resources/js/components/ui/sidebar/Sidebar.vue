@@ -18,6 +18,8 @@ const props = defineProps({
 });
 
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
+
+import { motion } from 'motion-v'
 </script>
 
 <template>
@@ -61,7 +63,7 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
     </SheetContent>
   </Sheet>
 
-  <div
+  <motion.div
     v-else
     class="group peer text-sidebar-foreground hidden md:block"
     data-slot="sidebar"
@@ -69,6 +71,15 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
     :data-collapsible="state === 'collapsed' ? collapsible : ''"
     :data-variant="variant"
     :data-side="side"
+    :animate="{
+            opacity: [0, 1],
+            x: [-50, 0],
+            transition: {
+                type: 'spring',
+                duration: 1,
+                delay: 0.15
+            }
+        }"
   >
     <!-- This is what handles the sidebar gap on desktop  -->
     <div
@@ -106,5 +117,5 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
         <slot />
       </div>
     </div>
-  </div>
+  </motion.div>
 </template>

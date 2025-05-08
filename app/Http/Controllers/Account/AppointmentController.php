@@ -50,6 +50,39 @@ class AppointmentController extends Controller
         }
 
         if ($user->is_staff) {
+            $staffId = $user->staff->id;
+            $centerId = $user->staff->center_id;
+
+            $appointments = Appointment::with([
+                'ward.procedure',
+                'patient.user',
+                'staff.user',
+            ])
+                ->whereHas('staff', function ($query) use ($staffId) {
+                    $query->where('staff.id', $staffId);
+                })
+                ->whereHas('patient', function ($query) use ($centerId) {
+                    $query->where('center_id', $centerId);
+                })
+                ->get();
+
+            $appointments = $appointments->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'time' => $item->time,
+                    'status' => $item->status,
+                    'notes' => $item->notes,
+                    'patient' => $item->patient,
+                    'staff' => $item->staff,
+                    'ward' => $item->ward,
+                ];
+            });
+
+            return Inertia::render('Account/Staff/Appointment/Index', [
+                'user' => $user,
+                'data' => $appointments,
+                'main_url' => route('account.appointment'),
+            ]);
         }
 
         return redirect()->back();

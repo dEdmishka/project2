@@ -79,7 +79,7 @@ const submit = () => {
                 </div>
                 <div class="mt-4 text-center text-sm">
                     Already have an account?
-                    <Link href="/login" class="underline">
+                    <Link href="/login" class="a-animate">
                         Sign in
                     </Link>
                 </div>

@@ -3,6 +3,44 @@ import Layout from '@/Layout/App.vue'
 import RoadmapTitle from '@/components/blocks/roadmap/RoadmapTitle.vue'
 import RoadmapCard from '@/components/blocks/roadmap/RoadmapCard.vue'
 
+const roadmapAuth = [
+  {
+    title: 'Крок 1',
+    subtitle: 'Зайдіть в особистий кабінет',
+    description: 'Вже зареєстровані? Чудово! Тоді ви на один крок менше до Вашого призначення! Перейдіть за посиланням нижче, після чого Ви опинитеся у вже знайомому Вам особистому кабінеті!',
+    href: '/account',
+    hreftitle: 'Перейти до кабінету',
+  },
+  {
+    title: 'Крок 2',
+    subtitle: 'Оберіть центр',
+    description: 'На сторінці особистого кабінету оберіть серед вкладок зліва посилання <Центри>. При натисненні на неї Ви потрапите на сторінку з усіма переліченими в системі центрами, і всі вони доступні для Вашого вибору! Оберіть свій, знайшовши його за адресою, та натисність на кнопку <Хочу до вас!>',
+    href: '/account/centers',
+    hreftitle: 'Обрати центр',
+  },
+  {
+    title: 'Крок 3',
+    subtitle: 'Завершіть реєстрацію',
+    description: 'Після натиснення на кнопку <Хочу до вас!>, Вам відкриється вікно з вказаним центром, та додатковими полями (такими, як Ваша адреса, номер телефону, тощо). Заповнивши ці поля, натисніть на кнопку <Зберегти>. Після цього Ви опинитесь на у власному кабінеті, але вже пацієнтом, закріпленим за обраним Центром.',
+    href: '/account/centers',
+    hreftitle: 'Обрати центр',
+  },
+  {
+    title: 'Крок 4',
+    subtitle: 'Оберіть необхідну процедуру',
+    description: 'В особистому кабінеті серед вкладок зліва оберіть посилання <Процедури>, де Ви зможете знайти список доступних в центрі процедур, та обрати саме ту, яка Вас цікавить. При виборі Вам відкриється сторінка з можливістю записатися на неї. Оберіть час та лікаря, натисніть <Зберегти>, після чого сформується Ваш запис!',
+    href: '/account/procedures',
+    hreftitle: 'Обрати процедуру',
+  },
+  {
+    title: 'Крок 5',
+    subtitle: 'Будьте на зв`язку!',
+    description: 'Протягом певного часу з Вами вийдуть на зв`язок! Вас можуть попросити принести свої медичні дані з собою (якщо вони у фізичному вигляді), або самостійно внести їх до системи за такої можливості! Також Вас запитають за Ваші скарги чи побажання у особистому чаті з Вами! Ваш попередній запис ймовірно буде уточнено та доповнено, тому не переживайте, якщо він зміниться! Слідкуйте за оновленнями, Вам буде надіслано відповідне повідомлення!',
+    href: '/account/notifications',
+    hreftitle: 'Перевірити повідомлення',
+  },
+]
+
 const roadmap = [
   {
     title: 'Крок 1',
@@ -67,13 +105,11 @@ const roadmap = [
       </RoadmapTitle>
 
       <div v-if="$page['props']['auth_user']" class="flex flex-wrap justify-center text-start gap-10">
-        <!-- Hiiiii authorized {{  $page['props']['auth_user']['first_name'] }} -->
-        <RoadmapCard v-for="(item, index) in roadmap" :key="index" :title="item.title" :subtitle="item.subtitle"
+        <RoadmapCard v-for="(item, index) in roadmapAuth" :key="index" :title="item.title" :subtitle="item.subtitle"
           :description="item.description" :href="item.href" :hreftitle="item.hreftitle" />
       </div>
 
       <div v-else class="flex flex-wrap justify-center text-start gap-10">
-        <!-- Hiiiii unauthorized  -->
         <RoadmapCard v-for="(item, index) in roadmap" :key="index" :title="item.title" :subtitle="item.subtitle"
           :description="item.description" :href="item.href" :hreftitle="item.hreftitle" />
       </div>

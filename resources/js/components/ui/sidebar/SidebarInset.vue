@@ -4,10 +4,21 @@ import { cn } from '@/lib/utils';
 const props = defineProps({
   class: { type: null, required: false },
 });
+
+import { motion } from 'motion-v'
 </script>
 
 <template>
-  <main
+  <motion.main
+    :animate="{
+            opacity: [0, 1],
+            x: [50, 0],
+            transition: {
+                type: 'linear',
+                duration: 1,
+                delay: 0
+            }
+        }"
     data-slot="sidebar-inset"
     :class="
       cn(
@@ -18,5 +29,5 @@ const props = defineProps({
     "
   >
     <slot />
-  </main>
+  </motion.main>
 </template>

@@ -13,7 +13,7 @@ class RecordTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $types = ['Medical Card', 'Treatment Plan', 'Presription', 'Session Log', 'Incident', 'Intake Summary', 'Discharge Summary', 'Billing'];
+        $types = ['Medical Card', 'Treatment Plan', 'Presription', 'Session Log', 'Incident', 'Intake Summary', 'Discharge Summary', 'Billing', 'Medical Test'];
 
         foreach ($types as $type) {
             RecordType::create(['type' => $type]);

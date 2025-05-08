@@ -1,6 +1,5 @@
 <script setup>
 import Layout from '@/Layout/Dashboard/Index.vue';
-
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -10,18 +9,13 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -40,11 +34,9 @@ import {
     getSortedRowModel,
     useVueTable,
 } from '@tanstack/vue-table'
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
-import { h, ref } from 'vue'
+import { h, ref, watch } from 'vue'
 import DropdownAction from '@/components/blocks/DropdownAction.vue'
-import { Badge } from '@/components/ui/badge';
-import { Plus } from 'lucide-vue-next';
+import { Plus, ArrowUpDown, ChevronDown, ChevronsRight, ChevronsLeft } from 'lucide-vue-next';
 
 import CreateDialog from '@/components/admin/procedure/cud/CreateDialog.vue';
 import DeleteDialog from '@/components/admin/procedure/cud/DeleteDialog.vue';
@@ -64,12 +56,6 @@ const deleteDialog = ref(false);
 
 const showCreateDialog = () => {
     createDialog.value = true;
-};
-const showEditDialog = () => {
-    editDialog.value = true;
-};
-const showDeleteDialog = () => {
-    deleteDialog.value = true;
 };
 
 const updateData = (newData) => {
@@ -91,39 +77,6 @@ const closeDeleteDialog = () => {
 const setCurrentCell = (editData) => {
     currentCell.value = editData;
 }
-
-// const data = [
-// {
-//     id: 'm5gr84i9',
-//     amount: 316,
-//     status: 'success',
-//     email: 'ken99@yahoo.com',
-// },
-// {
-//     id: '3u1reuv4',
-//     amount: 242,
-//     status: 'success',
-//     email: 'Abe45@gmail.com',
-// },
-// {
-//     id: 'derv1ws0',
-//     amount: 837,
-//     status: 'processing',
-//     email: 'Monserrat44@gmail.com',
-// },
-// {
-//     id: '5kma53ae',
-//     amount: 874,
-//     status: 'success',
-//     email: 'Silas22@gmail.com',
-// },
-// {
-//     id: 'bhqecj4p',
-//     amount: 721,
-//     status: 'failed',
-//     email: 'carmella@hotmail.com',
-// },
-// ]
 
 const columns = [
     {
@@ -182,7 +135,7 @@ const columns = [
         cell: ({ row }) => {
             const status = row.getValue('is_active');
 
-            return h('div', { class: 'capitalize' },  status ? 'Active' : 'Inactive');
+            return h('div', { class: 'capitalize' }, status ? 'Active' : 'Inactive');
             // return h('div', { class: 'capitalize' }, h(Badge, !status ? { variant: 'outline' } : {}, status ? 'Active' : 'Inactive'));
             // return h('div', { class: 'capitalize' }, 'Inactive');
         },
@@ -231,6 +184,30 @@ const table = useVueTable({
         get expanded() { return expanded.value },
     },
 })
+
+import { motion } from 'motion-v'
+
+const INITIAL_PAGE_INDEX = 0
+const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1)
+const pageSizes = [5, 10, 20, 30, 40, 50]
+
+const handleGoToPage = (e) => {
+    const page = e ? Number(e) - 1 : 0
+    goToPageNumber.value = page + 1
+    table.setPageIndex(page)
+}
+
+const handlePageSizeChange = (e) => {
+    table.setPageSize(Number(e))
+}
+
+const selectedField = ref('notes')
+
+watch(selectedField, (newField, oldField) => {
+    if (oldField) {
+        table.getColumn(oldField)?.setFilterValue('');
+    }
+});
 </script>
 
 <template>
@@ -238,13 +215,29 @@ const table = useVueTable({
         <template #title>
             Procedures
         </template>
-        Procedures
-
-        <div class="w-full">
+        <div class="">
             <div class="flex items-center py-4">
-                <Input class="max-w-sm" placeholder="Filter names..."
-                    :model-value="table.getColumn('name')?.getFilterValue()"
-                    @update:model-value="table.getColumn('name')?.setFilterValue($event)" />
+                <Input class="max-w-[250px]" :placeholder="`Filter ${selectedField}...`"
+                    :model-value="table.getColumn(selectedField)?.getFilterValue()"
+                    @update:model-value="table.getColumn(selectedField)?.setFilterValue($event)" />
+                <DropdownMenu>
+                    <DropdownMenuTrigger as-child>
+                        <Button variant="outline" class="ml-2 min-w-[225px] justify-start">
+                            Filter By<span class="capitalize">{{ selectedField }}</span>
+                            <ChevronDown class="ml-2 h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuRadioGroup v-model="selectedField">
+                            <DropdownMenuRadioItem @select="(e) => { e.preventDefault() }"
+                                v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
+                                :key="column.id" :value="column.id"
+                                @update:model-value="() => selectedField = column.id" class="capitalize">
+                                {{ column.id }}
+                            </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <Button class="ml-2" variant="outline" @click="showCreateDialog">
                     <Plus class="h-5"></Plus>
                     Create New
@@ -257,7 +250,7 @@ const table = useVueTable({
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuCheckboxItem
+                        <DropdownMenuCheckboxItem @select="(e) => { e.preventDefault() }"
                             v-for="column in table.getAllColumns().filter((column) => column.getCanHide())"
                             :key="column.id" class="capitalize" :model-value="column.getIsVisible()"
                             @update:model-value="(value) => {
@@ -280,7 +273,15 @@ const table = useVueTable({
                     </TableHeader>
                     <TableBody>
                         <template v-if="table.getRowModel().rows?.length">
-                            <template v-for="row in table.getRowModel().rows" :key="row.id">
+                            <motion.template v-for="(row, index) in table.getRowModel().rows" :key="row.id" :animate="{
+                                opacity: [0, 1],
+                                y: [100, 0],
+                                transition: {
+                                    type: 'linear',
+                                    duration: 1,
+                                    delay: 0.1 + 0.05 * index
+                                }
+                            }">
                                 <TableRow :data-state="row.getIsSelected() && 'selected'">
                                     <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
                                         <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
@@ -291,7 +292,7 @@ const table = useVueTable({
                                         {{ JSON.stringify(row.original) }}
                                     </TableCell>
                                 </TableRow>
-                            </template>
+                            </motion.template>
                         </template>
 
                         <TableRow v-else>
@@ -308,7 +309,38 @@ const table = useVueTable({
                     {{ table.getFilteredSelectedRowModel().rows.length }} of
                     {{ table.getFilteredRowModel().rows.length }} row(s) selected.
                 </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="flex items-center gap-1">
+                            <div>Page</div>
+                            <strong>
+                                {{ table.getState().pagination.pageIndex + 1 }} of
+                                {{ table.getPageCount() }}
+                            </strong>
+                        </span>
+                        <span class="flex items-center gap-1">
+                            | Go to page:
+                            <Input type="number" :min="1" :max="table.getPageCount()" v-model="goToPageNumber"
+                                @update:modelValue="handleGoToPage" class="w-16" />
+                        </span>
+                        <Select v-model="table.getState().pagination.pageSize"
+                            @update:modelValue="handlePageSizeChange">
+                            <SelectTrigger class="w-[180px]">
+                                <SelectValue placeholder="Select a pagesize" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem :key="pageSize" :value="pageSize" v-for="pageSize in pageSizes">
+                                    Show {{ pageSize }}
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
                 <div class="space-x-2">
+                    <Button variant="outline" size="sm" @click="() => table.setPageIndex(0)"
+                        :disabled="!table.getCanPreviousPage()">
+                        <ChevronsLeft class="h-4 w-4" />
+                    </Button>
                     <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
                         @click="table.previousPage()">
                         Previous
@@ -316,13 +348,20 @@ const table = useVueTable({
                     <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()">
                         Next
                     </Button>
+                    <Button variant="outline" size="sm" @click="() => table.setPageIndex(table.getPageCount() - 1)"
+                        :disabled="!table.getCanNextPage()">
+                        <ChevronsRight class="h-4 w-4" />
+                    </Button>
                 </div>
             </div>
         </div>
 
-        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog" :mainUrl="$page.props.main_url"/>
-        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog" :mainUrl="$page.props.main_url"/>
-        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell" v-model:open="deleteDialog" :mainUrl="$page.props.main_url"/>
+        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
+            :mainUrl="$page.props.main_url" />
+        <EditDialog @update="updateData" @close="closeEditDialog" :currentCell="currentCell" v-model:open="editDialog"
+            :mainUrl="$page.props.main_url" />
+        <DeleteDialog @update="updateData" @close="closeDeleteDialog" :currentCell="currentCell"
+            v-model:open="deleteDialog" :mainUrl="$page.props.main_url" />
         <!-- <Dialog v-model:open="showDialog">
             <DialogTrigger as-child>
                 <Button variant="outline">

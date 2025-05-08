@@ -47,4 +47,9 @@ class Center extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    public function records()
+    {
+        return $this->morphMany(Record::class, 'recordable');
+    }
 }

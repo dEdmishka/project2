@@ -61,4 +61,14 @@ class Staff extends Model
     {
         return $this->morphMany(WorkingHour::class, 'working_hourable');
     }
+
+    public function records()
+    {
+        return $this->morphMany(Record::class, 'recordable');
+    }
+
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class);
+    }
 }

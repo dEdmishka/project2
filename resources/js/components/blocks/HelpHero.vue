@@ -9,6 +9,8 @@ import {
   Building2,
 } from 'lucide-vue-next'
 
+import { motion } from 'motion-v'
+
 const features = [
   {
     icon: CircleUserRound,
@@ -16,6 +18,15 @@ const features = [
     description:
       "Roadmap for patient",
     href: "/roadmap/patient",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 0.3
+      }
+    }
   },
   {
     icon: BookHeart,
@@ -23,6 +34,15 @@ const features = [
     description:
       "Roadmap for employee",
     href: "/roadmap/employee",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 0.8
+      }
+    }
   },
   {
     icon: ShieldUser,
@@ -30,6 +50,15 @@ const features = [
     description:
       "Roadmap for administrator",
     href: "/roadmap/administrator",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 1.3
+      }
+    }
   },
   {
     icon: Building2,
@@ -37,6 +66,15 @@ const features = [
     description:
       "Roadmap for center",
     href: "/roadmap/center",
+    animation: {
+      opacity: [0, 1],
+      y: [100, 0],
+      transition: {
+        type: 'spring',
+        duration: 2,
+        delay: 1.8
+      }
+    }
   },
 ];
 </script>
@@ -65,7 +103,8 @@ const features = [
 
       <div class="text-2sm sm:text-1xl font-bold text-center">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50">
+          <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50" :animate=feature.animation
+            :whilePress="{ scale: 1.05 }">
             <Link :href="feature.href">
             <CardHeader>
               <CardTitle class="grid gap-2 place-items-center">

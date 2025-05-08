@@ -44,4 +44,14 @@ class Patient extends Model
     {
         return $this->morphMany(SocialLink::class, 'social_linkable');
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function records()
+    {
+        return $this->morphMany(Record::class, 'recordable');
+    }
 }

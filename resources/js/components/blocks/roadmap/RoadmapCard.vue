@@ -40,8 +40,8 @@ defineProps({
             </CardDescription>
         </CardContent>
         <CardFooter v-if="href" class="flex gap-8 items-center font-bold uppercase">
-            <Link :href="href" class="bg-[#d7b703] text-transparent bg-clip-text">{{ hreftitle }}</Link>
-            <MoveRight class="h-8 w-8 inline-block stroke-[#d7b703]" />
+            <Link :href="href" class="a-animate">{{ hreftitle }}</Link>
+            <MoveRight class="h-8 w-8 inline-block]" />
         </CardFooter>
     </Card>
 </template>

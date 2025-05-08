@@ -27,7 +27,7 @@ const data = {
       items: [
         {
           title: "Медична картка",
-          url: "/account/record",
+          url: "/account/medcard",
         },
         {
           title: "Процедури",
@@ -43,7 +43,7 @@ const data = {
         },
         {
           title: "Призначене лікування",
-          url: "/account/prescriptions",
+          url: "/account/treatments",
         },
         {
           title: "Документи",

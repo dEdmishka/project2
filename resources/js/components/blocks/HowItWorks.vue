@@ -60,7 +60,7 @@ const features = [
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50">
+      <Card v-for="(feature, index) in features" :key=feature.title class="bg-muted/50" :whileHover="{ scale: 1.05 }">
         <CardHeader>
           <CardTitle class="grid gap-4 place-items-center">
             <component :is="feature.icon" />

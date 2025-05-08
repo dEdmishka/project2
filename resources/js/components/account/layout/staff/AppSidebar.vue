@@ -39,7 +39,7 @@ const data = {
         },
         {
           title: "Плани лікування",
-          url: "/account/prescriptions",
+          url: "/account/treatments",
         },
         {
           title: "Документи",

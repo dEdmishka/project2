@@ -1,8 +1,5 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/Index.vue";
-import { Separator } from "@/components/ui/separator";
-
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -96,6 +93,8 @@ const previewImage = (e) => {
   preview.value = URL.createObjectURL(file);
   form.image = file
 }
+
+import { motion } from 'motion-v'
 </script>
 
 <template>
@@ -103,13 +102,20 @@ const previewImage = (e) => {
     <template #title>
       Profile
     </template>
-    <div class=" text-start">
-      <!-- Hiiiii our user {{ $page['props']['user'] }} -->
+    <div class="text-start">
       <div class="grid gap-4 py-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="grid items-center gap-1">
             <Label for="File" class="ml-[32px] pb-2">Аватар</Label>
-            <div class="text-center relative">
+            <motion.div class="text-center relative" :animate="{
+              opacity: [0, 1],
+              x: [100, 0],
+              transition: {
+                type: 'linear',
+                duration: 1,
+                delay: 0.05
+              }
+            }">
               <Input id="image" type="file" @change="previewImage"
                 class="w-[120px] h-[120px] rounded-[100%] opacity-0 cursor-pointer p-0" required />
               <figure class="absolute w-[120px] min-h-[120px] top-0 left-0 pointer-events-none">
@@ -117,52 +123,100 @@ const previewImage = (e) => {
                   class="cursor-pointer w-[120px] h-[120px] rounded-[100%] border-1" />
                 <Camera v-if="!form.image" class="absolute top-0 mt-[32px] ml-[32px] w-[50px] h-[50px]" />
               </figure>
-            </div>
+            </motion.div>
 
             <span v-if="errors.image" class="text-red-600 text-sm">{{ errors.image }}</span>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.1
+            }
+          }">
             <Label for="first_name" class="">
               Ім'я
             </Label>
             <Input id="first_name" class="col-span-3" required v-model="form.first_name" />
             <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
-          </div>
-          <div class="grid items-center gap-1">
+          </motion.div>
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.15
+            }
+          }">
             <Label for="birth_date" class="text-right">
               Дата народження
             </Label>
             <Input id="birth_date" type="date" class="col-span-3" required v-model="form.birth_date" />
             <span v-if="errors.birth_date" class="text-red-600 text-sm">{{ errors.birth_date }}</span>
-          </div>
+          </motion.div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.2
+            }
+          }">
             <Label for="last_name" class="">
               Прізвище
             </Label>
             <Input id="last_name" class="col-span-3" required v-model="form.last_name" />
             <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
-          </div>
-          <div class="grid items-center gap-2">
+          </motion.div>
+          <motion.div class="grid items-center gap-2" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.25
+            }
+          }">
             <Label for="address" class="text-right">
               Ваша адреса
             </Label>
             <Input id="address" class="col-span-3" required v-model="form.address" />
             <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
-          </div>
+          </motion.div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.3
+            }
+          }">
             <Label for="email" class="">
               Пошта
             </Label>
             <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
             <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
-          </div>
-          <div class="grid items-center gap-1">
+          </motion.div>
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.35
+            }
+          }">
             <Label for="gender" class="text-right">
               Стать: {{ form.gender === 'M' ? 'Male' : 'Female' }}
             </Label>
@@ -176,10 +230,18 @@ const previewImage = (e) => {
                 <Label for="F">Female</Label>
               </div>
             </RadioGroup>
-          </div>
+          </motion.div>
         </div>
         <div class="grid grid-cols-2 gap-2 items-start">
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.4
+            }
+          }">
             <Label for="name" class="text-right">
               Соціальні мережі
             </Label>
@@ -201,9 +263,17 @@ const previewImage = (e) => {
               @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
               <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
             </Button>
-          </div>
+          </motion.div>
 
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.45
+            }
+          }">
             <Label for="name" class="text-right">
               Телефони
             </Label>
@@ -227,10 +297,18 @@ const previewImage = (e) => {
               @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
               <Plus class="h-4 w-4 mr-1" /> Додати Телефон
             </Button>
-          </div>
+          </motion.div>
         </div>
         <div class="grid grid-cols-1 gap-2">
-          <div class="space-y-1">
+          <motion.div class="space-y-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.5
+            }
+          }">
             <div v-for="(hour, index) in form.working_hours" :key="index"
               class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
               <div class="font-medium">{{ dayName(hour.day_of_week) }}</div>
@@ -249,11 +327,19 @@ const previewImage = (e) => {
                 <label :for="'day-off-' + index" class="text-sm">Вихідний</label>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="gap-12 grid grid-cols-2">
+        <motion.div class="gap-12 grid grid-cols-2" :animate="{
+          opacity: [0, 1],
+          y: [100, 0],
+          transition: {
+            type: 'linear',
+            duration: 1,
+            delay: 0.55
+          }
+        }">
           <Button type="submit" @click="submit">
             Зберегти
           </Button>
@@ -261,7 +347,7 @@ const previewImage = (e) => {
           <Button class="ml-auto" type="button" variant="outline" @click="form.reset()">
             Reset form
           </Button>
-        </div>
+        </motion.div>
       </div>
 
     </div>

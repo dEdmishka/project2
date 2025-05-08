@@ -1,14 +1,10 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/Index.vue";
-import { Separator } from "@/components/ui/separator";
-
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Camera, Trash, Plus } from 'lucide-vue-next'
-import { Textarea } from '@/components/ui/textarea'
 import { useForm } from '@inertiajs/vue3';
 import { h, ref, watch } from 'vue'
 import { toast } from 'vue-sonner';
@@ -87,7 +83,7 @@ const previewImage = (e) => {
   form.image = file
 }
 
-import { motion, AnimatePresence } from 'motion-v'
+import { motion } from 'motion-v'
 </script>
 
 <template>
@@ -96,12 +92,19 @@ import { motion, AnimatePresence } from 'motion-v'
       Profile
     </template>
     <div class=" text-start">
-      <!-- Hiiiii our user {{ $page['props']['user'] }} -->
       <div class="grid gap-4 py-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="grid items-center gap-1">
             <Label for="File" class="ml-[32px] pb-2">Аватар</Label>
-            <motion.div class="text-center relative" :initial="{ scale: 0 }" :animate="{ scale: 1 }" :transition="{ duration: 0.5 }">
+            <motion.div class="text-center relative" :animate="{
+              opacity: [0, 1],
+              x: [100, 0],
+              transition: {
+                type: 'linear',
+                duration: 1,
+                delay: 0.05
+              }
+            }">
               <Input id="image" type="file" @change="previewImage"
                 class="w-[120px] h-[120px] rounded-[100%] opacity-0 cursor-pointer p-0" required />
               <figure class="absolute w-[120px] min-h-[120px] top-0 left-0 pointer-events-none">
@@ -114,16 +117,30 @@ import { motion, AnimatePresence } from 'motion-v'
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <motion.div class="grid items-center gap-1" :initial="{ y: 10, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-            :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.5 }">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.1
+            }
+          }">
             <Label for="first_name" class="">
               Ім'я
             </Label>
             <Input id="first_name" class="col-span-3" required v-model="form.first_name" />
             <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
           </motion.div>
-          <motion.div class="grid items-center gap-1" :initial="{ y: 10, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-            :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.5 }">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.15
+            }
+          }">
             <Label for="birth_date" class="text-right">
               Дата народження
             </Label>
@@ -132,16 +149,30 @@ import { motion, AnimatePresence } from 'motion-v'
           </motion.div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <motion.div class="grid items-center gap-1" :initial="{ y: 10, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-            :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.5 }">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.2
+            }
+          }">
             <Label for="last_name" class="">
               Прізвище
             </Label>
             <Input id="last_name" class="col-span-3" required v-model="form.last_name" />
             <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
           </motion.div>
-          <motion.div class="grid items-center gap-1" :initial="{ y: 10, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-            :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.5 }">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.25
+            }
+          }">
             <Label for="address" class="text-right">
               Ваша адреса
             </Label>
@@ -150,16 +181,30 @@ import { motion, AnimatePresence } from 'motion-v'
           </motion.div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <motion.div class="grid items-center gap-1" :initial="{ y: 10, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-            :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.5 }">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.3
+            }
+          }">
             <Label for="email" class="">
               Пошта
             </Label>
             <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
             <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
           </motion.div>
-          <motion.div class="grid items-center gap-1" :initial="{ y: 10, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-            :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.5 }">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.35
+            }
+          }">
             <Label for="gender" class="text-right">
               Стать: {{ form.gender === 'M' ? 'Male' : 'Female' }}
             </Label>
@@ -176,65 +221,83 @@ import { motion, AnimatePresence } from 'motion-v'
           </motion.div>
         </div>
         <div class="grid grid-cols-2 gap-2 items-start">
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.4
+            }
+          }">
             <Label for="name" class="text-right">
               Соціальні мережі
             </Label>
             <div class="space-y-2">
-              <AnimatePresence>
-                <div v-for="(social, index) in form.social_links" :key="'social-' + index" class="flex gap-2">
-                  <motion.div class="flex flex-col items-start gap-1 flex-1" :initial="{ y: 10, opacity: 0 }"
-                    :animate="{ y: 0, opacity: 1 }" :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.2 }">
-                    <Input v-model="social.url" placeholder="Social URL (e.g. https://instagram.com/center)" />
-                    <span v-if="errors[`social_links.${index}.url`]" class="text-red-600 text-sm">
-                      {{ errors[`social_links.${index}.url`] }}
-                    </span>
-                  </motion.div>
-                  <Button variant="destructive" size="icon" @click.prevent="form.social_links.splice(index, 1)"
-                    v-if="form.social_links.length > 1">
-                    <Trash class="h-4 w-4" />
-                  </Button>
+              <div v-for="(social, index) in form.social_links" :key="'social-' + index" class="flex gap-2">
+                <div class="flex flex-col items-start gap-1 flex-1">
+                  <Input v-model="social.url" placeholder="Social URL (e.g. https://instagram.com/center)" />
+                  <span v-if="errors[`social_links.${index}.url`]" class="text-red-600 text-sm">
+                    {{ errors[`social_links.${index}.url`] }}
+                  </span>
                 </div>
-              </AnimatePresence>
+                <Button variant="destructive" size="icon" @click.prevent="form.social_links.splice(index, 1)"
+                  v-if="form.social_links.length > 1">
+                  <Trash class="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <Button type="button" variant="outline" class="mt-2"
               @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
               <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
             </Button>
-          </div>
+          </motion.div>
 
-          <div class="grid items-center gap-1">
+          <motion.div class="grid items-center gap-1" :animate="{
+            opacity: [0, 1],
+            y: [100, 0],
+            transition: {
+              type: 'linear',
+              duration: 1,
+              delay: 0.45
+            }
+          }">
             <Label for="name" class="text-right">
               Телефони
             </Label>
             <div class="space-y-2">
-              <AnimatePresence>
-                <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
-                  <motion.div class="flex flex-col items-start gap-1 flex-1" :initial="{ y: 10, opacity: 0 }"
-                    :animate="{ y: 0, opacity: 1 }" :exit="{ y: -10, opacity: 0 }" :transition="{ duration: 0.2 }">
-                    <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)"
-                      placeholder="(0XX)-XXX-XX-XX" />
-                    <span v-if="errors[`phones.${index}.phone_number`]" class="text-red-600 text-sm">
-                      {{ errors[`phones.${index}.phone_number`] }}
-                    </span>
-                  </motion.div>
-                  <Button variant="destructive" size="icon" @click.prevent="form.phones.splice(index, 1)"
-                    v-if="form.phones.length > 1">
-                    <Trash class="h-4 w-4" />
-                  </Button>
+              <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
+                <div class="flex flex-col items-start gap-1 flex-1">
+                  <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)"
+                    placeholder="(0XX)-XXX-XX-XX" />
+                  <span v-if="errors[`phones.${index}.phone_number`]" class="text-red-600 text-sm">
+                    {{ errors[`phones.${index}.phone_number`] }}
+                  </span>
                 </div>
-              </AnimatePresence>
+                <Button variant="destructive" size="icon" @click.prevent="form.phones.splice(index, 1)"
+                  v-if="form.phones.length > 1">
+                  <Trash class="h-4 w-4" />
+                </Button>
+              </div>
             </div>
 
             <Button type="button" variant="outline" class="mt-2"
               @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
               <Plus class="h-4 w-4 mr-1" /> Додати Телефон
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="gap-12 grid grid-cols-2">
+        <motion.div class="gap-12 grid grid-cols-2" :animate="{
+          opacity: [0, 1],
+          y: [100, 0],
+          transition: {
+            type: 'linear',
+            duration: 1,
+            delay: 0.5
+          }
+        }">
           <Button type="submit" @click="submit">
             Зберегти
           </Button>
@@ -242,7 +305,7 @@ import { motion, AnimatePresence } from 'motion-v'
           <Button class="ml-auto" type="button" variant="outline" @click="form.reset()">
             Reset form
           </Button>
-        </div>
+        </motion.div>
       </div>
 
     </div>
