@@ -11,10 +11,12 @@ use App\Models\Procedure;
 use App\Models\Record;
 use App\Models\RecordType;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -105,18 +107,46 @@ class DocumentController extends Controller
 
         if ($user->is_patient) {
             $patientId = $user->patient->id;
-            $centerId = $user->patient->center_id;
 
             $patient = Patient::with([
                 'user',
-                'records.recordType',
-                'records.documents'
+                'records.documents',
+                'records' => function ($query) {
+                    $query->whereHas('recordType', function ($q) {
+                        $q->where('type', 'Medical Card');
+                    });
+                }
             ])->findOrFail($patientId);
 
             return Inertia::render('Account/Patient/Medcard/Index', [
                 'user' => $user,
                 'data' => $patient,
-                'main_url' => route('account.document'),
+                'main_url' => route('account.document.medcard'),
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function showMedcard($patientId)
+    {
+        $user = Auth::user()->load('image');
+
+        if ($user->is_staff && $patientId) {
+            $patient = Patient::with([
+                'user',
+                'records.documents',
+                'records' => function ($query) {
+                    $query->whereHas('recordType', function ($q) {
+                        $q->where('type', 'Medical Card');
+                    });
+                }
+            ])->findOrFail($patientId);
+
+            return Inertia::render('Account/Staff/Medcard/Index', [
+                'user' => $user,
+                'data' => $patient,
+                'main_url' => route('account.document.medcard'),
             ]);
         }
 
@@ -140,44 +170,88 @@ class DocumentController extends Controller
                 }
 
                 DB::transaction(function () use ($patient, $request) {
-                    // Get or create 'Medical Card' record type
                     $recordType = RecordType::where('type', 'Medical Card')->firstOrFail();
 
-                    // Create a new medical card record
-                    $record = new Record([
+                    $record = Record::firstOrCreate([
+                        'recordable_id' => $patient->id,
+                        'recordable_type' => Patient::class,
                         'record_type_id' => $recordType->id,
                         'content' => 'Uploaded medical card file',
                     ]);
-                    $patient->records()->save($record); // recordable = Patient
 
-                    // Store file
-                    $path = $request->file('file')->store('documents/medical_cards', 'public');
+                    foreach ($record->documents as $document) {
+                        Storage::disk('public')->delete($document->file_path);
+                        $document->delete();
+                    }
 
-                    // Create Document record
+                    $fileName = $patient->user->first_name . '-' . $patient->user->last_name . '-' . $patient->id . '.' . $request->file('file')->getClientOriginalExtension();
+
+                    $filePath = $request->file('file')->storeAs('documents/medical_cards', $fileName, 'public');
+
                     $document = new Document([
-                        'path' => $path,
-                        'name' => $request->file('file')->getClientOriginalName(),
-                        'type' => $request->file('file')->getClientMimeType(),
+                        'file_path' => $filePath,
+                        'file_name' => $fileName,
+                        'file_type' => $request->file('file')->getClientMimeType(),
+                        'is_private' => false,
                     ]);
 
-                    $record->documents()->save($document); // documentable = Record
+                    $record->documents()->save($document);
                 });
 
                 return redirect()->back()->with('success', 'Medical card uploaded successfully!');
             }
 
             $validator = Validator::make($request->all(), [
-                'weight' => 'required|integer',
-                'height' => 'required|integer',
+                'weight' => 'required|string',
+                'height' => 'required|string',
+                'blood_type' => 'required|string',
+                'blood_pressure' => 'required|string',
             ]);
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            DB::transaction(function () use ($patient, $request) {});
+            DB::transaction(function () use ($patient, $request) {
+                $recordType = RecordType::where('type', 'Medical Card')->firstOrFail();
 
-            // return redirect()->back()->with(['data' => $record->load('documents'), 'success' => 'Medical card uploaded successfully!']);
+                $record = Record::firstOrCreate([
+                    'recordable_id' => $patient->id,
+                    'recordable_type' => Patient::class,
+                    'record_type_id' => $recordType->id,
+                    'content' => 'Uploaded medical card file',
+                ]);
+
+                foreach ($record->documents as $document) {
+                    Storage::disk('public')->delete($document->file_path);
+                    $document->delete();
+                }
+
+                $data = [
+                    'patient' => $patient,
+                    'weight' => $request->weight,
+                    'height' => $request->height,
+                    'blood_type' => $request->blood_type,
+                    'blood_pressure' => $request->blood_pressure,
+                ];
+
+                $pdf = PDF::loadView('pdf.medical_card', $data);
+
+                $fileName = $patient->user->first_name . '-' . $patient->user->last_name . '-' . $patient->id . '.pdf';
+                $filePath = 'documents/medical_cards' . $fileName;
+
+                Storage::disk('public')->put($filePath, $pdf->output(), 'public');
+
+                $document = new Document([
+                    'file_path' => $filePath,
+                    'file_name' => $fileName,
+                    'file_type' => 'application/pdf',
+                    'is_private' => false,
+                ]);
+
+                $record->documents()->save($document);
+            });
+
             return redirect()->back()->with('success', 'Medical card uploaded successfully!');
         }
 
@@ -196,8 +270,6 @@ class DocumentController extends Controller
                 'appointments',
                 'user',
             ])->where('center_id', $centerId)->get();
-
-            // dd($patients);
 
             $patients = $patients->map(function ($item) {
                 return [

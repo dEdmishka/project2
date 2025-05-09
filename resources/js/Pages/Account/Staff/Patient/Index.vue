@@ -68,15 +68,18 @@ const setCurrentCell = (editData) => {
 }
 
 const columns = [
-    // {
-    //     id: 'actions',
-    //     enableHiding: false,
-    //     cell: ({ row }) => {
-    //         const objData = row.original
+    {
+        id: 'actions',
+        enableHiding: false,
+        cell: ({ row }) => {
+            const objData = row.original
 
-    //         return h('div', { class: 'grid py-4 px-2' }, h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Записатися!'))
-    //     },
-    // },
+            return h('div', { class: 'grid gap-2 py-4 px-2' }, [
+                h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Медична картка'),
+                h(Button, { class: 'cursor-pointer', variant: 'outline', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Вступна інформація')
+            ])
+        },
+    },
     {
         accessorKey: 'first_name',
         header: ({ column }) => {

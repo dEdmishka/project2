@@ -1,22 +1,5 @@
 <script setup>
-// import { Link } from "@inertiajs/vue3"
-// import { buttonVariants } from "@/components/ui/button";
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import {
-//   Medal,
-//   Map,
-//   Plane,
-//   Gift,
-//   CircleUserRound,
-//   ShieldUser,
-//   BookHeart,
-//   Building2,
-// } from 'lucide-vue-next'
-
 import { motion } from 'motion-v'
-// import { animate, stagger } from "motion"
-// import { splitText } from "motion-plus"
 import { ref, reactive } from "vue"
 import { Upload, X, FileIcon } from 'lucide-vue-next'
 import { Progress } from '@/components/ui/progress'
@@ -67,10 +50,6 @@ function simulateUpload(index) {
     }
   }, 50)
 }
-
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 
 import { toast } from 'vue-sonner';
 import { useForm } from '@inertiajs/vue3';

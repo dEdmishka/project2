@@ -86,6 +86,8 @@ Route::group([], function () {
             Route::get('/documents', [DocumentController::class, 'index'])->name('account.document');
 
             Route::get('/medcard', [DocumentController::class, 'medcard'])->name('account.document.medcard');
+            Route::get('/medcard/{id}', [DocumentController::class, 'showMedcard'])->name('account.document.medcard.show');
+            Route::post('/medcard/{id}', [DocumentController::class, 'storeMedcard'])->name('account.document.medcard.store');
 
             Route::get('/diagnosis', [DocumentController::class, 'diagnosis'])->name('account.document.diagnosis');
 
