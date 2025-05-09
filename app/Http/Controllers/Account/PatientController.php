@@ -57,6 +57,8 @@ class PatientController extends Controller
                 'user' => $user,
                 'data' => $patients,
                 'main_url' => route('account.patient'),
+                'medcard_url' => route('account.document.medcard'),
+                'intake_url' => route('account.document.intake'),
             ]);
         }
 

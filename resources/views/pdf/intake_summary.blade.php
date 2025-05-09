@@ -36,15 +36,23 @@
 
 <body>
     <div class="header">
-        <h1>Medical Card</h1>
+        <h1>Intake summary</h1>
         <p>Patient: {{ $patient->user->first_name }} {{ $patient->user->last_name }}</p>
     </div>
 
     <div class="content">
-        <p><span class="label">Weight:</span> {{ $weight }}</p>
-        <p><span class="label">Height:</span> {{ $height }}</p>
-        <p><span class="label">Blood type:</span> {{ $blood_type }}</p>
-        <p><span class="label">Blood Pressure:</span> {{ $blood_pressure }}</p>
+        <p><span class="label">Patologies:</span> {{ $patologies }}</p>
+        <p><span class="label">Chronic diseases:</span> {{ $chronic_diseases }}</p>
+        <p><span class="label">Complaints:</span> {{ $complaints }}</p>
+        <p><span class="label">Awareness:</span> {{ $awareness }}</p>
+        <p><span class="label">Head:</span> {{ $head }}</p>
+        <p><span class="label">Limbs:</span> {{ $limbs }}</p>
+        <p><span class="label">Abdomen:</span> {{ $abdomen }}</p>
+        <p><span class="label">Skin:</span> {{ $skin }}</p>
+        <p><span class="label">Lymph nodes:</span> {{ $lymph_nodes }}</p>
+        <p><span class="label">Breathe:</span> {{ $breathe }}</p>
+        <p><span class="label">Blood pressure:</span> {{ $blood_pressure }}</p>
+        <p><span class="label">Heart rate:</span> {{ $heart_rate }}</p>
     </div>
 
     <div class="footer">

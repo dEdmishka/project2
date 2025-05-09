@@ -1,6 +1,6 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/Index.vue";
-
+import { Link } from "@inertiajs/vue3"
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -42,30 +42,15 @@ import {
 import { ArrowUpDown, ChevronDown, ChevronsRight, ChevronsLeft } from 'lucide-vue-next'
 import { h, ref, watch } from 'vue'
 
-import CreateDialog from '@/Pages/Account/Patient/Procedure/CreateDialog.vue';
-
 const props = defineProps({
     user: Object,
     data: Array,
     main_url: String,
+    medcard_url: String,
+    intake_url: String,
 })
 
 const data = ref(props.data);
-const currentCell = ref();
-
-const createDialog = ref(false);
-
-const showCreateDialog = () => {
-    createDialog.value = true;
-};
-
-const closeCreateDialog = () => {
-    createDialog.value = false;
-};
-
-const setCurrentCell = (editData) => {
-    currentCell.value = editData;
-}
 
 const columns = [
     {
@@ -75,8 +60,8 @@ const columns = [
             const objData = row.original
 
             return h('div', { class: 'grid gap-2 py-4 px-2' }, [
-                h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Медична картка'),
-                h(Button, { class: 'cursor-pointer', variant: 'outline', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Вступна інформація')
+                h(Button, { class: 'cursor-pointer' }, h(Link, { class: '', href: `${props.medcard_url}/${objData.id}` }, 'Медична картка')),
+                h(Button, { class: 'cursor-pointer', variant: 'outline' }, h(Link, { class: '', href: `${props.intake_url}/${objData.id}` }, 'Вступна інформація'))
             ])
         },
     },
@@ -394,10 +379,6 @@ watch(selectedField, (newField, oldField) => {
                     </Button>
                 </div>
             </div>
-
         </div>
-
-        <CreateDialog :procedure="currentCell" :user="$page.props.user" @close="closeCreateDialog"
-            v-model:open="createDialog" :mainUrl="$page.props.main_url" />
     </Layout>
 </template>

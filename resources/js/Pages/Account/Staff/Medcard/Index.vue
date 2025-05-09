@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FileText, Download, Plus } from 'lucide-vue-next'
 import { ref } from 'vue'
 
-import CreateDialog from '@/Pages/Account/Patient/Medcard/CreateDialog.vue';
+import CreateDialog from '@/Pages/Account/Staff/Medcard/CreateDialog.vue';
 
 const props = defineProps({
     user: Object,
@@ -24,6 +24,10 @@ const showCreateDialog = () => {
 const closeCreateDialog = () => {
     createDialog.value = false;
 };
+
+const updateData = (newData) => {
+    data.value = newData;
+}
 </script>
 
 <template>
@@ -53,7 +57,7 @@ const closeCreateDialog = () => {
                                 <FileText class="text-blue-500" />
                                 <span>{{ doc.file_name }}</span>
                             </div>
-                            <a :href="`/storage/${doc.file_path}`" :download
+                            <a :href="`/storage/${doc.file_path}`"
                                 class="text-blue-600 hover:underline flex items-center">
                                 <Download class="w-4 h-4 mr-1" /> View / Download
                             </a>
@@ -65,7 +69,7 @@ const closeCreateDialog = () => {
             <p v-else class="text-gray-500">No medical card record found for this patient.</p>
         </div>
 
-        <CreateDialog :patient="data" @close="closeCreateDialog" v-model:open="createDialog"
+        <CreateDialog @update="updateData" :patient="data" @close="closeCreateDialog" v-model:open="createDialog"
             :mainUrl="$page.props.main_url" />
     </Layout>
 </template>

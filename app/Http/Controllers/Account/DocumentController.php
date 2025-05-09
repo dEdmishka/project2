@@ -157,7 +157,7 @@ class DocumentController extends Controller
     {
         $user = Auth::user()->load('image');
 
-        if ($user->is_patient) {
+        if ($user->is_patient || $user->is_staff) {
             $patient = Patient::findOrFail($patientId);
 
             if ($request->hasFile('file')) {
@@ -172,12 +172,14 @@ class DocumentController extends Controller
                 DB::transaction(function () use ($patient, $request) {
                     $recordType = RecordType::where('type', 'Medical Card')->firstOrFail();
 
-                    $record = Record::firstOrCreate([
-                        'recordable_id' => $patient->id,
-                        'recordable_type' => Patient::class,
-                        'record_type_id' => $recordType->id,
-                        'content' => 'Uploaded medical card file',
-                    ]);
+                    $record = $patient->records()->firstOrCreate(
+                        [
+                            'record_type_id' => $recordType->id,
+                        ],
+                        [
+                            'content' => 'Uploaded medical card file',
+                        ]
+                    );
 
                     foreach ($record->documents as $document) {
                         Storage::disk('public')->delete($document->file_path);
@@ -198,7 +200,7 @@ class DocumentController extends Controller
                     $record->documents()->save($document);
                 });
 
-                return redirect()->back()->with('success', 'Medical card uploaded successfully!');
+                return redirect()->back()->with(['success' => 'Medical card uploaded successfully!', 'data' => $patient]);
             }
 
             $validator = Validator::make($request->all(), [
@@ -215,12 +217,14 @@ class DocumentController extends Controller
             DB::transaction(function () use ($patient, $request) {
                 $recordType = RecordType::where('type', 'Medical Card')->firstOrFail();
 
-                $record = Record::firstOrCreate([
-                    'recordable_id' => $patient->id,
-                    'recordable_type' => Patient::class,
-                    'record_type_id' => $recordType->id,
-                    'content' => 'Uploaded medical card file',
-                ]);
+                $record = $patient->records()->firstOrCreate(
+                    [
+                        'record_type_id' => $recordType->id,
+                    ],
+                    [
+                        'content' => 'Uploaded medical card file',
+                    ]
+                );
 
                 foreach ($record->documents as $document) {
                     Storage::disk('public')->delete($document->file_path);
@@ -238,7 +242,7 @@ class DocumentController extends Controller
                 $pdf = PDF::loadView('pdf.medical_card', $data);
 
                 $fileName = $patient->user->first_name . '-' . $patient->user->last_name . '-' . $patient->id . '.pdf';
-                $filePath = 'documents/medical_cards' . $fileName;
+                $filePath = 'documents/medical_cards/' . $fileName;
 
                 Storage::disk('public')->put($filePath, $pdf->output(), 'public');
 
@@ -253,6 +257,170 @@ class DocumentController extends Controller
             });
 
             return redirect()->back()->with('success', 'Medical card uploaded successfully!');
+        }
+
+        return redirect()->back();
+    }
+
+    public function intake()
+    {
+        $user = Auth::user()->load('image');
+
+        if ($user->is_patient) {
+            $patientId = $user->patient->id;
+
+            $patient = Patient::with([
+                'user',
+                'records.documents',
+                'records' => function ($query) {
+                    $query->whereHas('recordType', function ($q) {
+                        $q->where('type', 'Intake Summary');
+                    });
+                }
+            ])->findOrFail($patientId);
+
+            return Inertia::render('Account/Patient/Intake/Index', [
+                'user' => $user,
+                'data' => $patient,
+                'main_url' => route('account.document.intake'),
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function showIntake($patientId)
+    {
+        $user = Auth::user()->load('image');
+
+        if ($user->is_staff && $patientId) {
+            $patient = Patient::with([
+                'user',
+                'records.documents',
+                'records' => function ($query) {
+                    $query->whereHas('recordType', function ($q) {
+                        $q->where('type', 'Intake Summary');
+                    });
+                }
+            ])->findOrFail($patientId);
+
+            return Inertia::render('Account/Staff/Intake/Index', [
+                'user' => $user,
+                'data' => $patient,
+                'main_url' => route('account.document.intake'),
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function storeIntake(Request $request, $patientId)
+    {
+        $user = Auth::user()->load('image');
+
+        if ($user->is_staff) {
+            $patient = Patient::findOrFail($patientId);
+
+            if ($request->hasFile('file')) {
+                $validator = Validator::make($request->all(), [
+                    'file' => 'required|file|mimes:pdf,doc,docx|max:5120',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+
+                DB::transaction(function () use ($patient, $request) {
+                    $recordType = RecordType::where('type', 'Intake Summary')->firstOrFail();
+
+                    $record = $patient->records()->firstOrCreate(
+                        [
+                            'record_type_id' => $recordType->id,
+                        ],
+                        [
+                            'content' => 'Uploaded intake summary file',
+                        ]
+                    );
+
+                    foreach ($record->documents as $document) {
+                        Storage::disk('public')->delete($document->file_path);
+                        $document->delete();
+                    }
+
+                    $fileName = $patient->user->first_name . '-' . $patient->user->last_name . '-' . $patient->id . '.' . $request->file('file')->getClientOriginalExtension();
+
+                    $filePath = $request->file('file')->storeAs('documents/intake_summaries', $fileName, 'public');
+
+                    $document = new Document([
+                        'file_path' => $filePath,
+                        'file_name' => $fileName,
+                        'file_type' => $request->file('file')->getClientMimeType(),
+                        'is_private' => false,
+                    ]);
+
+                    $record->documents()->save($document);
+                });
+
+                return redirect()->back()->with('success', 'Intake summary uploaded successfully!');
+            }
+
+            // $validator = Validator::make($request->all(), []);
+
+            // if ($validator->fails()) {
+            //     return redirect()->back()->withErrors($validator)->withInput();
+            // }
+
+            DB::transaction(function () use ($patient, $request) {
+                $recordType = RecordType::where('type', 'Intake Summary')->firstOrFail();
+
+                $record = $patient->records()->firstOrCreate(
+                    [
+                        'record_type_id' => $recordType->id,
+                    ],
+                    [
+                        'content' => 'Uploaded intake summary file',
+                    ]
+                );
+
+                foreach ($record->documents as $document) {
+                    Storage::disk('public')->delete($document->file_path);
+                    $document->delete();
+                }
+
+                $data = [
+                    'patient' => $patient,
+                    'patologies' => $request->patologies,
+                    'chronic_diseases' => $request->chronic_diseases,
+                    'complaints' => $request->complaints,
+                    'awareness' => $request->awareness,
+                    'head' => $request->head,
+                    'limbs' => $request->limbs,
+                    'abdomen' => $request->abdomen,
+                    'skin' => $request->skin,
+                    'lymph_nodes' => $request->lymph_nodes,
+                    'breathe' => $request->breathe,
+                    'blood_pressure' => $request->blood_pressure,
+                    'heart_rate' => $request->heart_rate,
+                ];
+
+                $pdf = PDF::loadView('pdf.intake_summary', $data);
+
+                $fileName = $patient->user->first_name . '-' . $patient->user->last_name . '-' . $patient->id . '.pdf';
+                $filePath = 'documents/intake_summaries/' . $fileName;
+
+                Storage::disk('public')->put($filePath, $pdf->output(), 'public');
+
+                $document = new Document([
+                    'file_path' => $filePath,
+                    'file_name' => $fileName,
+                    'file_type' => 'application/pdf',
+                    'is_private' => false,
+                ]);
+
+                $record->documents()->save($document);
+            });
+
+            return redirect()->back()->with('success', 'Intake summary uploaded successfully!');
         }
 
         return redirect()->back();

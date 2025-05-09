@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FileText, Download, Plus } from 'lucide-vue-next'
 import { ref } from 'vue'
 
-import CreateDialog from '@/Pages/Account/Patient/Medcard/CreateDialog.vue';
+import CreateDialog from '@/Pages/Account/Staff/Intake/CreateDialog.vue';
 
 const props = defineProps({
     user: Object,
@@ -33,20 +33,20 @@ const updateData = (newData) => {
 <template>
     <Layout>
         <template #title>
-            Медична картка
+            Вступна інформація
         </template>
         <div>
             <Button class="" variant="outline" @click="showCreateDialog">
                 <Plus class="h-5"></Plus>
-                Внести нову картку
+                Внести нові дані
             </Button>
         </div>
 
         <div class="grid py-6 space-y-6">
-            <h1 class="text-2xl font-bold">Medical Card for {{ data.user.first_name }} {{ data.user.last_name }}</h1>
+            <h1 class="text-2xl font-bold">Intake summary for {{ data.user.first_name }} {{ data.user.last_name }}</h1>
             <Card v-if="data?.records[0]?.documents">
                 <CardHeader>
-                    <CardTitle>Medical Card Record</CardTitle>
+                    <CardTitle>Intake summary Record</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <p class="text-gray-700 mb-4">{{ data.records[0].content }}</p>
@@ -66,7 +66,7 @@ const updateData = (newData) => {
                     <p v-else class="text-gray-500">No documents uploaded yet.</p>
                 </CardContent>
             </Card>
-            <p v-else class="text-gray-500">No medical card record found for this patient.</p>
+            <p v-else class="text-gray-500">No intake summary record found for this patient.</p>
         </div>
 
         <CreateDialog @update="updateData" :patient="data" @close="closeCreateDialog" v-model:open="createDialog"

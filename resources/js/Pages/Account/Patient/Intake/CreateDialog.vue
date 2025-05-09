@@ -123,9 +123,9 @@ function simulateUpload() {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Нова медична картка</DialogTitle>
+                <DialogTitle>Нова вступна інформація</DialogTitle>
                 <DialogDescription>
-                    Внесіть дані для заповнення картки.
+                    Внесіть дані для заповнення форми.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">

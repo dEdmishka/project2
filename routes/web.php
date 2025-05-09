@@ -89,6 +89,10 @@ Route::group([], function () {
             Route::get('/medcard/{id}', [DocumentController::class, 'showMedcard'])->name('account.document.medcard.show');
             Route::post('/medcard/{id}', [DocumentController::class, 'storeMedcard'])->name('account.document.medcard.store');
 
+            Route::get('/intake', [DocumentController::class, 'intake'])->name('account.document.intake');
+            Route::get('/intake/{id}', [DocumentController::class, 'showIntake'])->name('account.document.intake.show');
+            Route::post('/intake/{id}', [DocumentController::class, 'storeIntake'])->name('account.document.intake.store');
+
             Route::get('/diagnosis', [DocumentController::class, 'diagnosis'])->name('account.document.diagnosis');
 
             Route::get('/schedule', [ScheduleController::class, 'index'])->name('account.schedule');

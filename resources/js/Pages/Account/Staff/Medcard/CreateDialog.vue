@@ -27,6 +27,7 @@ import { Progress } from '@/components/ui/progress'
 
 const fileInput = ref(null)
 const isDragging = ref(false)
+const progress = ref(0)
 
 const form = useForm({
     first_name: '',
@@ -36,7 +37,6 @@ const form = useForm({
     blood_type: '',
     blood_pressure: '',
     file: {},
-    progress: 0
 });
 
 const emit = defineEmits(['update', 'close']);
@@ -73,6 +73,7 @@ const submit = () => {
             });
 
             emit('close', false);
+            emit('update', data);
         }
     })
 };
@@ -91,6 +92,8 @@ function handleDrop(e) {
 }
 
 function addFile(newFile) {
+    progress.value = 0
+    
     const file = newFile[0]
 
     form.file = file
@@ -99,17 +102,18 @@ function addFile(newFile) {
 }
 
 function removeFile() {
+  progress.value = 0
+
   form.file = {}
-  form.progress = 0
   errors = {}
 }
 
 function simulateUpload() {
   const interval = setInterval(() => {
-    if (form.progress >= 100) {
+    if (progress.value >= 100) {
       clearInterval(interval)
     } else {
-      form.progress += 10
+      progress.value += 10
     }
   }, 50)
 }
@@ -183,7 +187,7 @@ function simulateUpload() {
                             <span class="text-sm">{{ form.file.name }}</span>
                             </div>
                             <div class="flex items-center space-x-2">
-                            <Progress v-model="form.progress" class="w-20 h-2" />
+                            <Progress v-model="progress" class="w-20 h-2" />
                             <Button size="icon" variant="ghost" @click="removeFile()">
                                 <X class="w-4 h-4 text-red-500" />
                             </Button>
