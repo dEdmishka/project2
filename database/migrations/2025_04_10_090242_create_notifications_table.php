@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id')->nullable();
             $table->foreign('recipient_id')->references('id')->on('users')->constrained();
             $table->foreign('sender_id')->references('id')->on('users')->constrained();
-
             $table->text('content');
             $table->enum('status', ['pending', 'read'])->default('pending');
             // $table->index('notification_type_id')->nullable();

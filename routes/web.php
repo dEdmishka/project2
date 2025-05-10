@@ -98,6 +98,7 @@ Route::group([], function () {
             Route::get('/schedule', [ScheduleController::class, 'index'])->name('account.schedule');
 
             Route::get('/notifications', [NotificationController::class, 'index'])->name('account.notification');
+            Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name('account.notification.read');
         });
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');

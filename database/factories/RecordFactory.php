@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Patient;
+use App\Models\RecordType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,21 @@ class RecordFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
-        ];
+        // $patient = Patient::inRandomOrder()->first();
+
+        // // Randomly select Intake Summary or Medical Card
+        // $recordTypeName = $this->faker->randomElement(['Intake Summary', 'Medical Card']);
+        // $recordType = RecordType::firstOrCreate(['name' => $recordTypeName]);
+
+        // return [
+        //     'recordable_type' => Patient::class,
+        //     'recordable_id' => $patient->id,
+        //     'record_type_id' => $recordType->id,
+        //     'content' => $this->faker->paragraphs(3, true),
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
+        // ];
+
+        return [];
     }
 }

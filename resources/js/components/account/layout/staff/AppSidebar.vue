@@ -1,6 +1,5 @@
 <script setup>
 import SearchForm from "@/components/blocks/SearchForm.vue"
-import VersionSwitcher from "@/components/blocks/VersionSwitcher.vue"
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +15,6 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/vue3"
 
-// This is sample data.
 const props = defineProps();
 
 const data = {

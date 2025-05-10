@@ -40,6 +40,7 @@ const routeList = [
 
 import ThemeModeToggler from "@/components/blocks/ThemeModeToggler.vue";
 import NavActions from '@/components/account/layout/NavActions.vue'
+import NotificationMenu from "./NotificationMenu.vue";
 </script>
 
 <template>
@@ -61,6 +62,7 @@ import NavActions from '@/components/account/layout/NavActions.vue'
 
                 <!-- mobile -->
                 <span class="flex items-center md:hidden">
+                    <NotificationMenu />
                     <ThemeModeToggler />
 
                     <Sheet>
@@ -108,6 +110,7 @@ import NavActions from '@/components/account/layout/NavActions.vue'
                         Github
                     </a>
 
+                    <NotificationMenu />
                     <ThemeModeToggler />
                     <NavActions />
                 </div>

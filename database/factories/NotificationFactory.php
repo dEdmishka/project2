@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\NotificationType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,16 @@ class NotificationFactory extends Factory
      */
     public function definition(): array
     {
+        $recipient = User::inRandomOrder()->first();
+        $sender = User::inRandomOrder()->where('id', '!=', $recipient->id)->first();
+        $notificationType = NotificationType::inRandomOrder()->first();
+
         return [
-            //
+            'content' => fake()->sentence(),
+            'recipient_id' => $recipient->id,
+            'sender_id' => $sender->id,
+            'status' => fake()->randomElement(['pending', 'read']),
+            'notification_type_id' => $notificationType->id,
         ];
     }
 }

@@ -2,13 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Appointment;
-use App\Models\Department;
-use App\Models\Patient;
-use App\Models\Record;
-use App\Models\Report;
-use App\Models\Staff;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,12 +23,15 @@ class DatabaseSeeder extends Seeder
             StaffTypeSeeder::class, 
             RecordTypeSeeder::class,
             ReportTypeSeeder::class,
+            NotificationTypeSeeder::class,
             DepartmentSeeder::class,
             PatientSeeder::class,
             StaffSeeder::class,
             ProcedureSeeder::class,
             WardSeeder::class,
             AppointmentSeeder::class,
+            NotificationSeeder::class,
+            RecordSeeder::class,
         );
 
         foreach ($seeders as $seeder)
