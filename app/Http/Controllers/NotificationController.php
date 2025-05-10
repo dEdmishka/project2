@@ -8,30 +8,29 @@ use Inertia\Inertia;
 
 class NotificationController extends Controller
 {
-    public function index()
-    {
-        $user = Auth::user()->load('image');
+    // public function index()
+    // {
+    //     $user = Auth::user()->load('image');
 
-        $notifications = $user()
-            ->notifications()
-            ->with('notificationType')
-            ->get()
-            ->map(function ($notification) {
-                return [
-                    'id' => $notification->id,
-                    'type' => $notification->notificationType->type,
-                    'content' => $notification->content,
-                    'sender_id' => $notification->sender_id,
-                    'status' => $notification->status,
-                    'read_at' => $notification->read_at,
-                    'created_at' => $notification->created_at->diffForHumans(),
-                ];
-            });
+    //     $notifications = $user->notifications()
+    //         ->with('notificationType')
+    //         ->get()
+    //         ->map(function ($notification) {
+    //             return [
+    //                 'id' => $notification->id,
+    //                 'type' => $notification->notificationType->type,
+    //                 'content' => $notification->content,
+    //                 'sender_id' => $notification->sender_id,
+    //                 'status' => $notification->status,
+    //                 'read_at' => $notification->read_at,
+    //                 'created_at' => $notification->created_at->diffForHumans(),
+    //             ];
+    //         });
 
-        return Inertia::render('Account/Notification/Index', [
-            'user' => $user,
-            'data' => $notifications,
-            'main_url' => route('account.notification'),
-        ]);
-    }
+    //     return Inertia::render('Account/Notification/Index', [
+    //         'user' => $user,
+    //         'data' => $notifications,
+    //         'main_url' => route('account.notification'),
+    //     ]);
+    // }
 }

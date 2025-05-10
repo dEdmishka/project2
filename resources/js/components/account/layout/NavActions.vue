@@ -24,56 +24,9 @@ const form = useForm({});
 const logout = () => {
     form.post('/logout');
 }
-// const data = [
-//     [
-//         {
-//             label: "My Account",
-//             url: "/account",
-//             icon: User,
-//         },
-//     ],
-//     [
-//         {
-//             label: "Settings",
-//             url: "/settings",
-//             icon: Settings2,
-//         },
-//     ],
-//     [
-//         {
-//             label: "Logout",
-//             url: "/logout",
-//             icon: CornerUpLeft,
-//         },
-//     ],
-// ]
 </script>
 
 <template>
-    <!-- <div class="flex items-center gap-2 text-sm"> -->
-        <!-- <div class="hidden font-medium text-muted-foreground md:inline-block">
-            Edit Oct 08
-        </div>
-        <Button variant="ghost" size="icon" class="h-7 w-7">
-            <Star />
-        </Button> -->
-        <!-- <DropdownMenu>
-            <DropdownMenuTrigger as-child>
-                <Button variant="ghost" size="icon" class="h-7 w-7">
-                    <MoreHorizontal />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent class="w-56 rounded-lg mr-4">
-                <DropdownMenuGroup v-for="(group, index) in data" :key="index" class="border-b last:border-none">
-                    <DropdownMenuItem v-for="(item, index) in group" :key="index">
-                        <Link :href="item.url" class="flex gap-2 p-2">
-                        <component :is="item.icon" />
-                        <span>{{ item.label }}</span>
-                        </Link>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
-        </DropdownMenu> -->
         <DropdownMenu>
             <DropdownMenuTrigger as-child>
                 <Button variant="ghost" size="icon" class="h-7 w-7">
@@ -104,5 +57,4 @@ const logout = () => {
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
-    <!-- </div> -->
 </template>

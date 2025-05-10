@@ -20,3 +20,15 @@ export const formatPhoneNumber = (value) => {
 
     return value;
 }
+
+export const formatDate = (newDate) => {
+    const date = new Date(newDate);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+}
+
+export const formatTime = (newDate) => {
+    const date = new Date(newDate);
+    return `${formatDate(date)} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`
+}
+
+export const hasElements = (obj) => Object.keys(obj).length > 0;

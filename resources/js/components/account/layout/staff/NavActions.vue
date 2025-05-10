@@ -32,6 +32,7 @@ import {
 
 import { useForm } from '@inertiajs/vue3';
 import { Link } from "@inertiajs/vue3"
+import NotificationMenu from '@/components/blocks/NotificationMenu.vue';
 
 const form = useForm({});
 
@@ -77,6 +78,7 @@ const logout = () => {
 
             <!-- mobile -->
             <span class="flex items-center xl:hidden">
+                <NotificationMenu />
                 <ThemeModeToggler />
 
                 <Sheet>
@@ -150,13 +152,6 @@ const logout = () => {
             </span>
 
             <!-- desktop -->
-            <!-- <nav class="hidden md:flex items-center gap-2">
-                <Link v-for="(route, i) in routeList" :key="i" :href="route.href" rel="noreferrer noopener"
-                    :class="`text-[17px] ${buttonVariants({ variant: 'ghost' })}`">
-                {{ route.label }}
-                </Link>
-            </nav> -->
-
             <nav class="hidden xl:flex flex-1 items-center justify-center gap-2">
                 <Link v-for="(route, i) in routeList" :key="i" :href="route.href" rel="noreferrer noopener"
                     :class="`text-[17px] ${buttonVariants({ variant: 'ghost' })}`">
@@ -171,7 +166,7 @@ const logout = () => {
                     Github
                 </a>
 
-
+                <NotificationMenu />
                 <ThemeModeToggler />
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
