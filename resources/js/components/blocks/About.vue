@@ -21,16 +21,12 @@ import { motion } from 'motion-v'
           <div class="pb-6">
             <h2 class="text-3xl md:text-4xl font-bold">
               <span class="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-                About{{ " " }}
+                {{ $t('pages.about') }}{{ " " }}
               </span>
-              Us
+              {{ $t('pages.us') }}
             </h2>
             <p class="text-xl text-muted-foreground mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit.
+              {{ $t('pages.lorem') }}
             </p>
           </div>
 

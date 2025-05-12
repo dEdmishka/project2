@@ -79,7 +79,7 @@ class WardController extends Controller
             'procedure_id' => $request->procedure,
         ]);
 
-        return redirect()->back()->with('success', 'Ward has been successfully created!');
+        return redirect()->back()->with('success', __('admin.ward_created'));
     }
 
     public function update(Request $request, $id)
@@ -108,7 +108,7 @@ class WardController extends Controller
             'procedure_id' => $request->procedure,
         ]);
 
-        return redirect()->back()->with('success', 'Ward has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.ward_edited'));
     }
 
     public function delete($id)
@@ -118,9 +118,9 @@ class WardController extends Controller
         if ($ward) {
             $ward->delete();
 
-            return redirect()->back()->with('success', 'Ward has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.ward_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no ward to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_ward_delete')]);
     }
 }

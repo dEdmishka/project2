@@ -1,38 +1,38 @@
 <script setup>
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Medal,
-  Map,
-  Plane,
-  Gift
+  Speech,
+  ChartNetwork,
+  User,
+  Shield
 } from 'lucide-vue-next'
 
 import { motion } from 'motion-v'
 
 const features = [
   {
-    icon: Medal,
-    title: "Accessibility",
+    icon: Speech,
+    title: "pages.communication",
     description:
-      "Simple communication between patients and healthcare professionals",
+      "pages.simple_comm",
   },
   {
-    icon: Map,
-    title: "Community",
+    icon: ChartNetwork,
+    title: "pages.insights",
     description:
-      "Data-driven insights to improve patient outcomes and satisfaction",
+      "pages.data_driven",
   },
   {
-    icon: Plane,
-    title: "Scalability",
+    icon: User,
+    title: "pages.individuality",
     description:
-      "Rehabilitation programs tailored to individual needs and preferences",
+      "pages.rehab_programs",
   },
   {
-    icon: Gift,
-    title: "Gamification",
+    icon: Shield,
+    title: "pages.security",
     description:
-      "Secure and private platform for patient data and communication",
+      "pages.secure_and_private",
   },
 ];
 </script>
@@ -48,15 +48,14 @@ const features = [
       delay: 0.05
     }">
     <h2 class="text-3xl md:text-4xl font-bold ">
-      Benefits{{ " " }}
+      {{ $t('pages.benefits') }}{{ " " }}
       <span class="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-        Of Our{{ " " }}
+        {{ $t('pages.of_our') }}{{ " " }}
       </span>
-      Platform
+      {{ $t('pages.of_platform') }}
     </h2>
     <p class="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
-      dolor pariatur sit!
+      {{ $t('pages.short_lorem') }}
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -64,10 +63,10 @@ const features = [
         <CardHeader>
           <CardTitle class="grid gap-4 place-items-center">
             <component :is="feature.icon" />
-            {{ feature.title }}
+            {{ $t(feature.title) }}
           </CardTitle>
         </CardHeader>
-        <CardContent>{{ feature.description }}</CardContent>
+        <CardContent>{{ $t(feature.description) }}</CardContent>
       </Card>
     </div>
   </motion.section>

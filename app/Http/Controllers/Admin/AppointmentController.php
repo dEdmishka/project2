@@ -96,7 +96,7 @@ class AppointmentController extends Controller
             ->count();
 
         if ($activeAppointments >= $ward->capacity) {
-            return redirect()->back()->withErrors(['ward' => 'The selected ward is already full at this time.'])->withInput();
+            return redirect()->back()->withErrors(['ward' => __('admin.ward_full')])->withInput();
         }
 
         // 2. Перевірка на конфлікт за пацієнтом
@@ -105,7 +105,7 @@ class AppointmentController extends Controller
             ->exists();
 
         if ($conflictForPatient) {
-            return redirect()->back()->withErrors(['patient' => 'This patient already has an appointment at that time.'])->withInput();
+            return redirect()->back()->withErrors(['patient' => __('admin.patient_has_appointment')])->withInput();
         }
 
         // 3. Перевірка на конфлікт за спеціалістом
@@ -125,12 +125,11 @@ class AppointmentController extends Controller
                     $appointmentTimeEnd->gt($existingStart)
                 ) {
                     return redirect()->back()->withErrors([
-                        'staff' => "Staff member {$staff->user->first_name} {$staff->user->last_name} is already booked from {$existingStart->format('H:i')} to {$existingEnd->format('H:i')}."
+                        'staff' => __('admin.staff_booked', ['first_name' => $staff->user->first_name, 'last_name' => $staff->user->last_name, 'start' => $existingStart->format('H:i'), 'end' => $existingEnd->format('H:i')])
                     ])->withInput();
                 }
             }
         }
-
 
         // 4. Перевірка на розклад за спеціалістом
         $dayOfWeek = ($appointmentTime->dayOfWeek + 6) % 7; // 0 (Mon) - 6 (Sun)
@@ -144,7 +143,7 @@ class AppointmentController extends Controller
                 ->first();
 
             if (!$workingHour) {
-                return redirect()->back()->withErrors(['staff' => "Staff member {$staff->user->first_name} {$staff->user->last_name} is not available on that day."])->withInput();
+                return redirect()->back()->withErrors(['staff' => __('admin.staff_not_available', ['first_name' => $staff->user->first_name, 'last_name' => $staff->user->last_name])])->withInput();
             }
 
             $start = Carbon::parse($workingHour->start_time);
@@ -157,7 +156,7 @@ class AppointmentController extends Controller
                 $appointmentTime->lt($start) ||
                 $appointmentTimeEnd->gt($end)
             ) {
-                return redirect()->back()->withErrors(['staff' => "Appointment time is outside working hours for staff {$staff->user->first_name} {$staff->user->last_name}."])->withInput();
+                return redirect()->back()->withErrors(['staff' => __('admin.appointment_outside', ['first_name' => $staff->user->first_name, 'last_name' => $staff->user->last_name])])->withInput();
             }
         }
 
@@ -171,7 +170,7 @@ class AppointmentController extends Controller
 
         $appointment->staff()->attach($request->staff);
 
-        return redirect()->back()->with('success', 'Appointment has been successfully created!');
+        return redirect()->back()->with('success', __('admin.appointment_created'));
     }
 
     public function update(Request $request, $id)
@@ -201,7 +200,7 @@ class AppointmentController extends Controller
 
         $appointment->staff()->sync($request->staff);
 
-        return redirect()->back()->with('success', 'Appointment has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.appointment_edited'));
     }
 
     public function delete($id)
@@ -212,9 +211,9 @@ class AppointmentController extends Controller
             $appointment->staff()->detach();
             $appointment->delete();
 
-            return redirect()->back()->with('success', 'Appointment has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.appointment_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no appointment to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_appointment_delete')]);
     }
 }

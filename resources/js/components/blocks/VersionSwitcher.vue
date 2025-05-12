@@ -30,8 +30,6 @@ const selectVersion = (version) => {
         selectedVersion.value = version;
         emit('change', version)
     }
-    // Emit an event to notify the parent component about the version change
-    // emit('update:version', version);
 }
 </script>
 
@@ -47,7 +45,7 @@ const selectVersion = (version) => {
                             <GalleryVerticalEnd class="size-4" />
                         </div>
                         <div class="flex flex-col gap-0.5 leading-none">
-                            <span class="font-semibold">Current Center</span>
+                            <span class="font-semibold">{{ $t('current_center') }}</span>
                             <span v-if=selectedVersion class="">{{ selectedVersion?.name }}</span>
                         </div>
                         <ChevronsUpDown class="ml-auto" />

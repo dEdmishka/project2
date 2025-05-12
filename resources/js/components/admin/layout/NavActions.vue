@@ -23,7 +23,7 @@ const logout = () => {
             <div class="flex items-center gap-2 text-sm ml-auto">
                 <Button class="p-1" @click="logout">
                     <div class="flex gap-2 p-2">
-                        <CornerUpLeft /><span>Logout</span>
+                        <CornerUpLeft /><span>{{ $t('auth.title.logout') }}</span>
                     </div>
                 </Button>
             </div>

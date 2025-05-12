@@ -252,7 +252,7 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            Treatments
+            {{ $t('account.admin.treatments') }}
         </template>
         <div class="">
             <div class="flex items-center py-4">
@@ -262,7 +262,7 @@ watch(selectedField, (newField, oldField) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-2 min-w-[225px] justify-start">
-                            Filter By<span class="capitalize">{{ selectedField }}</span>
+                            {{ $t('table.filter_by') }}<span class="capitalize">{{ selectedField }}</span>
                             <ChevronDown class="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
@@ -281,7 +281,7 @@ watch(selectedField, (newField, oldField) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto">
-                            Columns
+                            {{ $t('table.columns') }}
                             <ChevronDown class="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
@@ -334,7 +334,7 @@ watch(selectedField, (newField, oldField) => {
 
                         <TableRow v-else>
                             <TableCell :colspan="columns.length" class="h-24 text-center">
-                                No results.
+                                {{ $t('table.no_results') }}
                             </TableCell>
                         </TableRow>
                     </TableBody>
@@ -343,20 +343,20 @@ watch(selectedField, (newField, oldField) => {
 
             <div class="flex items-center justify-end space-x-2 py-4">
                 <div class="flex-1 text-sm text-muted-foreground">
-                    {{ table.getFilteredSelectedRowModel().rows.length }} of
-                    {{ table.getFilteredRowModel().rows.length }} row(s) selected.
+                    {{ table.getFilteredSelectedRowModel().rows.length }} {{ $t('table.of') }}
+                    {{ table.getFilteredRowModel().rows.length }} {{ $t('table.rows_selected') }}
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="flex items-center gap-1">
-                            <div>Page</div>
+                            <div>{{ $t('table.page') }}</div>
                             <strong>
-                                {{ table.getState().pagination.pageIndex + 1 }} of
+                                {{ table.getState().pagination.pageIndex + 1 }} {{ $t('table.of') }}
                                 {{ table.getPageCount() }}
                             </strong>
                         </span>
                         <span class="flex items-center gap-1">
-                            | Go to page:
+                            | {{ $t('table.go_to_page') }}:
                             <Input type="number" :min="1" :max="table.getPageCount()" v-model="goToPageNumber"
                                 @update:modelValue="handleGoToPage" class="w-16" />
                         </span>
@@ -367,7 +367,7 @@ watch(selectedField, (newField, oldField) => {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem :key="pageSize" :value="pageSize" v-for="pageSize in pageSizes">
-                                    Show {{ pageSize }}
+                                    {{ $t('table.show') }} {{ pageSize }}
                                 </SelectItem>
                             </SelectContent>
                         </Select>
@@ -380,10 +380,10 @@ watch(selectedField, (newField, oldField) => {
                     </Button>
                     <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
                         @click="table.previousPage()">
-                        Previous
+                        {{ $t('table.previous') }}
                     </Button>
                     <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()">
-                        Next
+                        {{ $t('table.next') }}
                     </Button>
                     <Button variant="outline" size="sm" @click="() => table.setPageIndex(table.getPageCount() - 1)"
                         :disabled="!table.getCanNextPage()">

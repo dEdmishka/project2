@@ -62,7 +62,7 @@ const submit = () => {
     onSuccess: (event) => {
       const data = event.props.data;
       const successMessage = event.props.flash.success;
-      toast('Success!', {
+      toast('account.toast.success', {
         variant: 'default',
         duration: 3000,
         description: successMessage,
@@ -89,13 +89,13 @@ import { motion } from 'motion-v'
 <template>
   <Layout>
     <template #title>
-      Profile
+      {{ $t('account.admin.profile') }}
     </template>
     <div class=" text-start">
       <div class="grid gap-4 py-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="grid items-center gap-1">
-            <Label for="File" class="ml-[32px] pb-2">Аватар</Label>
+            <Label for="File" class="ml-[32px] pb-2">{{ $t('label.avatar') }}</Label>
             <motion.div class="text-center relative" :animate="{
               opacity: [0, 1],
               x: [100, 0],
@@ -127,7 +127,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="first_name" class="">
-              Ім'я
+              {{ $t('label.first_name') }}
             </Label>
             <Input id="first_name" class="col-span-3" required v-model="form.first_name" />
             <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
@@ -142,7 +142,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="birth_date" class="text-right">
-              Дата народження
+              {{ $t('label.birth_date') }}
             </Label>
             <Input id="birth_date" type="date" class="col-span-3" required v-model="form.birth_date" />
             <span v-if="errors.birth_date" class="text-red-600 text-sm">{{ errors.birth_date }}</span>
@@ -159,7 +159,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="last_name" class="">
-              Прізвище
+              {{ $t('label.last_name') }}
             </Label>
             <Input id="last_name" class="col-span-3" required v-model="form.last_name" />
             <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
@@ -174,7 +174,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="address" class="text-right">
-              Ваша адреса
+              {{ $t('label.address') }}
             </Label>
             <Input id="address" class="col-span-3" required v-model="form.address" />
             <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
@@ -191,7 +191,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="email" class="">
-              Пошта
+              {{ $t('label.email') }}
             </Label>
             <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
             <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
@@ -206,16 +206,16 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="gender" class="text-right">
-              Стать: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+              {{ $t('label.gender') }}: {{ form.gender === 'M' ? 'Male' : 'Female' }}
             </Label>
             <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
               <div class="flex items-center space-x-2">
                 <RadioGroupItem id="M" value="M" />
-                <Label for="M">Male</Label>
+                <Label for="M">{{ $t('label.male') }}</Label>
               </div>
               <div class="flex items-center space-x-2">
                 <RadioGroupItem id="F" value="F" />
-                <Label for="F">Female</Label>
+                <Label for="F">{{ $t('label.female') }}</Label>
               </div>
             </RadioGroup>
           </motion.div>
@@ -231,7 +231,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="name" class="text-right">
-              Соціальні мережі
+              {{ $t('label.social_links') }}
             </Label>
             <div class="space-y-2">
               <div v-for="(social, index) in form.social_links" :key="'social-' + index" class="flex gap-2">
@@ -249,7 +249,7 @@ import { motion } from 'motion-v'
             </div>
             <Button type="button" variant="outline" class="mt-2"
               @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
-              <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
+              <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_social_link') }}
             </Button>
           </motion.div>
 
@@ -263,7 +263,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="name" class="text-right">
-              Телефони
+              {{ $t('label.phones') }}
             </Label>
             <div class="space-y-2">
               <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
@@ -283,7 +283,7 @@ import { motion } from 'motion-v'
 
             <Button type="button" variant="outline" class="mt-2"
               @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
-              <Plus class="h-4 w-4 mr-1" /> Додати Телефон
+              <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone') }}
             </Button>
           </motion.div>
         </div>
@@ -299,11 +299,11 @@ import { motion } from 'motion-v'
           }
         }">
           <Button type="submit" @click="submit">
-            Зберегти
+            {{ $t('label.save') }}
           </Button>
 
           <Button class="ml-auto" type="button" variant="outline" @click="form.reset()">
-            Reset form
+            {{ $t('label.reset_form') }}
           </Button>
         </motion.div>
       </div>

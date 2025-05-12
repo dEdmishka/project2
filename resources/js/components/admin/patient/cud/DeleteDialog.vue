@@ -52,25 +52,20 @@ const submit = () => {
 
 <template>
     <Dialog :value="showDialog">
-        <!-- <DialogTrigger as-child>
-                <Button variant="outline">
-                    Edit Profile
-                </Button>
-            </DialogTrigger> -->
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Delete profile</DialogTitle>
+                <DialogTitle>{{ $t('admin.patient.delete') }}</DialogTitle>
                 <DialogDescription>
-                    Make changes to your profile here. Click save when you're done.
+                    {{ $t('admin.patient.make_changes') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
-                <h3>You are sure want to delete {{ currentCell.first_name }}?</h3>
+                <h3>{{ $t('admin.you_sure') }} {{ currentCell.first_name }}?</h3>
                 <span v-if="errors" class="text-red-600 text-sm">{{ errors.msg }}</span>
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Delete
+                    {{ $t('label.delete') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

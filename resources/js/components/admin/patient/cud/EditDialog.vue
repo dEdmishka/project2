@@ -130,23 +130,23 @@ function selectCenter(center) {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Edit patient</DialogTitle>
+                <DialogTitle>{{ $t('admin.patient.edit') }}</DialogTitle>
                 <DialogDescription>
-                    Make changes to your patient here. Click save when you're done.
+                    {{ $t('admin.patient.make_changes') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-2 gap-2">
                     <div class="grid items-center gap-2">
                         <Label for="first_name" class="text-right">
-                            First name
+                            {{ $t('label.first_name') }}
                         </Label>
                         <Input id="first_name" class="col-span-3" required v-model="form.first_name" />
                         <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
                     </div>
                     <div class="grid items-center gap-2">
                         <Label for="last_name" class="text-right">
-                            Last name
+                            {{ $t('label.last_name') }}
                         </Label>
                         <Input id="last_name" class="col-span-3" required v-model="form.last_name" />
                         <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
@@ -155,14 +155,14 @@ function selectCenter(center) {
                 <div class="grid grid-cols-2 gap-2">
                     <div class="grid items-center gap-2">
                         <Label for="Email" class="text-right">
-                            Email
+                            {{ $t('label.email') }}
                         </Label>
                         <Input type="email" id="email" class="col-span-3" required v-model="form.email" />
                         <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
                     </div>
                     <div class="grid items-center gap-2">
                         <Label for="center" class="text-right">
-                            Center
+                            {{ $t('label.center') }}
                         </Label>
                         <Popover id="center" v-model:open="openCenter">
                             <PopoverTrigger as-child>
@@ -174,7 +174,7 @@ function selectCenter(center) {
                             <PopoverContent class="p-0 overflow-y-auto max-h-70">
                                 <Command>
                                     <CommandInput placeholder="Search centers..." v-model="searchCenter" />
-                                    <CommandEmpty>No centers found.</CommandEmpty>
+                                    <CommandEmpty>{{ $t('label.no_center') }}</CommandEmpty>
                                     <CommandGroup>
                                         <CommandItem v-for="center in filteredCenters" :key="center.id"
                                             :value="center.name" @select="() => selectCenter(center)">
@@ -192,14 +192,14 @@ function selectCenter(center) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div class="grid items-center gap-2">
                         <Label for="birth_date" class="text-right">
-                            Birth Date
+                            {{ $t('label.birth_date') }}
                         </Label>
                         <Input id="birth_date" type="date" class="col-span-3" required v-model="form.birth_date" />
                         <span v-if="errors.birth_date" class="text-red-600 text-sm">{{ errors.birth_date }}</span>
                     </div>
                     <div class="grid items-center gap-2">
                         <Label for="address" class="text-right">
-                            Address
+                            {{ $t('label.address') }}
                         </Label>
                         <Input id="address" class="col-span-3" required v-model="form.address" />
                         <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
@@ -208,29 +208,29 @@ function selectCenter(center) {
                 <div class="grid grid-cols-1 gap-2">
                     <div class="grid grid-cols-2 items-center gap-2">
                         <Label for="gender" class="text-right">
-                            Gender: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                            {{ $t('label.gender') }}: {{ form.gender === 'M' ? 'Male' : 'Female' }}
                         </Label>
                         <Label for="status" class="text-right">
-                            Status: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                            {{ $t('label.status') }}: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
                         </Label>
                         <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="M" value="M" />
-                                <Label for="M">Male</Label>
+                                <Label for="M">{{ $t('label.male') }}</Label>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="F" value="F" />
-                                <Label for="F">Female</Label>
+                                <Label for="F">{{ $t('label.female') }}</Label>
                             </div>
                         </RadioGroup>
                         <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="active" value="active" />
-                                <Label for="active">Active</Label>
+                                <Label for="active">{{ $t('label.active') }}</Label>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="discharge" value="discharge" />
-                                <Label for="discharge">Discharge</Label>
+                                <Label for="discharge">{{ $t('label.discharge') }}</Label>
                             </div>
                         </RadioGroup>
                     </div>
@@ -239,7 +239,7 @@ function selectCenter(center) {
                 <div class="grid grid-cols-2 gap-2">
                     <div class="grid items-center gap-1">
                         <Label for="name" class="text-right">
-                            Соціальні мережі
+                            {{ $t('label.social_links') }}
                         </Label>
                         <div class="space-y-2">
                             <div v-for="(social, index) in form.social_links" :key="'social-' + index"
@@ -260,13 +260,13 @@ function selectCenter(center) {
                         </div>
                         <Button type="button" variant="outline" class="mt-2"
                             @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
-                            <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
+                            <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_social_link') }}
                         </Button>
                     </div>
 
                     <div class="grid items-center gap-1">
                         <Label for="name" class="text-right">
-                            Телефони
+                            {{ $t('label.phones') }}
                         </Label>
                         <div class="space-y-2">
                             <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
@@ -286,14 +286,14 @@ function selectCenter(center) {
 
                         <Button type="button" variant="outline" class="mt-2"
                             @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
-                            <Plus class="h-4 w-4 mr-1" /> Додати Телефон
+                            <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone') }}
                         </Button>
                     </div>
                 </div>
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Save changes
+                    {{ $t('label.save_changes') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

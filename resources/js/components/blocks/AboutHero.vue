@@ -38,14 +38,12 @@ import { motion } from 'motion-v'
           delay: 0.05
         }
       }">
-        <!-- Build your React landing page effortlessly with the required sections
-          to your project. -->
-        Ми відкрились відносно недавно, але вже готові Вам презентувати перші здобутки у даній сфері!
+        {{ $t('pages.about_us_p1') }}
         <br />
-        Наше завдання - надати Вам всі можливості у відновленні Вашого здоров`я!
+        {{ $t('pages.about_us_p2') }}
       </motion.p>
 
-      <motion.div class="space-y-6 md:space-y-0 md:space-x-4" :animate="{
+      <motion.div class="space-y-6 md:space-y-0 md:space-x-4 flex" :animate="{
         opacity: [0, 1],
         x: [-100, 0],
         transition: {
@@ -54,11 +52,16 @@ import { motion } from 'motion-v'
           delay: 0.3
         }
       }">
-        <motion.Link href="/signup" :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'default' })}`"
-          :whileHover="{ scale: 1.05 }">Signup</motion.Link>
+        <motion.div :whileHover="{ scale: 1.05 }" class="w-full md:w-1/3">
+          <Link href="/signup" :class="`cursor-pointer w-full ${buttonVariants({ variant: 'default' })}`">
+          {{ $t('pages.signup') }}</Link>
+        </motion.div>
 
-        <motion.Link href="/login" :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`"
-          :whileHover="{ scale: 1.05 }">Login</motion.Link>
+        <motion.div :whileHover="{ scale: 1.05 }" class="w-full md:w-1/3">
+          <Link href="/login" :class="`cursor-pointer w-full ${buttonVariants({ variant: 'outline' })}`">{{
+            $t('pages.login') }}
+          </Link>
+        </motion.div>
       </motion.div>
 
       <motion.div class="space-y-4 md:space-y-0 md:space-x-4 md:px-4" :animate="{
@@ -70,8 +73,10 @@ import { motion } from 'motion-v'
           delay: 0.3
         }
       }">
-        <motion.Link href="/contacts" :class="`w-full md:w-2/3 ${buttonVariants({ variant: 'outline' })}`"
-          :whileHover="{ scale: 1.05 }">Our contacts</motion.Link>
+        <motion.div :whileHover="{ scale: 1.05 }" class="w-full md:w-2/3">
+          <Link href="/contacts" :class="`cursor-pointer w-full ${buttonVariants({ variant: 'outline' })}`">{{
+            $t('pages.our_contacts') }}</Link>
+        </motion.div>
       </motion.div>
     </div>
   </section>

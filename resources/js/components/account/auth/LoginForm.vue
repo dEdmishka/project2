@@ -34,41 +34,41 @@ const submit = () => {
     <Card class="w-full max-w-sm">
         <CardHeader>
             <CardTitle class="text-2xl">
-                Login
+                {{ $t('account.auth.login') }}
             </CardTitle>
             <CardDescription>
-                Enter your email below to login to your account
+                {{ $t('account.auth.enter_email') }}
             </CardDescription>
         </CardHeader>
         <CardContent>
             <form @submit.prevent="submit">
                 <div class="grid gap-4">
                     <div class="grid gap-2">
-                        <Label for="email">Email</Label>
+                        <Label for="email">{{ $t('account.auth.email') }}</Label>
                         <Input id="email" type="email" v-model="form.email" :class="{ 'is-invalid': errors.email }"
                             required />
                         <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
                     </div>
                     <div class="grid gap-2">
                         <div class="flex items-center">
-                            <Label for="password">Password</Label>
+                            <Label for="password">{{ $t('account.auth.password') }}</Label>
                             <a href="#" class="ml-auto inline-block text-sm a-animate">
-                                Forgot your password?
+                                {{ $t('account.auth.forgot_password') }}
                             </a>
                         </div>
                         <Input id="password" type="password" v-model="form.password" required />
                     </div>
                     <Button type="submit" class="w-full">
-                        Login
+                        {{ $t('account.auth.login') }}
                     </Button>
                     <Button variant="outline" class="w-full">
-                        Login with Google
+                        {{ $t('account.auth.login_google') }}
                     </Button>
                 </div>
                 <div class="mt-4 text-center text-sm">
-                    Don't have an account?
+                    {{ $t('account.auth.dont_have_account') }}
                     <Link href="/signup" class="a-animate">
-                    Sign up
+                    {{ $t('account.auth.signup') }}
                     </Link>
                 </div>
             </form>

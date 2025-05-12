@@ -97,7 +97,7 @@ class PatientController extends Controller
             }
         });
 
-        return redirect()->back()->with('success', 'Patient has been successfully created!');
+        return redirect()->back()->with('success', __('admin.patient_created'));
     }
 
     public function update(Request $request, $id)
@@ -154,7 +154,7 @@ class PatientController extends Controller
             }
         });
 
-        return redirect()->back()->with('success', 'Patient has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.patient_edited'));
     }
 
     public function delete($id)
@@ -170,9 +170,9 @@ class PatientController extends Controller
                 $patient->socialLinks()->delete();
             });
 
-            return redirect()->back()->with('success', 'Patient has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.patient_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no patient to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_patient_delete')]);
     }
 }

@@ -10,26 +10,28 @@ import { motion } from 'motion-v'
 
 const FAQList = [
     {
-        question: "Is this template free?",
-        answer: "Yes. It is a free ChadcnUI template.",
-        value: "item-1",
-    },
-    {
         question: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
         answer:
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
-        value: "item-2",
+        value: "item-1",
     },
     {
         question:
             "Lorem ipsum dolor sit amet  Consectetur natus dolores minus quibusdam?",
         answer:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore qui nostrum reiciendis veritatis necessitatibus maxime quis ipsa vitae cumque quo?",
-        value: "item-3",
+        value: "item-2",
     },
     {
         question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit?",
         answer: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+        value: "item-3",
+    },
+    {
+        question:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur natus?",
+        answer:
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint labore quidem quam? Consectetur sapiente iste rerum reiciendis animi nihil nostrum sit quo, modi quod.",
         value: "item-4",
     },
     {
@@ -48,18 +50,18 @@ const FAQList = [
             visible: { opacity: 1, y: 0 },
             hidden: { opacity: 0, y: 100 }
         }" :transition="{
-        type: 'spring',
-        duration: 3,
-        delay: 0.05
-    }">
+            type: 'spring',
+            duration: 3,
+            delay: 0.05
+        }">
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-            Frequently Asked{{ " " }}
+            {{ $t('pages.freq_asked') }}{{ " " }}
             <span class="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-                Questions
+                {{ $t('pages.questions') }}
             </span>
         </h2>
 
-        <Accordion type="single" collapsible class="w-full AccordionRoot">
+        <Accordion type="single" collapsible class="w-full max-w-[508px] AccordionRoot">
             <AccordionItem v-for="(item, index) in FAQList" :key="item.value" :value="item.value">
                 <AccordionTrigger class="text-left">
                     {{ item.question }}
@@ -69,9 +71,9 @@ const FAQList = [
         </Accordion>
 
         <h3 class="font-medium mt-4">
-            Still have questions?{{ " " }}
+            {{ $t('pages.have_questions') }}{{ " " }}
             <a rel="noreferrer noopener" href="#" class="text-primary transition-all border-primary hover:border-b-2">
-                Contact us
+                {{ $t('pages.contact') }} {{ $t('pages.with_us') }}
             </a>
         </h3>
     </motion.section>

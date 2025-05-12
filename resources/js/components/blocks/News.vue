@@ -2,48 +2,47 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Link } from "@inertiajs/vue3"
 import {
-  Medal,
-  Map,
-  Plane,
-  Gift,
+  Stethoscope,
+  ShieldHalf,
+  Baby,
+  Hospital,
   MoveRight,
 } from 'lucide-vue-next'
 import Autoplay from 'embla-carousel-autoplay'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
-
 const features = [
   {
-    icon: Medal,
-    title: "Accessibility",
-    date: "2023-10-01",
+    icon: Stethoscope,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація за різними напрямками",
-    href: "/info/directions",
+      "pages.rehab_directions",
+    // href: "/info/directions",
   },
   {
-    icon: Map,
-    title: "Community",
-    date: "2023-10-01",
+    icon: ShieldHalf,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація поранених",
-    href: "/info/wounded",
+      "pages.rehab_wounded",
+    // href: "/info/wounded",
   },
   {
-    icon: Plane,
-    title: "Scalability",
-    date: "2023-10-01",
+    icon: Baby,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація дітей",
-    href: "/info/kids",
+      "pages.rehab_kids",
+    // href: "/info/kids",
   },
   {
-    icon: Gift,
-    title: "Gamification",
-    date: "2023-10-01",
+    icon: Hospital,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація за кошти НСЗУ",
-    href: "/info/national",
+      "pages.rehab_national",
+    // href: "/info/national",
   },
 ];
 </script>
@@ -63,18 +62,19 @@ const features = [
                 <component class="h-24 w-24" :is="feature.icon" />
               </CardHeader>
               <CardTitle class="px-6 text-2xl md:text-3xl font-bold">
-                {{ feature.title }}
+                {{ $t(feature.title) }}
               </CardTitle>
               <CardDescription class="px-6">
                 {{ feature.date }}
               </CardDescription>
               <CardContent class="text-xl font-bold">
-                <p>{{ feature.description }}</p>
+                <p>{{ $t(feature.description) }}</p>
               </CardContent>
               <CardFooter class="grid grid-cols-2 gap-8 items-center font-bold uppercase">
                 <div>
-                  <Link :href="feature.href" class="a-animate">Read More</Link>
-                <MoveRight class="ml-2 h-4 w-4 inline-block" />
+                  <!-- <Link :href="feature.href" class="a-animate">{{ $t('pages.read_more') }}</Link> -->
+                  <Link href="#" class="a-animate">{{ $t('pages.read_more') }}</Link>
+                  <MoveRight class="ml-2 h-4 w-4 inline-block" />
                 </div>
               </CardFooter>
             </Card>

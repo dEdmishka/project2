@@ -69,7 +69,7 @@ const submit = () => {
     onSuccess: (event) => {
       const data = event.props.data;
       const successMessage = event.props.flash.success;
-      toast('Success!', {
+      toast('account.toast.success', {
         variant: 'default',
         duration: 3000,
         description: successMessage,
@@ -94,7 +94,7 @@ const submit = () => {
       @change="handleFileChange" />
     <div class="p-12 flex items-center justify-center flex-col space-y-2 cursor-pointer" @click="openFilePicker">
       <Upload class="w-6 h-6 text-gray-500" />
-      <p class="text-sm text-gray-500">Drag and drop files here or click to upload</p>
+      <p class="text-sm text-gray-500">{{ $t('pages.drag_and_drop') }}</p>
     </div>
 
     <div v-if="form.files.length" class="mt-4 space-y-2">

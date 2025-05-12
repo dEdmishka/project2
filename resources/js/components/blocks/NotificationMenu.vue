@@ -31,18 +31,18 @@ const unreadCount = computed(() =>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent class="w-80">
-      <div class="p-2 font-bold">Notifications</div>
+      <div class="p-2 font-bold">{{ $t('pages.notifications') }}</div>
       <DropdownMenuSeparator />
       <template v-if="notifications.length">
         <DropdownMenuItem v-for="(n, index) in notifications" :key="n.id">
           <Link href="/account/notifications" class="flex flex-col items-start space-y-1">
-            <span class="text-sm">{{ n.type }}</span>
-            <span class="text-xs text-muted-foreground">{{ n.content }}</span>
-            <span class="text-[10px] text-muted-foreground">{{ n.created_at }}</span>
+          <span class="text-sm">{{ n.type }}</span>
+          <span class="text-xs text-muted-foreground">{{ n.content }}</span>
+          <span class="text-[10px] text-muted-foreground">{{ n.created_at }}</span>
           </Link>
         </DropdownMenuItem>
       </template>
-      <div v-else class="p-2 text-sm text-muted-foreground">No notifications</div>
+      <div v-else class="p-2 text-sm text-muted-foreground">{{ $t('pages.no_notifications') }}</div>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>

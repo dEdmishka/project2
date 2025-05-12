@@ -87,71 +87,50 @@ const submit = () => {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Edit procedure</DialogTitle>
+                <DialogTitle>{{ $t('admin.procedure.edit') }}</DialogTitle>
                 <DialogDescription>
-                    Make changes to your procedure here. Click save when you're done.
+                    {{ $t('admin.procedure.make_changes') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid items-center gap-2">
                     <Label for="name" class="text-right">
-                        Name
+                        {{ $t('label.name') }}
                     </Label>
                     <Input id="name" class="col-span-3" required v-model="form.name" />
                     <span v-if="errors.name" class="text-red-600 text-sm">{{ errors.name }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="description" class="text-right">
-                        Description
+                        {{ $t('label.description') }}
                     </Label>
                     <Textarea v-model="form.description"></Textarea>
                     <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="duration" class="text-right">
-                        Duration
+                        {{ $t('label.duration') }}
                     </Label>
                     <Input type="number" id="duration" class="col-span-3" required v-model="form.duration" />
                     <span v-if="errors.duration" class="text-red-600 text-sm">{{ errors.price }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="price" class="text-right">
-                        Price
+                        {{ $t('label.price') }}
                     </Label>
                     <Input type="number" id="price" class="col-span-3" required v-model="form.price" />
                     <span v-if="errors.price" class="text-red-600 text-sm">{{ errors.price }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="status" class="text-right">
-                        Status
+                        {{ $t('label.status') }}
                     </Label>
                     <Checkbox v-model="form.is_active" :checked="form.is_active == 1" />
-                </div>
-                <div class="grid gap-2">
-                    <Label for="select" class="text-right">
-                        Select
-                    </Label>
-                    <Select id="select">
-                        <SelectTrigger class="w-full">
-                            <SelectValue placeholder="Select a fruit" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Fruits</SelectLabel>
-                                <SelectItem value="apple">
-                                    Apple
-                                </SelectItem>
-                                <SelectItem value="banana">
-                                    Banana
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
                 </div>
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Save changes
+                    {{ $t('label.save_changes') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

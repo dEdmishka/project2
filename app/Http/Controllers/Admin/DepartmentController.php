@@ -73,7 +73,7 @@ class DepartmentController extends Controller
             'department_type_id' => $request->department_type,
         ]);
 
-        return redirect()->back()->with('success', 'Department has been successfully created!');
+        return redirect()->back()->with('success', __('admin.department_created'));
     }
 
     public function update(Request $request, $id)
@@ -100,7 +100,7 @@ class DepartmentController extends Controller
             'department_type_id' => $request->department_type,
         ]);
 
-        return redirect()->back()->with('success', 'Department has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.department_edited'));
     }
 
     public function delete($id)
@@ -110,9 +110,9 @@ class DepartmentController extends Controller
         if ($department) {
             $department->delete();
 
-            return redirect()->back()->with('success', 'Department has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.department_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no department to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_department_delete')]);
     }
 }

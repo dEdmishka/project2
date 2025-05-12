@@ -125,6 +125,6 @@ class AppointmentController extends Controller
         //     }
         // });
 
-        return redirect()->route('account.appointment')->with('success', 'Appointment has been successfully created!');
+        return redirect()->route('account.appointment')->with('success', __('account.appointment_created'));
     }
 }

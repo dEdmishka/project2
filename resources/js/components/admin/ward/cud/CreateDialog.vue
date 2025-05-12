@@ -113,43 +113,43 @@ function selectProcedure(procedure) {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Create ward</DialogTitle>
+                <DialogTitle>{{ $t('admin.ward.create') }}</DialogTitle>
                 <DialogDescription>
-                    Make changes to your department here. Click save when you're done.
+                    {{ $t('admin.ward.make_changes') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid items-center gap-2">
                     <Label for="name" class="text-right">
-                        Name
+                        {{ $t('label.name') }}
                     </Label>
                     <Input id="name" class="col-span-3" required v-model="form.name" />
                     <span v-if="errors.name" class="text-red-600 text-sm">{{ errors.name }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="description" class="text-right">
-                        Description
+                        {{ $t('label.description') }}
                     </Label>
                     <Textarea v-model="form.description"></Textarea>
                     <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="ward_number" class="text-right">
-                        Ward Number
+                        {{ $t('label.ward_number') }}
                     </Label>
                     <Input type="number" id="ward_number" class="col-span-3" required v-model="form.ward_number" />
                     <span v-if="errors.ward_number" class="text-red-600 text-sm">{{ errors.ward_number }}</span>
                 </div>
                 <div class="grid items-center gap-2">
                     <Label for="capacity" class="text-right">
-                        Capacity
+                        {{ $t('label.capacity') }}
                     </Label>
                     <Input type="number" id="capacity" class="col-span-3" required v-model="form.capacity" />
                     <span v-if="errors.capacity" class="text-red-600 text-sm">{{ errors.capacity }}</span>
                 </div>
                 <div class="grid gap-2">
                     <Label for="department" class="text-right">
-                        Department
+                        {{ $t('label.department') }}
                     </Label>
                     <Popover id="department" v-model:open="openDepartment">
                         <PopoverTrigger as-child>
@@ -161,7 +161,7 @@ function selectProcedure(procedure) {
                         <PopoverContent class="p-0 overflow-y-auto max-h-70">
                             <Command>
                                 <CommandInput placeholder="Search departments..." v-model="searchDepartment" />
-                                <CommandEmpty>No departments found.</CommandEmpty>
+                                <CommandEmpty>{{ $t('label.no_departments') }}</CommandEmpty>
                                 <CommandGroup>
                                     <CommandItem v-for="department in filteredDepartments" :key="department.id" :value="department.name"
                                         @select="() => selectDepartment(department)">
@@ -177,7 +177,7 @@ function selectProcedure(procedure) {
                 </div>
                 <div class="grid gap-2">
                     <Label for="procedure" class="text-right">
-                        Procedure
+                        {{ $t('label.procedure') }}
                     </Label>
                     <Popover id="procedure" v-model:open="openProcedure">
                         <PopoverTrigger as-child>
@@ -189,7 +189,7 @@ function selectProcedure(procedure) {
                         <PopoverContent class="p-0 overflow-y-auto max-h-70">
                             <Command>
                                 <CommandInput placeholder="Search procedure type..." v-model="searchProcedure" />
-                                <CommandEmpty>No procedures types found.</CommandEmpty>
+                                <CommandEmpty>{{ $t('label.no_procedure') }}</CommandEmpty>
                                 <CommandGroup>
                                     <CommandItem v-for="procedure in filteredProcedure"
                                         :key="procedure.id" :value="procedure.name"
@@ -207,7 +207,7 @@ function selectProcedure(procedure) {
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Save changes
+                    {{ $t('label.save') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

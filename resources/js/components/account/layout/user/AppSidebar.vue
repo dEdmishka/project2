@@ -22,19 +22,19 @@ const props = defineProps();
 const data = {
   navMain: [
     {
-      title: "Профіль",
+      title: "account.sidebar.profile",
       url: "/account",
       items: [
         {
-          title: "Центри",
+          title: "account.sidebar.centers",
           url: "/account/centers",
         },
         {
-          title: "Чати",
+          title: "account.sidebar.chat",
           url: "/account/chat",
         },
         {
-          title: "Повідомлення",
+          title: "account.sidebar.notifications",
           url: "/account/notifications",
         },
       ],
@@ -46,7 +46,7 @@ const data = {
 <template>
   <Sidebar v-bind="props">
     <SidebarHeader class="pt-4">
-      <SearchForm />
+      <!-- <SearchForm /> -->
     </SidebarHeader>
     <SidebarContent class="text-xl text-gray-700 dark:text-gray-100">
       <SidebarGroup>
@@ -54,13 +54,13 @@ const data = {
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
               <Link :href="item.url" class="font-medium">
-              {{ item.title }}
+              {{ $t(item.title) }}
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="gap-4">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
                 <SidebarMenuSubButton as-child :is-active="$page.url === childItem.url">
-                  <Link :href="childItem.url">{{ childItem.title }}</Link>
+                  <Link :href="childItem.url">{{ $t(childItem.title) }}</Link>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             </SidebarMenuSub>

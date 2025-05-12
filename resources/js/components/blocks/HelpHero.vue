@@ -9,14 +9,12 @@ import {
   Building2,
 } from 'lucide-vue-next'
 
-import { motion } from 'motion-v'
-
 const features = [
   {
     icon: CircleUserRound,
-    title: "New patient",
+    title: "pages.new_patient",
     description:
-      "Roadmap for patient",
+      "pages.roadmap_patient",
     href: "/roadmap/patient",
     animation: {
       opacity: [0, 1],
@@ -30,9 +28,9 @@ const features = [
   },
   {
     icon: BookHeart,
-    title: "New employee",
+    title: "pages.new_employee",
     description:
-      "Roadmap for employee",
+      "pages.roadmap_employee",
     href: "/roadmap/employee",
     animation: {
       opacity: [0, 1],
@@ -46,9 +44,9 @@ const features = [
   },
   {
     icon: ShieldUser,
-    title: "New administrator",
+    title: "pages.new_administrator",
     description:
-      "Roadmap for administrator",
+      "pages.roadmap_administrator",
     href: "/roadmap/administrator",
     animation: {
       opacity: [0, 1],
@@ -62,9 +60,9 @@ const features = [
   },
   {
     icon: Building2,
-    title: "New center",
+    title: "pages.new_center",
     description:
-      "Roadmap for center",
+      "pages.roadmap_center",
     href: "/roadmap/center",
     animation: {
       opacity: [0, 1],
@@ -85,20 +83,21 @@ const features = [
       <div class="text-5xl md:text-6xl font-bold">
         <h1 class="inline">
           <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-            Help
+            {{ $t('pages.help') }}
           </span>
         </h1>
+        {{ "" }}
         <h2 class="inline">
           <span class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-            Page
+            {{ $t('pages.page') }}
           </span>
         </h2>
       </div>
 
       <p class="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
-        Вам необхідна допомога? Тоді Ви на правильному шляху!
+        {{ $t('pages.help_hero_p1') }}
         <br />
-        Оберіть інструкцію користувача та обов'язково перегляньте секцію FaQ!
+        {{ $t('pages.help_hero_p2') }}
       </p>
 
       <div class="text-2sm sm:text-1xl font-bold text-center">
@@ -109,10 +108,10 @@ const features = [
             <CardHeader>
               <CardTitle class="grid gap-2 place-items-center">
                 <component :is="feature.icon" />
-                {{ feature.title }}
+                {{ $t(feature.title) }}
               </CardTitle>
             </CardHeader>
-            <CardContent>{{ feature.description }}</CardContent>
+            <CardContent>{{ $t(feature.description) }}</CardContent>
             </Link>
           </Card>
         </div>

@@ -110,7 +110,7 @@ class AccountController extends Controller
                 }
             });
 
-            return redirect()->back()->with('success', 'Patient has been successfully updated!');
+            return redirect()->back()->with('success', __('account.patient_updated'));
         }
 
         if ($user->is_staff) {
@@ -143,6 +143,6 @@ class AccountController extends Controller
             }
         });
 
-        return redirect()->back()->with('success', 'User has been successfully updated!');
+        return redirect()->back()->with('success', __('account.user_updated'));
     }
 }

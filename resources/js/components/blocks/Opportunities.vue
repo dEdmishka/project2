@@ -2,10 +2,10 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Link } from "@inertiajs/vue3"
 import {
-  Medal,
-  Map,
-  Plane,
-  Gift,
+  Stethoscope,
+  ShieldHalf,
+  Baby,
+  Hospital,
   MoveRight,
 } from 'lucide-vue-next'
 
@@ -13,32 +13,36 @@ import { motion } from 'motion-v'
 
 const features = [
   {
-    icon: Medal,
-    title: "Accessibility",
+    icon: Stethoscope,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація за різними напрямками",
-    href: "/info/directions",
+      "pages.rehab_directions",
+    // href: "/info/directions",
   },
   {
-    icon: Map,
-    title: "Community",
+    icon: ShieldHalf,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація поранених",
-    href: "/info/wounded",
+      "pages.rehab_wounded",
+    // href: "/info/wounded",
   },
   {
-    icon: Plane,
-    title: "Scalability",
+    icon: Baby,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація дітей",
-    href: "/info/kids",
+      "pages.rehab_kids",
+    // href: "/info/kids",
   },
   {
-    icon: Gift,
-    title: "Gamification",
+    icon: Hospital,
+    title: "pages.rehabilitation",
+    date: "2025-01-01",
     description:
-      "Реабілітація за кошти НСЗУ",
-    href: "/info/national",
+      "pages.rehab_national",
+    // href: "/info/national",
   },
 ];
 </script>
@@ -59,11 +63,12 @@ const features = [
           <component class="h-24 w-24" :is="feature.icon" />
         </CardHeader>
         <CardContent class="text-2xl md:text-3xl font-bold">
-          <p>{{ feature.description }}</p>
+          <p>{{ $t(feature.description) }}</p>
         </CardContent>
         <CardFooter class="grid grid-cols-2 gap-8 items-center font-bold uppercase">
           <div>
-            <Link :href="feature.href" class="a-animate">Details</Link>
+            <!-- <Link :href="feature.href" class="a-animate">{{ $t('page.details') }}</Link> -->
+            <Link href="#" class="a-animate">{{ $t('pages.details') }}</Link>
             <MoveRight class="ml-2 h-4 w-4 inline-block" />
           </div>
         </CardFooter>

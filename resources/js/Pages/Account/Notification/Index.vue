@@ -51,22 +51,22 @@ const groupedNotifications = computed(() => {
 <template>
     <Layout>
         <template #title>
-            Notifications
+            {{ $t('pages.notifications') }}
         </template>
         <div class="">
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-3">
                     <!-- Left: Types -->
                     <div class="content gap-0 p-0 outline-none space-y-2">
-                        <h2 class="text-xl font-semibold mb-2">Notification Types</h2>
+                        <h2 class="text-xl font-semibold mb-2">{{ $t('pages.notification_types') }}</h2>
                         <Button
-                            :class="`w-full justify-start ${buttonVariants({ variant: selectedTypeId === null ? 'secondary' : 'ghost' })} border p-5`"
+                            :class="`w-full justify-start ${buttonVariants({ variant: selectedTypeId === null ? 'default' : 'secondary' })} border p-5`"
                             @click="selectType(null)">
-                            All Notifications
+                            {{ $t('pages.all_notifications') }}
                         </Button>
                         <div v-for="type in types" :key="type.id">
                             <Button
-                                :class="`w-full justify-start ${buttonVariants({ variant: selectedTypeId === type.type ? 'secondary' : 'ghost' })} border p-5`"
+                                :class="`w-full justify-start ${buttonVariants({ variant: selectedTypeId === type.type ? 'default' : 'secondary' })} border p-5`"
                                 @click="selectType(type.type)">
                                 {{ type.type }}
                             </Button>
@@ -98,7 +98,7 @@ const groupedNotifications = computed(() => {
                                 </div>
                             </div>
                         </div>
-                        <div v-else class="text-muted-foreground">No notifications found.</div>
+                        <div v-else class="text-muted-foreground">{{ $t('pages.no_notifications') }}</div>
                     </div>
                 </div>
             </div>

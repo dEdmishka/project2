@@ -124,41 +124,41 @@ watch(formattedDateTime, newVal => {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Новий пацієнт</DialogTitle>
+                <DialogTitle>{{ $t('pages.new_patient') }}</DialogTitle>
                 <DialogDescription>
-                    Внесіть додаткові дані для завершення реєстрації.
+                    {{ $t('pages.enter_reg_details') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="grid items-center gap-1">
                         <Label for="first_name" class="text-right">
-                            Ім'я
+                            {{ $t('label.first_name') }}
                         </Label>
                         <Input id="first_name" class="col-span-3" required v-model="form.first_name" disabled />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="last_name" class="text-right">
-                            Прізвище
+                            {{ $t('label.last_name') }}
                         </Label>
                         <Input id="last_name" class="col-span-3" required v-model="form.last_name" disabled />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="procedure_name" class="text-right">
-                            Процедура
+                            {{ $t('label.procedure') }}
                         </Label>
                         <Input id="procedure_name" class="col-span-3" required v-model="form.procedure_name" disabled />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="duration" class="text-right">
-                            Тривалість процедури
+                            {{ $t('label.duration') }}
                         </Label>
                         <Input id="duration" class="col-span-3" required v-model="form.duration" disabled />
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div class="grid gap-2 max-w-sm">
-                        <Label for="datetime">Time</Label>
+                        <Label for="datetime">{{ $t('label.time') }}</Label>
                         <Popover v-model:open="openDateTime">
                             <PopoverTrigger as-child>
                                 <Button variant="outline" class="w-full justify-start text-left">
@@ -178,7 +178,7 @@ watch(formattedDateTime, newVal => {
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Зберегти
+                    {{ $t('label.save') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

@@ -117,6 +117,6 @@ class CenterController extends Controller
         //     }
         // });
 
-        return redirect()->route('account.index')->with('success', 'Patient has been successfully created!');
+        return redirect()->route('account.index')->with('success', __('account.patient_created'));
     }
 }

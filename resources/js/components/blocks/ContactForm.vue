@@ -58,21 +58,21 @@ const submit = () => {
             <div class="grid grid-cols-1 gap-4">
                 <div class="grid items-center gap-1">
                     <Label for="email" class="text-right">
-                        Пошта
+                        {{ $t('pages.email') }}
                     </Label>
                     <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
                     <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
                 </div>
                 <div class="grid items-center gap-1">
                     <Label for="description" class="text-right">
-                        Повідомлення
+                        {{ $t('pages.message') }}
                     </Label>
                     <Textarea id="description" v-model="form.description" class="max-h-[175px]"></Textarea>
                     <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
                 </div>
             </div>
             <Button type="submit" @click="submit">
-                Надіслати
+                {{ $t('pages.send') }}
             </Button>
         </div>
     </motion.section>

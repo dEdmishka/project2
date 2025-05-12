@@ -111,10 +111,10 @@ class StaffController extends Controller
                     'end_time' => $hours['is_day_off'] ? null : $hours['end_time'],
                     'is_day_off' => $hours['is_day_off'],
                 ]);
-            }
+            }   
         });
 
-        return redirect()->back()->with('success', 'Staff member has been successfully created!');
+        return redirect()->back()->with('success', __('admin.staff_created'));
     }
 
     public function update(Request $request, $id)
@@ -185,7 +185,7 @@ class StaffController extends Controller
             }
         });
 
-        return redirect()->back()->with('success', 'Staff member has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.staff_edited'));
     }
 
     public function delete($id)
@@ -203,9 +203,9 @@ class StaffController extends Controller
                 $staff->workingHours()->delete();
             });
 
-            return redirect()->back()->with('success', 'Staff member has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.staff_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no staff member to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_staff_delete')]);
     }
 }

@@ -14,7 +14,7 @@ import { Search } from 'lucide-vue-next'
         <SidebarGroup class="py-0">
             <SidebarGroupContent class="relative">
                 <Label for="search" class="sr-only">
-                    Search
+                    {{ $t('pages.search') }}
                 </Label>
                 <SidebarInput id="search" placeholder="Search the docs..." class="pl-8" />
                 <Search

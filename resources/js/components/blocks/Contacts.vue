@@ -24,13 +24,14 @@ import { motion } from 'motion-v'
             }">
                 <h1 class="inline">
                     <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-                        Contact
+                        {{ $t('pages.contact') }}
                     </span>
                 </h1>
+                {{ "" }}
                 <h2 class="inline">
                     <span
                         class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-                        Us
+                        {{ $t('pages.with_us') }}
                     </span>
                 </h2>
             </motion.div>
@@ -44,9 +45,9 @@ import { motion } from 'motion-v'
                     delay: 0.05
                 }
             }">
-                Зверніться до нас у будь-який момент!
+                {{ $t('pages.contact_us_p2') }}
                 <br />
-                Вкажіть тему Вашого звернення та зміст у формі, або напишіть нам в особисті!
+                {{ $t('pages.contact_us_p2') }}
             </motion.p>
 
             <motion.div class="space-y-6 md:space-y-0 md:space-x-4" :animate="{
@@ -60,12 +61,12 @@ import { motion } from 'motion-v'
             }">
                 <Link rel="noreferrer noopener" href="https://github.com/dEdmishka" target="_blank"
                     :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`">
-                Github Repository
+                {{ $t('pages.github') }}
                 <Github class="ml-2 w-5 h-5" />
                 </Link>
                 <Link rel="noreferrer noopener" href="https://t.me/mishka10101" target="_blank"
                     :class="`w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`">
-                Telegram
+                {{ $t('pages.telegram') }}
                 <Send class="ml-2 w-5 h-5" />
                 </Link>
             </motion.div>

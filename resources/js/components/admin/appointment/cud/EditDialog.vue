@@ -170,15 +170,15 @@ watch(formattedDateTime, newVal => {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Edit appointment</DialogTitle>
+                <DialogTitle>{{ $t('admin.appointment.edit') }}</DialogTitle>
                 <DialogDescription>
-                    Make changes to your appointment here. Click save when you're done.
+                    {{ $t('admin.appointment.make_changes') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid items-center gap-2">
                     <Label for="notes" class="text-right">
-                        Notes
+                        {{ $t('label.notes') }}
                     </Label>
                     <Textarea v-model="form.notes"></Textarea>
                     <span v-if="errors.notes" class="text-red-600 text-sm">{{ errors.notes }}</span>
@@ -186,25 +186,25 @@ watch(formattedDateTime, newVal => {
                 <div class="grid grid-cols-2 gap-2">
                     <div class="grid items-center gap-2">
                         <Label for="status" class="text-right capitalize">
-                            Status: {{ form.status }}
+                            {{ $t('label.status') }}: {{ form.status }}
                         </Label>
                         <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="active" value="active" />
-                                <Label for="active">Active</Label>
+                                <Label for="active">{{ $t('label.active') }}</Label>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="closed" value="closed" />
-                                <Label for="closed">Closed</Label>
+                                <Label for="closed">{{ $t('label.closed') }}</Label>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <RadioGroupItem id="canceled" value="canceled" />
-                                <Label for="canceled">Canceled</Label>
+                                <Label for="canceled">{{ $t('label.canceled') }}</Label>
                             </div>
                         </RadioGroup>
                     </div>
                     <div class="grid gap-2 max-w-sm">
-                        <Label for="datetime">Time</Label>
+                        <Label for="datetime">{{ $t('label.time') }}</Label>
                         <Popover v-model:open="openDateTime">
                             <PopoverTrigger as-child>
                                 <Button variant="outline" class="w-full justify-start text-left">
@@ -225,7 +225,7 @@ watch(formattedDateTime, newVal => {
                 <div class="grid grid-cols-2 gap-2">
                     <div class="grid gap-2">
                         <Label for="patient" class="text-right">
-                            Patient
+                            {{ $t('label.patient') }}
                         </Label>
                         <Popover id="patient" v-model:open="openPatient">
                             <PopoverTrigger as-child>
@@ -239,7 +239,7 @@ watch(formattedDateTime, newVal => {
                             <PopoverContent class="p-0 overflow-y-auto max-h-70">
                                 <Command>
                                     <CommandInput placeholder="Search patients..." v-model="searchPatient" />
-                                    <CommandEmpty>No patients found.</CommandEmpty>
+                                    <CommandEmpty>{{ $t('label.no_patient') }}</CommandEmpty>
                                     <CommandGroup>
                                         <CommandItem v-for="patient in filteredPatients" :key="patient.id"
                                             :value="patient.user.first_name" @select="() => selectPatient(patient)">
@@ -255,7 +255,7 @@ watch(formattedDateTime, newVal => {
                     </div>
                     <div class="grid gap-2">
                         <Label for="ward" class="text-right">
-                            Ward
+                            {{ $t('label.ward') }}
                         </Label>
                         <Popover id="ward" v-model:open="openWard">
                             <PopoverTrigger as-child>
@@ -267,7 +267,7 @@ watch(formattedDateTime, newVal => {
                             <PopoverContent class="p-0 overflow-y-auto max-h-70">
                                 <Command>
                                     <CommandInput placeholder="Search ward..." v-model="searchWard" />
-                                    <CommandEmpty>No wards found.</CommandEmpty>
+                                    <CommandEmpty>{{ $t('label.no_ward') }}</CommandEmpty>
                                     <CommandGroup>
                                         <CommandItem v-for="ward in filteredWards" :key="ward.id" :value="ward.name"
                                             @select="() => selectWard(ward)">
@@ -284,7 +284,7 @@ watch(formattedDateTime, newVal => {
                 </div>
                 <div class="grid gap-2">
                     <Label for="staff" class="text-right">
-                        Staff
+                        {{ $t('label.staff') }}
                     </Label>
                     <Popover id="staff" v-model:open="openStaff">
                         <PopoverTrigger as-child>
@@ -299,7 +299,7 @@ watch(formattedDateTime, newVal => {
                         <PopoverContent class="p-0 overflow-y-auto max-h-70">
                             <Command>
                                 <CommandInput placeholder="Search staff..." v-model="searchStaff" />
-                                <CommandEmpty>No staff found.</CommandEmpty>
+                                <CommandEmpty>{{ $t('label.no_staff') }}</CommandEmpty>
                                 <CommandGroup>
                                     <CommandItem v-for="staff in filteredStaff" :key="staff.id"
                                         :value="staff.user.first_name" @select="() => toggleStaff(staff)"
@@ -342,7 +342,7 @@ watch(formattedDateTime, newVal => {
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Save changes
+                    {{ $t('label.save_changes') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

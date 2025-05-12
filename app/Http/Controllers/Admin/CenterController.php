@@ -97,7 +97,7 @@ class CenterController extends Controller
             }
         });
 
-        return redirect()->back()->with('success', 'Center has been successfully created!');
+        return redirect()->back()->with('success', __('admin.center_created'));
     }
 
     public function update(Request $request, $id)
@@ -166,7 +166,7 @@ class CenterController extends Controller
             }
         });
 
-        return redirect()->back()->with('success', 'Center has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.center_edited'));
     }
 
     public function delete($id)
@@ -184,9 +184,9 @@ class CenterController extends Controller
                 $center->workingHours()->delete();
             });
 
-            return redirect()->back()->with('success', 'Center has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.center_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no center to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_center_delete')]);
     }
 }

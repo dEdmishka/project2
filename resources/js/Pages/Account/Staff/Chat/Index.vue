@@ -93,7 +93,7 @@ const submit = () => {
   //   onSuccess: (event) => {
   //     const data = event.props.data;
   //     const successMessage = event.props.flash.success;
-  //     toast('Success!', {
+  //     toast('account.toast.success', {
   //       variant: 'default',
   //       duration: 3000,
   //       description: successMessage,
@@ -152,7 +152,7 @@ const messages = ref({})
 <template>
   <Layout>
     <template #title>
-      Chat
+      {{ $t('account.admin.chat') }}
     </template>
     <div class="">
       <!-- Hiiiii our user {{ $page['props']['user'] }} -->
@@ -163,11 +163,10 @@ const messages = ref({})
           <div class="content gap-0 p-0 outline-none">
             <div class="header pb-4 pt-5">
               <h1 class="text-lg font-semibold md:text-xl">
-                New message
+                {{ $t('pages.new_message') }}
               </h1>
               <div class="desc">
-                Invite a user to this thread. This will create a new group
-                message.
+                {{ $t('pages.invite_user') }}
               </div>
             </div>
             <div class="w-full border-r space-y-4 py-2">
@@ -189,7 +188,7 @@ const messages = ref({})
                 <PopoverContent class="p-0 overflow-y-auto max-w-70">
                   <Command>
                     <CommandInput placeholder="Search users..." v-model="searchUser" />
-                    <CommandEmpty>No users found.</CommandEmpty>
+                    <CommandEmpty>{{ $t('pages.no_users') }}</CommandEmpty>
                     <CommandGroup>
                       <CommandItem v-for="user in filteredUsers" :key="user.id" :value="user.first_name"
                         @select="() => selectUser(user)">

@@ -270,7 +270,7 @@ watch(selectedField, (newField, oldField) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-2 min-w-[225px] justify-start">
-                            Filter By<span class="capitalize">{{ selectedField }}</span>
+                            {{ $t('table.filter_by') }}ble.filter_by') }}<span class="capitalize">{{ selectedField }}</span>
                             <ChevronDown class="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
@@ -288,7 +288,7 @@ watch(selectedField, (newField, oldField) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto">
-                            Columns
+                            {{ $t('table.columns') }}table.columns') }}
                             <ChevronDown class="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
@@ -333,7 +333,7 @@ watch(selectedField, (newField, oldField) => {
 
                         <TableRow v-else>
                             <TableCell :colspan="columns.length" class="h-24 text-center">
-                                No results.
+                                {{ $t('table.no_results') }}
                             </TableCell>
                         </TableRow>
                     </TableBody>
@@ -342,16 +342,16 @@ watch(selectedField, (newField, oldField) => {
 
             <div class="flex items-center justify-end space-x-2 py-4">
                 <div class="flex-1 text-sm text-muted-foreground">
-                    {{ table.getFilteredSelectedRowModel().rows.length }} of
-                    {{ table.getFilteredRowModel().rows.length }} row(s) selected.
+                    {{ table.getFilteredSelectedRowModel().rows.length }} {{ $t('table.of') }}
+                    {{ table.getFilteredRowModel().rows.length }} {{ $t('table.rows_selected') }}
                 </div>
                 <div class="space-x-2">
                     <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
                         @click="table.previousPage()">
-                        Previous
+                        {{ $t('table.previous') }}
                     </Button>
                     <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()">
-                        Next
+                        {{ $t('table.next') }}
                     </Button>
                 </div>
             </div>

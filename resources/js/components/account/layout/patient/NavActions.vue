@@ -32,7 +32,6 @@ import {
 
 import { useForm } from '@inertiajs/vue3';
 import { Link } from "@inertiajs/vue3"
-import SheetDescription from '@/components/ui/sheet/SheetDescription.vue';
 import NotificationMenu from '@/components/blocks/NotificationMenu.vue';
 
 const form = useForm({});
@@ -41,19 +40,19 @@ const form = useForm({});
 const routeList = [
     {
         href: "/",
-        label: "Home",
+        label: "account.nav.home",
     },
     {
         href: "/about",
-        label: "About",
+        label: "account.nav.about",
     },
     {
         href: "/contacts",
-        label: "Contacts",
+        label: "account.nav.contacts",
     },
     {
         href: "/help",
-        label: "Help",
+        label: "account.nav.help",
     },
 ];
 
@@ -70,9 +69,11 @@ const logout = () => {
                 <div class="text-2xl font-bold my-auto">
                     <h1 class="inline">
                         <span
-                            class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                            class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">{{
+                                $t('account.title.rehab') }}</span>
                         <span
-                            class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                            class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">{{
+                                $t('account.title.system') }}</span>
                     </h1>
                 </div>
                 </Link>
@@ -101,20 +102,22 @@ const logout = () => {
                             <SheetHeader>
                                 <SheetTitle class="font-bold text-xl inline">
                                     <span
-                                        class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                                        class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">{{
+                                            $t('account.title.rehab') }}</span>
                                     <span
-                                        class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                                        class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">{{
+                                            $t('account.title.system') }}</span>
                                 </SheetTitle>
                             </SheetHeader>
                             <nav class="flex flex-col justify-center items-center gap-2 mt-4">
                                 <Link v-for="route in routeList" :key="route.label" :href="route.href"
                                     rel="noreferrer noopener" :class="buttonVariants({ variant: 'ghost' })">
-                                {{ route.label }}
+                                {{ $t(route.label) }}
                                 </Link>
                                 <a rel="noreferrer noopener" href="https://github.com/dEdmishka" target="_blank"
                                     :class="`w-[110px] border ${buttonVariants({ variant: 'secondary' })}`">
                                     <Github class="mr-2 w-5 h-5" />
-                                    Github
+                                    {{ $t('account.title.github') }}
                                 </a>
                             </nav>
                         </SheetContent>
@@ -131,21 +134,21 @@ const logout = () => {
                         <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem>
                                 <Link href="/account" class="flex gap-2 p-2">
-                                <User /><span>My Account</span>
+                                <User /><span>{{ $t('account.title.account') }}</span>
                                 </Link>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
-                        <DropdownMenuGroup class="border-b last:border-none">
+                        <!-- <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem>
                                 <Link href="/settings" class="flex gap-2 p-2">
-                                <Settings2 /><span>Settings</span>
+                                <Settings2 /><span>{{ $t('account.title.settings') }}</span>
                                 </Link>
                             </DropdownMenuItem>
-                        </DropdownMenuGroup>
+                        </DropdownMenuGroup> -->
                         <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem @click="logout">
                                 <div class="flex gap-2 p-2">
-                                    <CornerUpLeft /><span>Logout</span>
+                                    <CornerUpLeft /><span>{{ $t('account.title.logout') }}</span>
                                 </div>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
@@ -157,7 +160,7 @@ const logout = () => {
             <nav class="hidden xl:flex flex-1 items-center justify-center gap-2">
                 <Link v-for="(route, i) in routeList" :key="i" :href="route.href" rel="noreferrer noopener"
                     :class="`text-[17px] ${buttonVariants({ variant: 'ghost' })}`">
-                {{ route.label }}
+                {{ $t(route.label) }}
                 </Link>
             </nav>
 
@@ -165,7 +168,7 @@ const logout = () => {
                 <a rel="noreferrer noopener" href="https://github.com/leoMirandaa/shadcn-landing-page.git"
                     target="_blank" :class="`border ${buttonVariants({ variant: 'secondary' })}`">
                     <Github class="mr-2 w-5 h-5" />
-                    Github
+                    {{ $t('account.title.github') }}
                 </a>
 
                 <NotificationMenu />
@@ -180,21 +183,21 @@ const logout = () => {
                         <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem>
                                 <Link href="/account" class="flex gap-2 p-2">
-                                <User /><span>My Account</span>
+                                <User /><span>{{ $t('account.title.account') }}</span>
                                 </Link>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
-                        <DropdownMenuGroup class="border-b last:border-none">
+                        <!-- <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem>
                                 <Link href="/settings" class="flex gap-2 p-2">
-                                <Settings2 /><span>Settings</span>
+                                <Settings2 /><span>{{ $t('account.title.settings') }}</span>
                                 </Link>
                             </DropdownMenuItem>
-                        </DropdownMenuGroup>
+                        </DropdownMenuGroup> -->
                         <DropdownMenuGroup class="border-b last:border-none">
                             <DropdownMenuItem @click="logout">
                                 <div class="flex gap-2 p-2">
-                                    <CornerUpLeft /><span>Logout</span>
+                                    <CornerUpLeft /><span>{{ $t('account.title.logout') }}</span>
                                 </div>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>

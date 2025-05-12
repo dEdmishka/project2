@@ -31,10 +31,10 @@ const submit = () => {
     <Card class="mx-auto max-w-sm">
         <CardHeader>
             <CardTitle class="text-xl">
-                Sign Up
+                {{ $t('account.auth.signup') }}
             </CardTitle>
             <CardDescription>
-                Enter your information to create an account
+                {{ $t('account.auth.enter_info') }}
             </CardDescription>
         </CardHeader>
         <CardContent>
@@ -42,45 +42,45 @@ const submit = () => {
                 <div class="grid gap-4">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="grid gap-2">
-                            <Label for="first-name">First name</Label>
+                            <Label for="first-name">{{ $t('account.auth.first_name') }}</Label>
                             <Input id="first-name" v-model="form.first_name"
                                 :class="{ 'is-invalid': errors.first_name }" required autocomplete="false" />
                             <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
                         </div>
                         <div class="grid gap-2">
-                            <Label for="last-name">Last name</Label>
+                            <Label for="last-name">{{ $t('account.auth.last_name') }}</Label>
                             <Input id="last-name" v-model="form.last_name" :class="{ 'is-invalid': errors.last_name }"
                                 required autocomplete="false" />
                             <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
                         </div>
                     </div>
                     <div class="grid gap-2">
-                        <Label for="email">Email</Label>
+                        <Label for="email">{{ $t('account.auth.email') }}</Label>
                         <Input id="email" type="email" v-model="form.email" :class="{ 'is-invalid': errors.email }"
                             required autocomplete="false" />
                         <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
                     </div>
                     <div class="grid gap-2">
-                        <Label for="password">Password</Label>
+                        <Label for="password">{{ $t('account.auth.password') }}</Label>
                         <Input id="password" type="password" v-model="form.password"
                             :class="{ 'is-invalid': errors.password }" required />
                         <span v-if="errors.password" class="text-red-600 text-sm">{{ errors.password }}</span>
                     </div>
                     <div class="grid gap-2">
-                        <Label for="password_confirmation">Confirm Password</Label>
+                        <Label for="password_confirmation">{{ $t('account.auth.confirm_password') }}</Label>
                         <Input id="password_confirmation" type="password" v-model="form.password_confirmation" />
                     </div>
                     <Button type="submit" class="w-full">
-                        Create an account
+                        {{ $t('account.auth.create_account') }}
                     </Button>
                     <Button variant="outline" class="w-full">
-                        Sign up with GitHub
+                        {{ $t('account.auth.signup_google') }}
                     </Button>
                 </div>
                 <div class="mt-4 text-center text-sm">
-                    Already have an account?
+                    {{ $t('account.auth.already_have_account') }}
                     <Link href="/login" class="a-animate">
-                        Sign in
+                    {{ $t('account.auth.signin') }}
                     </Link>
                 </div>
             </form>

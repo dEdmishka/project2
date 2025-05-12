@@ -12,17 +12,12 @@ defineProps({
 const emit = defineEmits(['current']);
 
 function showEditDialog(objData, editDialog) {
-    // navigator.clipboard.writeText(objData.id);
     editDialog.value = true;
-    // console.log(url);
-    // console.log(objData);
     emit('current', objData);
 }
 
 function showDeleteDialog(objData, deleteDialog) {
     deleteDialog.value = true;
-    // console.log(url);
-    // console.log(objData);
     emit('current', objData);
 }
 </script>
@@ -36,12 +31,12 @@ function showDeleteDialog(objData, deleteDialog) {
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>{{ $t('pages.actions') }}</DropdownMenuLabel>
             <DropdownMenuItem @click="showEditDialog(objData, editDialog)">
-                Edit
+                {{ $t('pages.edit') }}
             </DropdownMenuItem>
             <DropdownMenuItem @click="showDeleteDialog(objData, deleteDialog)">
-                Delete
+                {{ $t('pages.delete') }}
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

@@ -87,23 +87,23 @@ const formatPhone = (event, index) => {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Створити центр</DialogTitle>
+                <DialogTitle>{{ $t('admin.center.create') }}</DialogTitle>
                 <DialogDescription>
-                    Внесіть дані про центр, щоб створити новий запис.
+                    {{ $t('admin.center.make_changes') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="grid items-center gap-1">
                         <Label for="name" class="text-right">
-                            Назва
+                            {{ $t('label.name') }}
                         </Label>
                         <Input id="name" class="col-span-3" required v-model="form.name" />
                         <span v-if="errors.name" class="text-red-600 text-sm">{{ errors.name }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="email" class="text-right">
-                            Пошта
+                            {{ $t('label.email') }}
                         </Label>
                         <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
                         <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
@@ -113,7 +113,7 @@ const formatPhone = (event, index) => {
 
                     <div class="grid items-center gap-1">
                         <Label for="name" class="text-right">
-                            Соціальні мережі
+                            {{ $t('label.socail_links') }}
                         </Label>
                         <div class="space-y-2">
                             <div v-for="(social, index) in form.social_links" :key="'social-' + index"
@@ -134,13 +134,13 @@ const formatPhone = (event, index) => {
                         </div>
                         <Button type="button" variant="outline" class="mt-2"
                             @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
-                            <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
+                            <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_social_link') }}
                         </Button>
                     </div>
 
                     <div class="grid items-center gap-1">
                         <Label for="name" class="text-right">
-                            Телефони
+                            {{ $t('label.phones') }}
                         </Label>
                         <div class="space-y-2">
                             <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
@@ -159,7 +159,7 @@ const formatPhone = (event, index) => {
 
                         <Button type="button" variant="outline" class="mt-2"
                             @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
-                            <Plus class="h-4 w-4 mr-1" /> Додати Телефон
+                            <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone') }}
                         </Button>
                     </div>
                 </div>
@@ -168,7 +168,7 @@ const formatPhone = (event, index) => {
                     <div class="space-y-4">
                         <div class="grid items-start gap-1">
                             <Label for="address" class="text-right">
-                                Адреса
+                                {{ $t('label.address') }}
                             </Label>
                             <Input id="address" class="col-span-3" required v-model="form.address" />
                             <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
@@ -176,7 +176,7 @@ const formatPhone = (event, index) => {
 
                         <div class="grid items-center gap-1">
                             <Label for="description" class="text-right">
-                                Опис
+                                {{ $t('label.description') }}
                             </Label>
                             <Textarea id="description" v-model="form.description" class="max-h-[175px]"></Textarea>
                             <span v-if="errors.description" class="text-red-600 text-sm">{{ errors.description }}</span>
@@ -197,7 +197,7 @@ const formatPhone = (event, index) => {
 
                             <div class="flex items-center gap-2">
                                 <Checkbox v-model:model-value="hour.is_day_off" id="day-off-{{ index }}" />
-                                <label :for="'day-off-' + index" class="text-sm">Вихідний</label>
+                                <label :for="'day-off-' + index" class="text-sm">{{ $t('label.dayoff') }}</label>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ const formatPhone = (event, index) => {
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Зберегти
+                    {{ $t('label.save') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

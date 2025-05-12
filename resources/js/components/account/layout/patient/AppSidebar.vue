@@ -22,45 +22,45 @@ const props = defineProps();
 const data = {
   navMain: [
     {
-      title: "Профіль",
+      title: "account.sidebar.profile",
       url: "/account",
       items: [
         {
-          title: "Медична картка",
+          title: "account.sidebar.medcard",
           url: "/account/medcard",
         },
         {
-          title: "Процедури",
+          title: "account.sidebar.procedures",
           url: "/account/procedures",
         },
         {
-          title: "Заплановані сеанси",
+          title: "account.sidebar.appointments",
           url: "/account/appointments",
         },
         {
-          title: "Діагноз",
-          url: "/account/diagnosis",
-        },
-        {
-          title: "Призначене лікування",
-          url: "/account/treatments",
-        },
-        {
-          title: "Документи",
-          url: "/account/documents",
-        },
-        {
-          title: "Рахунок",
-          url: "/account/billing",
-        },
-        {
-          title: "Чати",
+          title: "account.sidebar.chat",
           url: "/account/chat",
         },
         {
-          title: "Повідомлення",
+          title: "account.sidebar.notifications",
           url: "/account/notifications",
         },
+        // {
+        //   title: "account.sidebar.diagnosis",
+        //   url: "/account/diagnosis",
+        // },
+        // {
+        //   title: "account.sidebar.treatments",
+        //   url: "/account/treatments",
+        // },
+        // {
+        //   title: "account.sidebar.documents",
+        //   url: "/account/documents",
+        // },
+        // {
+        //   title: "account.sidebar.billing",
+        //   url: "/account/billing",
+        // },
       ],
     },
   ],
@@ -70,7 +70,7 @@ const data = {
 <template>
   <Sidebar v-bind="props">
     <SidebarHeader class="pt-4">
-      <SearchForm />
+      <!-- <SearchForm /> -->
     </SidebarHeader>
     <SidebarContent class="text-xl text-gray-700 dark:text-gray-100">
       <SidebarGroup>
@@ -78,13 +78,13 @@ const data = {
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
               <Link :href="item.url" class="font-medium">
-              {{ item.title }}
+              {{ $t(item.title) }}
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="gap-4">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
                 <SidebarMenuSubButton as-child :is-active="$page.url === childItem.url">
-                  <Link :href="childItem.url">{{ childItem.title }}</Link>
+                  <Link :href="childItem.url">{{ $t(childItem.title) }}</Link>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             </SidebarMenuSub>

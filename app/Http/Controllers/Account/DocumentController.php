@@ -200,7 +200,7 @@ class DocumentController extends Controller
                     $record->documents()->save($document);
                 });
 
-                return redirect()->back()->with(['success' => 'Medical card uploaded successfully!', 'data' => $patient]);
+                return redirect()->back()->with(['success' => __('account.medcard_uploaded'), 'data' => $patient]);
             }
 
             $validator = Validator::make($request->all(), [
@@ -256,7 +256,7 @@ class DocumentController extends Controller
                 $record->documents()->save($document);
             });
 
-            return redirect()->back()->with('success', 'Medical card uploaded successfully!');
+            return redirect()->back()->with('success', __('account.medcard_uploaded'));
         }
 
         return redirect()->back();
@@ -361,7 +361,7 @@ class DocumentController extends Controller
                     $record->documents()->save($document);
                 });
 
-                return redirect()->back()->with('success', 'Intake summary uploaded successfully!');
+                return redirect()->back()->with('success', __('account.intake_uploaded'));
             }
 
             // $validator = Validator::make($request->all(), []);
@@ -420,7 +420,7 @@ class DocumentController extends Controller
                 $record->documents()->save($document);
             });
 
-            return redirect()->back()->with('success', 'Intake summary uploaded successfully!');
+            return redirect()->back()->with('success', __('account.intake_uploaded'));
         }
 
         return redirect()->back();

@@ -100,7 +100,7 @@ Route::group([], function () {
             Route::get('/notifications', [NotificationController::class, 'index'])->name('account.notification');
             Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name('account.notification.read');
         });
-        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        // Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });
 });
@@ -114,7 +114,7 @@ Route::group(['prefix' => 'admin'], function () {
     // Authenticate middleware for admin
     Route::group(['middleware' => 'admin.auth'], function () {
         Route::get('/', [AdminDashboardController::class, 'home'])->name('admin.home');
-        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+        // Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         Route::group(['prefix' => 'centers'], function () {
             Route::get('/', [AdminCenterController::class, 'index'])->name('admin.center.index');
             Route::post('/', [AdminCenterController::class, 'store'])->name('admin.center.store');

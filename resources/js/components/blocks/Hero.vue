@@ -47,9 +47,9 @@ onMounted(() => {
 const features = [
   {
     icon: CircleUserRound,
-    title: "New patient",
+    title: "pages.new_patient",
     description:
-      "Roadmap for patient",
+      "pages.roadmap_patient",
     href: "/roadmap/patient",
     animation: {
       opacity: [0, 1],
@@ -63,9 +63,9 @@ const features = [
   },
   {
     icon: BookHeart,
-    title: "New employee",
+    title: "pages.new_employee",
     description:
-      "Roadmap for employee",
+      "pages.roadmap_employee",
     href: "/roadmap/employee",
     animation: {
       opacity: [0, 1],
@@ -73,15 +73,15 @@ const features = [
       transition: {
         type: 'spring',
         duration: 2,
-        delay: 0.5
+        delay: 0.8
       }
     }
   },
   {
     icon: ShieldUser,
-    title: "New administrator",
+    title: "pages.new_administrator",
     description:
-      "Roadmap for administrator",
+      "pages.roadmap_administrator",
     href: "/roadmap/administrator",
     animation: {
       opacity: [0, 1],
@@ -95,9 +95,9 @@ const features = [
   },
   {
     icon: Building2,
-    title: "New center",
+    title: "pages.new_center",
     description:
-      "Roadmap for center",
+      "pages.roadmap_center",
     href: "/roadmap/center",
     animation: {
       opacity: [0, 1],
@@ -126,13 +126,13 @@ const features = [
       }">
         <h1 class="inline">
           <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-            Rehabilitation
+            {{ $t('account.title.rehab') }}
           </span>
           <br />
         </h1>
         <h2 class="inline">
           <span class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-            System
+            {{ $t('account.title.system') }}
           </span>
         </h2>
       </motion.div>
@@ -146,14 +146,12 @@ const features = [
           delay: 0.05
         }
       }">
-        <!-- Build your React landing page effortlessly with the required sections
-          to your project. -->
-        Вітаємо у нашій системі!
+        {{ $t('pages.greeting') }}
         <br />
-        В ній ви маєте змогу знайти необхідну допомогу у відновленні Вашого здоров`я!
+        {{ $t('pages.you_have_opportunity') }}
       </motion.p>
 
-      <motion.div class="space-y-6 md:space-y-0 md:space-x-4" :animate="{
+      <motion.div class="space-y-6 md:space-y-0 md:space-x-4 flex" :animate="{
         opacity: [0, 1],
         x: [-100, 0],
         transition: {
@@ -162,12 +160,16 @@ const features = [
           delay: 0.3
         }
       }">
-        <motion.Link href="/signup" :class="`cursor-pointer w-full md:w-1/3 ${buttonVariants({ variant: 'default' })}`"
-          :whileHover="{ scale: 1.05 }">Signup</motion.Link>
+        <motion.div :whileHover="{ scale: 1.05 }" class="w-full md:w-1/3">
+          <Link href="/signup" :class="`cursor-pointer w-full ${buttonVariants({ variant: 'default' })}`">
+          {{ $t('pages.signup') }}</Link>
+        </motion.div>
 
-        <motion.Link href="/login" :class="`cursor-pointer w-full md:w-1/3 ${buttonVariants({ variant: 'outline' })}`"
-          :whileHover="{ scale: 1.05 }">Login
-        </motion.Link>
+        <motion.div :whileHover="{ scale: 1.05 }" class="w-full md:w-1/3">
+          <Link href="/login" :class="`cursor-pointer w-full ${buttonVariants({ variant: 'outline' })}`">{{
+            $t('pages.login') }}
+          </Link>
+        </motion.div>
       </motion.div>
 
       <motion.div class="space-y-4 md:space-y-0 md:space-x-4 md:px-4" :animate="{
@@ -179,14 +181,17 @@ const features = [
           delay: 0.3
         }
       }">
-        <motion.Link href="/contacts" :class="`cursor-pointer w-full md:w-2/3 ${buttonVariants({ variant: 'outline' })}`"
-          :whileHover="{ scale: 1.05 }">Our contacts</motion.Link>
+        <motion.div :whileHover="{ scale: 1.05 }" class="w-full md:w-2/3">
+          <Link href="/contacts" :class="`cursor-pointer w-full ${buttonVariants({ variant: 'outline' })}`">{{
+            $t('pages.our_contacts') }}</Link>
+        </motion.div>
       </motion.div>
     </div>
 
     <div class="text-center space-y-6" ref="containerRef">
       <div class="text-2xl md:text-3xl font-bold">
-        <h6>Новенький у системі? Оберіть свій шлях!</h6>
+        <h6>{{
+          $t('pages.new_to_system') }}</h6>
       </div>
       <div class="text-2sm sm:text-1xl font-bold">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -196,10 +201,10 @@ const features = [
             <CardHeader>
               <CardTitle class="grid gap-2 place-items-center">
                 <component :is="feature.icon" />
-                {{ feature.title }}
+                {{ $t(feature.title) }}
               </CardTitle>
             </CardHeader>
-            <CardContent>{{ feature.description }}</CardContent>
+            <CardContent>{{ $t(feature.description) }}</CardContent>
             </Link>
           </Card>
         </div>

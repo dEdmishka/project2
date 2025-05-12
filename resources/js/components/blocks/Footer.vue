@@ -11,94 +11,94 @@ import { Link } from "@inertiajs/vue3"
                 <div class="text-2xl font-bold">
                     <h1 class="inline">
                         <span
-                            class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">Rehab</span>
+                            class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">{{ $t('account.title.rehab') }}</span>
                         <span
-                            class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">System</span>
+                            class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">{{ $t('account.title.system') }}</span>
                     </h1>
                 </div>
                 </Link>
             </div>
 
             <div class="flex flex-col gap-2">
-                <h3 class="font-bold text-lg">Follow US</h3>
+                <h3 class="font-bold text-lg">{{ $t('pages.follow_us') }}</h3>
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Github
+                        {{ $t('pages.github') }}
                     </a>
                 </div>
 
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Instagram
+                        {{ $t('pages.instagram') }}
                     </a>
                 </div>
 
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Telegram
-                    </a>
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <h3 class="font-bold text-lg">Platforms</h3>
-                <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Web
-                    </a>
-                </div>
-
-                <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Mobile
-                    </a>
-                </div>
-
-                <div>
-                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Desktop
+                        {{ $t('pages.telegram') }}
                     </a>
                 </div>
             </div>
 
             <div class="flex flex-col gap-2">
-                <h3 class="font-bold text-lg">About</h3>
+                <h3 class="font-bold text-lg">{{ $t('pages.platforms') }}</h3>
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Features
+                        {{ $t('pages.web') }}
                     </a>
                 </div>
 
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Pricing
+                        {{ $t('pages.mobile') }}
                     </a>
                 </div>
 
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        FAQ
+                        {{ $t('pages.desktop') }}
                     </a>
                 </div>
             </div>
 
             <div class="flex flex-col gap-2">
-                <h3 class="font-bold text-lg">Community</h3>
+                <h3 class="font-bold text-lg">{{ $t('pages.about') }}</h3>
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Youtube
+                        {{ $t('pages.features') }}
                     </a>
                 </div>
 
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Discord
+                        {{ $t('pages.pricing') }}
                     </a>
                 </div>
 
                 <div>
                     <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
-                        Twitch
+                        {{ $t('pages.faq') }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <h3 class="font-bold text-lg">{{ $t('pages.community') }}</h3>
+                <div>
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
+                        {{ $t('pages.youtube') }}
+                    </a>
+                </div>
+
+                <div>
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
+                        {{ $t('pages.discord') }}
+                    </a>
+                </div>
+
+                <div>
+                    <a rel="noreferrer noopener" href="#" class="opacity-60 hover:opacity-100 a-animate">
+                        {{ $t('pages.twitch') }}
                     </a>
                 </div>
             </div>
@@ -107,7 +107,7 @@ import { Link } from "@inertiajs/vue3"
         <section class="container pb-14 text-center">
             <h3>
                 &copy; 2025 Landing page made by{{ " " }}
-                <a rel="noreferrer noopener" target="_blank" href="https://www.linkedin.com/in/leopoldo-miranda/"
+                <a rel="noreferrer noopener" target="_blank" href="https://github.com/dEdmishka"
                     class="text-primary transition-all border-primary hover:border-b-2 a-animate">
                     Melnyk Mykhailo
                 </a>

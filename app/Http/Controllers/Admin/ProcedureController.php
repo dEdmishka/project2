@@ -48,7 +48,7 @@ class ProcedureController extends Controller
             'is_active' => $request->is_active,
         ]);
 
-        return redirect()->back()->with('success', 'Product has been successfully created!');
+        return redirect()->back()->with('success', __('admin.procedure_created'));
     }
 
     public function update(Request $request, $id) {
@@ -66,7 +66,7 @@ class ProcedureController extends Controller
 
         Procedure::whereId($id)->update($request->all());
 
-        return redirect()->back()->with('success', 'Product has been successfully edited!');
+        return redirect()->back()->with('success', __('admin.procedure_edited'));
     }    
 
     public function delete($id) {
@@ -74,9 +74,9 @@ class ProcedureController extends Controller
 
         if ($procedure) {
             $procedure->delete();
-            return redirect()->back()->with('success', 'Product has been successfully deleted!');
+            return redirect()->back()->with('success', __('admin.procedure_deleted'));
         }
 
-        return redirect()->back()->withErrors(['msg' => 'There`s no procedure to delete!']);
+        return redirect()->back()->withErrors(['msg' => __('admin.no_procedure_delete')]);
     }    
 }

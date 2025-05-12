@@ -79,11 +79,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             // $request->session()->regenerate();
 
-            return redirect()->intended('/');
+            return redirect()->route('account.index');
         }
 
         return back()->withErrors([
-            'email' => 'Email or password doesn`t match'
+            'email' => __('auth.email_or_password')
         ]);
     }
 

@@ -15,90 +15,86 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/vue3"
 
-// This is sample data.
-const props = defineProps();
-
 const data = {
-  centers: ["MedicineCenter", "RehabCenter", "SomeOtherCenter"],
   navMain: [
     {
-      title: "Office",
+      title: "account.admin.office",
       url: "#",
       items: [
+        // {
+        //   title: "Home",
+        //   url: "/admin",
+        // },
+        // {
+        //   title: "Dashboard",
+        //   url: "/admin/dashboard",
+        // },
         {
-          title: "Home",
-          url: "/admin",
-        },
-        {
-          title: "Dashboard",
-          url: "/admin/dashboard",
-        },
-        {
-          title: "Centers",
+          title: "account.admin.centers",
           url: "/admin/centers",
         },
         {
-          title: "Procedures",
+          title: "account.admin.procedures",
           url: "/admin/procedures",
         },
         {
-          title: "Departments",
+          title: "account.admin.departments",
           url: "/admin/departments",
         },
         {
-          title: "Appointments",
+          title: "account.admin.appointments",
           url: "/admin/appointments",
         },
         {
-          title: "Wards",
+          title: "account.admin.wards",
           url: "/admin/wards",
         },
       ],
     },
     {
-      title: "Users",
+      title: "account.admin.users",
       url: "#",
       items: [
         {
-          title: "Patients",
+          title: "account.admin.patients",
           url: "/admin/patients",
         },
         {
-          title: "Staff",
+          title: "account.admin.staff",
           url: "/admin/staff",
         },
       ],
     },
-    {
-      title: "Services",
-      url: "#",
-      items: [
-        {
-          title: "Records",
-          url: "/admin/records",
-        },
-        {
-          title: "Reports",
-          url: "/admin/reports",
-        },
-        {
-          title: "Posts",
-          url: "/admin/posts",
-        },
-        {
-          title: "Notifications",
-          url: "/admin/notifications",
-        },
-        {
-          title: "Documents",
-          url: "/admin/documents",
-        },
-        {
-          title: "Payments",
-          url: "/admin/payments",
-        },
-      ],
-    },
+    // {
+    //   title: "Services",
+    //   url: "#",
+    //   items: [
+    //     {
+    //       title: "Records",
+    //       url: "/admin/records",
+    //     },
+    //     {
+    //       title: "Reports",
+    //       url: "/admin/reports",
+    //     },
+    //     {
+    //       title: "Posts",
+    //       url: "/admin/posts",
+    //     },
+    //     {
+    //       title: "Notifications",
+    //       url: "/admin/notifications",
+    //     },
+    //     {
+    //       title: "Documents",
+    //       url: "/admin/documents",
+    //     },
+    //     {
+    //       title: "Payments",
+    //       url: "/admin/payments",
+    //     },
+    //   ],
+    // },
   ],
 }
 </script>
@@ -106,7 +102,7 @@ const data = {
 <template>
   <Sidebar v-bind="props">
     <SidebarHeader>
-      <SearchForm />
+      <!-- <SearchForm /> -->
     </SidebarHeader>
     <SidebarContent class="text-xl text-gray-700 dark:text-gray-100">
       <SidebarGroup>
@@ -114,13 +110,13 @@ const data = {
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
               <Link :href="item.url" class="font-medium">
-              {{ item.title }}
+              {{ $t(item.title) }}
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="gap-4">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
                 <SidebarMenuSubButton as-child :is-active="$page.url === childItem.url">
-                  <Link :href="childItem.url">{{ childItem.title }}</Link>
+                  <Link :href="childItem.url">{{ $t(childItem.title) }}</Link>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             </SidebarMenuSub>

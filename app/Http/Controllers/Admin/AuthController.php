@@ -44,7 +44,7 @@ class AuthController extends Controller
             if (Auth::guard('admin')->user()->role != "admin") {
                 Auth::guard('admin')->logout();
                 return redirect()->back()->withErrors([
-                    'email' => 'You are not authorized to access this page'
+                    'email' => __('auth.not_authorized')
                 ]);
             }
 
@@ -54,7 +54,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email or password doesn`t match'
+            'email' => __('auth.email_or_password')
         ]);
     }
 

@@ -123,7 +123,7 @@ const submit = () => {
     onSuccess: (event) => {
       const data = event.props.data;
       const successMessage = event.props.flash.success;
-      toast('Success!', {
+      toast('account.toast.success', {
         variant: 'default',
         duration: 3000,
         description: successMessage,
