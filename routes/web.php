@@ -16,6 +16,7 @@ use App\Http\Controllers\Account\AppointmentController;
 use App\Http\Controllers\Account\BillingController;
 use App\Http\Controllers\Account\ChatController;
 use App\Http\Controllers\Account\DocumentController;
+use App\Http\Controllers\Account\LocaleController;
 use App\Http\Controllers\Account\NotificationController;
 use App\Http\Controllers\Account\PatientController;
 use App\Http\Controllers\Account\ScheduleController;
@@ -49,6 +50,8 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/logout', [AuthController::class, 'logout'])->name('account.logout');
 
 Route::group([], function () {
+    Route::post('/locale', [LocaleController::class, 'locale'])->name('locale');
+    
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [AboutController::class, 'index'])->name('about');
     Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');

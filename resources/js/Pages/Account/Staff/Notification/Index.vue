@@ -252,7 +252,7 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            Notifications
+            {{ $t('pages.notifications') }}
         </template>
         <div class="">
             <div class="flex items-center py-4">
@@ -334,7 +334,7 @@ watch(selectedField, (newField, oldField) => {
 
                         <TableRow v-else>
                             <TableCell :colspan="columns.length" class="h-24 text-center">
-                                {{ $t('table.no_results') }}e.no_results') }}e.no_results') }}
+                                {{ $t('table.no_results') }}
                             </TableCell>
                         </TableRow>
                     </TableBody>
@@ -367,7 +367,7 @@ watch(selectedField, (newField, oldField) => {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem :key="pageSize" :value="pageSize" v-for="pageSize in pageSizes">
-                                    {{ $t('table.show') }} {{ pageSize }} }} {{ pageSize }}
+                                    {{ $t('table.show') }} {{ pageSize }}
                                 </SelectItem>
                             </SelectContent>
                         </Select>

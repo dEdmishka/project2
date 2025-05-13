@@ -5,35 +5,35 @@ import RoadmapCard from '@/components/blocks/roadmap/RoadmapCard.vue'
 
 const roadmapAuth = [
   {
-    title: 'Крок 1',
-    subtitle: 'Розпочніть свою роботу',
-    description: 'Вже зареєстровані? Чудово! Тоді розпочинайте своб роботу з необхідної Вам категорії даних!',
+    title: 'pages.roadmap.step_1',
+    subtitle: 'pages.roadmap.start_your_work',
+    description: 'pages.roadmap.already_auth',
     href: '/admin',
-    hreftitle: 'Розпочати',
+    hreftitle: 'pages.roadmap.start',
   },
   {
-    title: 'Крок 2',
-    subtitle: 'Оберіть центр',
-    description: 'На сторінках для даних, відмінних від центрів, ми маєте змогу відбирати ті дані, які належать конкретному центру! Для роботи з потрібним центром, просто оберіть необхідний у випадаючому списку!',
+    title: 'pages.roadmap.step_2',
+    subtitle: 'pages.roadmap.choose_center',
+    description: 'pages.roadmap.choose_data',
     href: '/admin/centers',
-    hreftitle: 'Обрати центр',
+    hreftitle: 'pages.roadmap.choose_center',
   },
 ]
 
 const roadmap = [
   {
-    title: 'Крок 1',
-    subtitle: 'Авторизуйтеся',
-    description: 'Як новому адміністратору, Вам повинні були надати дані для авторизації! Перейдіть за посиланням нижче для подальшої авторизації в системі, після чого Ви опинитеся у дашбоарді!',
+    title: 'pages.roadmap.step_1',
+    subtitle: 'pages.roadmap.auth',
+    description: 'pages.roadmap.new_admin',
     href: '/admin/login',
-    hreftitle: 'Авторизуватися',
+    hreftitle: 'pages.roadmap.auth',
   },
   {
-    title: 'Крок 2',
-    subtitle: 'Оберіть центр',
-    description: 'На сторінках для даних, відмінних від центрів, ми маєте змогу відбирати ті дані, які належать конкретному центру! Для роботи з потрібним центром, просто оберіть необхідний у випадаючому списку!',
+    title: 'pages.roadmap.step_2',
+    subtitle: 'pages.roadmap.choose_center',
+    description: 'pages.roadmap.choose_data',
     href: '/admin/centers',
-    hreftitle: 'Обрати центр',
+    hreftitle: 'pages.roadmap.choose_center',
   },
 ]
 </script>
@@ -45,17 +45,18 @@ const roadmap = [
         <template #title>
           <h1 class="inline">
             <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-              Шлях
+              {{ $t('pages.roadmap.roadmap_for') }}
             </span>
+            {{ "" }}
             <span
               class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              Адміністратора
+              {{ $t('pages.roadmap.administrator') }}
             </span>
           </h1>
         </template>
       </RoadmapTitle>
 
-      <div v-if="$page['props']['auth_user']['role'] === 'admin'"
+      <div v-if="$page['props']['auth_user']?.role === 'admin'"
         class="flex flex-wrap justify-center text-start gap-10">
         <RoadmapCard v-for="(item, index) in roadmapAuth" :key="index" :title="item.title" :subtitle="item.subtitle"
           :description="item.description" :href="item.href" :hreftitle="item.hreftitle" />

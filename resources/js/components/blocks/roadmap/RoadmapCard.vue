@@ -27,20 +27,20 @@ defineProps({
         <CardHeader>
             <CardTitle
                 class="inline font-bold text-3xl md:text-6xl py-1 bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-                {{ title }}
+                {{ $t(title) }}
             </CardTitle>
             <CardDescription
                 class="inline font-bold text-2xl md:text-4xl py-1 bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-                {{ subtitle }}
+                {{ $t(subtitle) }}
             </CardDescription>
         </CardHeader>
         <CardContent class="flex flex-col justify-between flex-grow">
             <CardDescription class="text-xl font-bold">
-                {{ description }}
+                {{ $t(description) }}
             </CardDescription>
         </CardContent>
         <CardFooter v-if="href" class="flex gap-8 items-center font-bold uppercase">
-            <Link :href="href" class="a-animate">{{ hreftitle }}</Link>
+            <Link :href="href" class="a-animate">{{ $t(hreftitle) }}</Link>
             <MoveRight class="h-8 w-8 inline-block]" />
         </CardFooter>
     </Card>

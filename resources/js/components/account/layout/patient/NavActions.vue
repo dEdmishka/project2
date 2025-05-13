@@ -33,6 +33,7 @@ import {
 import { useForm } from '@inertiajs/vue3';
 import { Link } from "@inertiajs/vue3"
 import NotificationMenu from '@/components/blocks/NotificationMenu.vue';
+import LocaleToggler from '@/components/blocks/LocaleToggler.vue';
 
 const form = useForm({});
 
@@ -83,6 +84,7 @@ const logout = () => {
             <span class="flex items-center xl:hidden">
                 <NotificationMenu />
                 <ThemeModeToggler />
+                <LocaleToggler />
 
                 <Sheet>
                     <SheetTrigger class="px-2">
@@ -165,7 +167,7 @@ const logout = () => {
             </nav>
 
             <div class="hidden xl:flex items-center gap-2">
-                <a rel="noreferrer noopener" href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+                <a rel="noreferrer noopener" href="https://github.com/dEdmishka"
                     target="_blank" :class="`border ${buttonVariants({ variant: 'secondary' })}`">
                     <Github class="mr-2 w-5 h-5" />
                     {{ $t('account.title.github') }}
@@ -173,6 +175,7 @@ const logout = () => {
 
                 <NotificationMenu />
                 <ThemeModeToggler />
+                <LocaleToggler />
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="ghost" size="icon" class="h-7 w-7">

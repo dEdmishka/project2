@@ -19,7 +19,7 @@ const props = defineProps({
     :as="as"
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"
-    :whilePress="{ scale: 0.85 }"
+    :whilePress="{ scale: 1.05 }"
     :whileHover="{ scale: 1.03 }"
   >
     <slot />

@@ -1,28 +1,9 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/Index.vue";
-// defineProps({ user: Object })
-
-import { cn } from '@/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-
-import {
-  Card,
-  CardTitle,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { Check, ChevronDown, Plus, Send, ArchiveX, File, Inbox, Trash2 } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 import Separator from "@/components/ui/separator/Separator.vue";
@@ -32,39 +13,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-
-const navMain = ref([
-  {
-    title: 'Inbox',
-    url: '#',
-    icon: Inbox,
-    isActive: true,
-  },
-  {
-    title: 'Drafts',
-    url: '#',
-    icon: File,
-    isActive: false,
-  },
-  {
-    title: 'Sent',
-    url: '#',
-    icon: Send,
-    isActive: false,
-  },
-  {
-    title: 'Junk',
-    url: '#',
-    icon: ArchiveX,
-    isActive: false,
-  },
-  {
-    title: 'Trash',
-    url: '#',
-    icon: Trash2,
-    isActive: false,
-  },
-])
 
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -169,7 +117,7 @@ function selectUser(user) {
   <Layout>
     <div class="">
       <h1 class="text-lg font-semibold md:text-2xl">
-        Chat
+        {{ $t('account.admin.chat') }}
       </h1>
       <Separator class="my-4" />
       <!-- Hiiiii our user {{ $page['props']['user'] }} -->
@@ -179,12 +127,12 @@ function selectUser(user) {
           <div class="grid grid-cols-2 gap-2">
             <div class="grid items-center gap-2">
               <Label for="user" class="text-right">
-                User
+                {{ $t('label.user') }}
               </Label>
               <Popover id="user" v-model:open="openUser">
                 <PopoverTrigger as-child>
                   <Button variant="outline" role="combobox" class="justify-between">
-                    {{ selectedUser?.first_name || 'Select user...' }} {{ selectedUser?.last_name || ''
+                    {{ selectedUser?.first_name || $t('label.select_user') }} {{ selectedUser?.last_name || ''
                     }}
                     <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
@@ -192,7 +140,7 @@ function selectUser(user) {
                 <PopoverContent class="p-0 overflow-y-auto max-h-70">
                   <Command>
                     <CommandInput placeholder="Search users..." v-model="searchUser" />
-                    <CommandEmpty>No users found.</CommandEmpty>
+                    <CommandEmpty>{{ $t('label.no_users') }}</CommandEmpty>
                     <CommandGroup>
                       <CommandItem v-for="user in filteredUsers" :key="user.id" :value="user.first_name"
                         @select="() => selectUser(user)">
@@ -208,7 +156,7 @@ function selectUser(user) {
             </div>
             <div class="grid items-center gap-2">
               <Label for="center" class="text-right">
-                Center
+                {{ $t('label.center')}}
               </Label>
               <Input id="address" class="col-span-3" required v-model="form.address" disabled />
             </div>
@@ -216,29 +164,29 @@ function selectUser(user) {
           <div class="grid grid-cols-1 gap-2">
             <div class="grid grid-cols-2 items-center gap-2">
               <Label for="gender" class="text-right">
-                Gender: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                {{ $t('label.gender')}}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
               </Label>
               <Label for="status" class="text-right">
-                Status: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                {{ $t('label.status')}}: {{ form.status === 'active' ? $t('label.active') : $t('label.discharge') }}
               </Label>
               <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="M" value="M" />
-                  <Label for="M">Male</Label>
+                  <Label for="M">{{ $t('label.male')}}</Label>
                 </div>
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="F" value="F" />
-                  <Label for="F">Female</Label>
+                  <Label for="F">{{ $t('label.female')}}</Label>
                 </div>
               </RadioGroup>
               <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="active" value="active" />
-                  <Label for="active">Active</Label>
+                  <Label for="active">{{ $t('label.active')}}</Label>
                 </div>
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="discharge" value="discharge" />
-                  <Label for="discharge">Discharge</Label>
+                  <Label for="discharge">{{ $t('label.discharge')}}</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -246,14 +194,14 @@ function selectUser(user) {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div class="grid items-center gap-2">
               <Label for="birth_date" class="text-right">
-                Birth Date
+                {{ $t('label.birth_date')}}
               </Label>
               <Input id="birth_date" type="date" class="col-span-3" required v-model="form.birth_date" />
               <span v-if="errors.birth_date" class="text-red-600 text-sm">{{ errors.birth_date }}</span>
             </div>
             <div class="grid items-center gap-2">
               <Label for="address" class="text-right">
-                Address
+                {{ $t('label.address')}}
               </Label>
               <Input id="address" class="col-span-3" required v-model="form.address" />
               <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
@@ -262,7 +210,7 @@ function selectUser(user) {
           <div class="grid grid-cols-2 gap-2">
             <div class="grid items-center gap-1">
               <Label for="name" class="text-right">
-                Соціальні мережі
+                {{ $t('label.social_links')}}
               </Label>
               <div class="space-y-2">
                 <div v-for="(social, index) in form.social_links" :key="'social-' + index" class="flex gap-2">
@@ -280,13 +228,13 @@ function selectUser(user) {
               </div>
               <Button type="button" variant="outline" class="mt-2"
                 @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
-                <Plus class="h-4 w-4 mr-1" /> Додати Соцільну Мережу
+                <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_social_link')}}
               </Button>
             </div>
 
             <div class="grid items-center gap-1">
               <Label for="name" class="text-right">
-                Телефони
+                {{ $t('label.phones')}}
               </Label>
               <div class="space-y-2">
                 <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
@@ -306,7 +254,7 @@ function selectUser(user) {
 
               <Button type="button" variant="outline" class="mt-2"
                 @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
-                <Plus class="h-4 w-4 mr-1" /> Додати Телефон
+                <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone')}}
               </Button>
             </div>
           </div>
@@ -314,7 +262,7 @@ function selectUser(user) {
 
         <div>
           <Button type="submit" @click="submit">
-            Save changes
+            {{ $t('label.save')}}
           </Button>
         </div>
       </div>

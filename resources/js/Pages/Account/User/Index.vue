@@ -71,7 +71,7 @@ import { motion } from 'motion-v'
 <template>
   <Layout>
     <template #title>
-      Profile
+      {{ $t('account.admin.profile') }}
     </template>
     <div class=" text-start">
       <div class="grid gap-4 py-4">
@@ -85,7 +85,7 @@ import { motion } from 'motion-v'
               delay: 0.1
             }
           }">
-            <Label for="File" class="ml-[32px] pb-2">Аватар</Label>
+            <Label for="File" class="ml-[32px] pb-2">{{ $t('label.avatar') }}</Label>
             <motion.div class="text-center relative" :animate="{
               opacity: [0, 1],
               x: [100, 0],
@@ -119,7 +119,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="first_name" class="">
-              Ім'я
+              {{ $t('label.first_name') }}
             </Label>
             <Input id="first_name" class="col-span-3" required v-model="form.first_name" />
             <span v-if="errors.first_name" class="text-red-600 text-sm">{{ errors.first_name }}</span>
@@ -136,7 +136,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="last_name" class="">
-              Прізвище
+              {{ $t('label.last_name') }}
             </Label>
             <Input id="last_name" class="col-span-3" required v-model="form.last_name" />
             <span v-if="errors.last_name" class="text-red-600 text-sm">{{ errors.last_name }}</span>
@@ -153,7 +153,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="email" class="">
-              Пошта
+              {{ $t('label.email') }}
             </Label>
             <Input id="email" type="email" class="col-span-3" required v-model="form.email" />
             <span v-if="errors.email" class="text-red-600 text-sm">{{ errors.email }}</span>
@@ -171,11 +171,11 @@ import { motion } from 'motion-v'
           }
         }">
           <Button type="submit" @click="submit">
-            Зберегти
+            {{ $t('label.save') }}
           </Button>
 
           <Button class="ml-auto" type="button" variant="outline" @click="form.reset()">
-            Reset form
+            {{ $t('label.reset_form') }}
           </Button>
         </motion.div>
       </div>

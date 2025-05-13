@@ -140,7 +140,7 @@ function selectCenter(center) {
                         <Popover id="user" v-model:open="openUser">
                             <PopoverTrigger as-child>
                                 <Button variant="outline" role="combobox" class="justify-between">
-                                    {{ selectedUser?.first_name || 'Select user...' }} {{ selectedUser?.last_name || ''
+                                    {{ selectedUser?.first_name || $t('label.select_user') }} {{ selectedUser?.last_name || ''
                                     }}
                                     <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
@@ -194,10 +194,10 @@ function selectCenter(center) {
                 <div class="grid grid-cols-1 gap-2">
                     <div class="grid grid-cols-2 items-center gap-2">
                         <Label for="gender" class="text-right">
-                            {{ $t('label.gender') }}: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                            {{ $t('label.gender') }}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
                         </Label>
                         <Label for="status" class="text-right">
-                            {{ $t('label.status') }}: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                            {{ $t('label.status') }}: {{ form.status === 'active' ? $t('label.active') : $t('label.discharge') }}
                         </Label>
                         <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
                             <div class="flex items-center space-x-2">

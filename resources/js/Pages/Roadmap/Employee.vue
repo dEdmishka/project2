@@ -5,84 +5,84 @@ import RoadmapCard from '@/components/blocks/roadmap/RoadmapCard.vue'
 
 const roadmapAuth = [
   {
-    title: 'Крок 1',
-    subtitle: 'Перевірте свої дані',
-    description: 'Вже зареєстровані та маєте статус працівника? Чудово! Перейдіть на сторінку особистого кабінету, перевірте свої персональні дані, а також скорегуйте свій розклад роботи!',
+    title: 'pages.roadmap.step_1',
+    subtitle: 'pages.roadmap.check_your_data',
+    description: 'pages.roadmap.auth_employee',
     href: '/account',
-    hreftitle: 'Перейти до кабінету',
+    hreftitle: 'pages.roadmap.go_to_account',
   },
   {
-    title: 'Крок 2',
-    subtitle: 'Заплановані сеанси',
-    description: 'Після завершення реєстрації у особистому кабінеті, серед вкладок зліва Ви можете натиснути на посилання <Заплановані сеанси>, де Ви здатні переглянути призначені за Вами та іншими спеціалістами призначення на сеанси!',
+    title: 'pages.roadmap.step_2',
+    subtitle: 'pages.roadmap.appointments',
+    description: 'pages.roadmap.end_of_registration',
     href: '/account/appointments',
-    hreftitle: 'Переглянути сеанси',
+    hreftitle: 'pages.roadmap.show_appointments',
   },
   {
-    title: 'Крок 3',
-    subtitle: 'Пацієнти',
-    description: 'В особистому кабінеті серед вкладок зліва оберіть посилання <Пацієнти>, де Ви зможете знайти список закріплених за Вами пацієнтів, з якими у Вас були створені сеанси. Тут Ви знайдете всю необхідну Вам інформацію щодо їхніх медичних даних, з якими ви можете ознайомитися в будь-яку мить!',
+    title: 'pages.roadmap.step_3',
+    subtitle: 'pages.roadmap.patients',
+    description: 'pages.roadmap.patients_link',
     href: '/account/patients',
-    hreftitle: 'Переглянути пацієнтів',
+    hreftitle: 'pages.roadmap.show_patients',
   },
   {
-    title: 'Крок 4',
-    subtitle: 'Будьте на зв`язку!',
-    description: 'Також серед важливих функцій варто відзначити можливість вести чати з іншими працівниками та/або пацієнтами! Швидко відшукайте необхідного користувача, ініціюйте діалог, та повідомте йому про важливу чи просто робочу інформацію! Також інші пацієнти можуть надіслати Вам запит на початок розмови - Ви маєте право прийняти його, чи відкликати.',
+    title: 'pages.roadmap.step_4',
+    subtitle: 'pages.roadmap.stay_in_touch',
+    description: 'pages.roadmap.function_chat',
     href: '/account/chat',
-    hreftitle: 'Перевірити повідомлення',
+    hreftitle: 'pages.roadmap.check_messages',
   },
 ]
 
 const roadmap = [
   {
-    title: 'Крок 1',
-    subtitle: 'Зареєструйтеся',
-    description: 'Спершу Вам необхідно зареєструватися в даній системі! Перейдіть за посиланням нижче, заповніть поля з Вашими прізвищем, ім`ям та поштою, після чого Ви потрапите до особистого кабінету!',
+    title: 'pages.roadmap.step_1',
+    subtitle: 'pages.roadmap.register',
+    description: 'pages.roadmap.firstly_auth',
     href: '/signup',
-    hreftitle: 'Зареєструватися',
+    hreftitle: 'pages.roadmap.register',
   },
   {
-    title: 'Крок 2',
-    subtitle: 'Повідомте адміністратора',
-    description: 'Коли Ви зареєструєтеся в даній системі, повідомте адміністратора про присвоєння Вам статусу працівника. Після цього Ви можете повноцінно працювати!',
+    title: 'pages.roadmap.step_2',
+    subtitle: 'pages.roadmap.notify_administrator',
+    description: 'pages.roadmap.notify_administrator_employee',
     href: '/admin',
-    hreftitle: 'Адміністратор',
+    hreftitle: 'pages.roadmap.administrator',
   },
   {
-    title: 'Крок 3',
-    subtitle: 'Авторизуйтеся',
-    description: 'Вже зареєстровані та маєте статус працівника? Чудово! Тоді ви на один крок менше до Вашого призначення! Перейдіть за посиланням нижче для подальшої авторизації в системі, після чого Ви опинитеся у вже знайомому Вам особистому кабінеті!',
+    title: 'pages.roadmap.step_3',
+    subtitle: 'pages.roadmap.authenticate',
+    description: 'pages.roadmap.auth_employee',
     href: '/login',
-    hreftitle: 'Авторизуватися',
+    hreftitle: 'pages.roadmap.auth',
   },
   {
-    title: 'Крок 4',
-    subtitle: 'Перевірте свої дані',
-    description: 'На сторінці особистого кабінету перевірте свої персональні дані, а також скорегуйте свій розклад роботи!',
+    title: 'pages.roadmap.step_4',
+    subtitle: 'pages.roadmap.check_your_data',
+    description: 'pages.roadmap.check_your_account_data',
     href: '/account',
-    hreftitle: 'Перейти до кабінету',
+    hreftitle: 'pages.roadmap.go_to_account',
   },
   {
-    title: 'Крок 5',
-    subtitle: 'Заплановані сеанси',
-    description: 'Після завершення реєстрації у особистому кабінеті, серед вкладок зліва Ви можете натиснути на посилання <Заплановані сеанси>, де Ви здатні переглянути призначені за Вами та іншими спеціалістами призначення на сеанси!',
+    title: 'pages.roadmap.step_5',
+    subtitle: 'pages.roadmap.appointments',
+    description: 'pages.roadmap.end_of_registration',
     href: '/account/appointments',
-    hreftitle: 'Переглянути сеанси',
+    hreftitle: 'pages.roadmap.show_appointments',
   },
   {
-    title: 'Крок 6',
-    subtitle: 'Пацієнти',
-    description: 'В особистому кабінеті серед вкладок зліва оберіть посилання <Пацієнти>, де Ви зможете знайти список закріплених за Вами пацієнтів, з якими у Вас були створені сеанси. Тут Ви знайдете всю необхідну Вам інформацію щодо їхніх медичних даних, з якими ви можете ознайомитися в будь-яку мить!',
+    title: 'pages.roadmap.step_6',
+    subtitle: 'pages.roadmap.patients',
+    description: 'pages.roadmap.patients_link',
     href: '/account/patients',
-    hreftitle: 'Переглянути пацієнтів',
+    hreftitle: 'pages.roadmap.show_patients',
   },
   {
-    title: 'Крок 7',
-    subtitle: 'Будьте на зв`язку!',
-    description: 'Також серед важливих функцій варто відзначити можливість вести чати з іншими працівниками та/або пацієнтами! Швидко відшукайте необхідного користувача, ініціюйте діалог, та повідомте йому про важливу чи просто робочу інформацію! Також інші пацієнти можуть надіслати Вам запит на початок розмови - Ви маєте право прийняти його, чи відкликати.',
+    title: 'pages.roadmap.step_7',
+    subtitle: 'pages.roadmap.stay_in_touch',
+    description: 'pages.roadmap.function_chat',
     href: '/account/notifications',
-    hreftitle: 'Перевірити повідомлення',
+    hreftitle: 'pages.roadmap.check_messages',
   },
 ]
 </script>
@@ -94,11 +94,12 @@ const roadmap = [
         <template #title>
           <h1 class="inline">
             <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-              Шлях
+              {{ $t('pages.roadmap.roadmap_for') }}
             </span>
+            {{ "" }}
             <span
               class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              Працівника
+              {{ $t('pages.roadmap.employee') }}
             </span>
           </h1>
         </template>

@@ -3,7 +3,6 @@ import Layout from "@/Layout/Dashboard/Index.vue";
 
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -13,17 +12,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
     Table,
@@ -44,8 +32,6 @@ import {
 } from '@tanstack/vue-table'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { h, ref, watch } from 'vue'
-import DropdownAction from '@/components/blocks/DropdownAction.vue'
-import { Plus } from 'lucide-vue-next';
 import { Link } from "@inertiajs/vue3"
 
 import CreateDialog from '@/Pages/Account/User/Center/CreateDialog.vue';
@@ -82,13 +68,13 @@ const columns = [
         cell: ({ row }) => {
             const objData = row.original
 
-            return h('div', { class: 'grid gap-4' }, 
-            {
-                default: () => [
-                    h(Button, { class: '', variant: "outline"}, h(Link, { class: '', href: `${props.main_url}/${objData.id}` }, 'Переглянути центр')),
-                    h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Хочу до вас!')
-                ],
-            })
+            return h('div', { class: 'grid gap-4' },
+                {
+                    default: () => [
+                        h(Button, { class: '', variant: "outline" }, h(Link, { class: '', href: `${props.main_url}/${objData.id}` }, 'Переглянути центр')),
+                        h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Хочу до вас!')
+                    ],
+                })
         },
     },
     {
@@ -187,9 +173,6 @@ const columns = [
             if (!Array.isArray(workingHours)) return false;
             if (!filterValue) return true;
 
-            // return workingHours.some(hour =>
-            //     hour.start_time.toLowerCase().includes(filterValue.toLowerCase())
-            // );
             const search = filterValue.toLowerCase();
 
             return hours.some(hour => {
@@ -260,7 +243,7 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            Centers
+            {{ $t('account.admin.centers') }}
         </template>
         <div class="">
             <div class="flex items-center py-4">
@@ -270,7 +253,7 @@ watch(selectedField, (newField, oldField) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-2 min-w-[225px] justify-start">
-                            {{ $t('table.filter_by') }}ble.filter_by') }}<span class="capitalize">{{ selectedField }}</span>
+                            {{ $t('table.filter_by') }} <span class="capitalize">{{ selectedField }}</span>
                             <ChevronDown class="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
@@ -288,7 +271,7 @@ watch(selectedField, (newField, oldField) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto">
-                            {{ $t('table.columns') }}table.columns') }}
+                            {{ $t('table.columns') }}
                             <ChevronDown class="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>

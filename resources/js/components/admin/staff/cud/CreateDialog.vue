@@ -167,7 +167,7 @@ function selectStaffType(staffType) {
                         <Popover id="user" v-model:open="openUser">
                             <PopoverTrigger as-child>
                                 <Button variant="outline" role="combobox" class="justify-between">
-                                    {{ selectedUser?.first_name || 'Select user...' }} {{ selectedUser?.last_name || ''
+                                    {{ selectedUser?.first_name || $t('label.select_user') }} {{ selectedUser?.last_name || ''
                                     }}
                                     <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
@@ -320,7 +320,7 @@ function selectStaffType(staffType) {
                         </div>
                         <div class="grid grid-cols-2 items-center gap-2">
                             <Label for="gender" class="text-right">
-                                {{ $t('label.gender') }}: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                                {{ $t('label.gender') }}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
                             </Label>
                             <Label for="status" class="text-right capitalize">
                                 {{ $t('label.status') }}: {{ form.status }}

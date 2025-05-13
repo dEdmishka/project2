@@ -33,20 +33,22 @@ const updateData = (newData) => {
 <template>
     <Layout>
         <template #title>
-            Вступна інформація
+            {{ $t('pages.intake') }}
         </template>
         <div>
             <Button class="" variant="outline" @click="showCreateDialog">
                 <Plus class="h-5"></Plus>
-                Внести нові дані
+                {{ $t('pages.enter_intake') }}
             </Button>
         </div>
 
         <div class="grid py-6 space-y-6">
-            <h1 class="text-2xl font-bold">Intake summary for {{ data.user.first_name }} {{ data.user.last_name }}</h1>
+            <h1 class="text-2xl font-bold">{{ $t('pages.intake_for') }} {{ data.user.first_name }} {{
+                data.user.last_name }}
+            </h1>
             <Card v-if="data?.records[0]?.documents">
                 <CardHeader>
-                    <CardTitle>Intake summary Record</CardTitle>
+                    <CardTitle>{{ $t('pages.intake_record') }}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <p class="text-gray-700 mb-4">{{ data.records[0].content }}</p>
@@ -59,14 +61,14 @@ const updateData = (newData) => {
                             </div>
                             <a :href="`/storage/${doc.file_path}`"
                                 class="text-blue-600 hover:underline flex items-center">
-                                <Download class="w-4 h-4 mr-1" /> View / Download
+                                <Download class="w-4 h-4 mr-1" /> {{ $t('pages.view_download') }}
                             </a>
                         </div>
                     </div>
-                    <p v-else class="text-gray-500">No documents uploaded yet.</p>
+                    <p v-else class="text-gray-500">{{ $t('pages.no_doc_uploaded') }}</p>
                 </CardContent>
             </Card>
-            <p v-else class="text-gray-500">No intake summary record found for this patient.</p>
+            <p v-else class="text-gray-500">{{ $t('pages.no_intake') }}</p>
         </div>
 
         <CreateDialog @update="updateData" :patient="data" @close="closeCreateDialog" v-model:open="createDialog"

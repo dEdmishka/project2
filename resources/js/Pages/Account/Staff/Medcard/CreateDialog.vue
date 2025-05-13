@@ -27,7 +27,6 @@ import { Progress } from '@/components/ui/progress'
 
 const fileInput = ref(null)
 const isDragging = ref(false)
-const progress = ref(0)
 
 const form = useForm({
     first_name: '',
@@ -41,6 +40,7 @@ const form = useForm({
 
 const emit = defineEmits(['update', 'close']);
 const errors = ref({});
+const progress = ref(0);
 
 watch(
     () => props.patient,
@@ -79,21 +79,21 @@ const submit = () => {
 };
 
 function openFilePicker() {
-  fileInput.value.click()
+    fileInput.value.click()
 }
 
 function handleFileChange(e) {
-  addFile(e.target.files)
+    addFile(e.target.files)
 }
 
 function handleDrop(e) {
-  isDragging.value = false
-  addFile(e.dataTransfer.files)
+    isDragging.value = false
+    addFile(e.dataTransfer.files)
 }
 
 function addFile(newFile) {
     progress.value = 0
-    
+
     const file = newFile[0]
 
     form.file = file
@@ -102,20 +102,20 @@ function addFile(newFile) {
 }
 
 function removeFile() {
-  progress.value = 0
+    progress.value = 0
 
-  form.file = {}
-  errors = {}
+    form.file = {}
+    errors = {}
 }
 
 function simulateUpload() {
-  const interval = setInterval(() => {
-    if (progress.value >= 100) {
-      clearInterval(interval)
-    } else {
-      progress.value += 10
-    }
-  }, 50)
+    const interval = setInterval(() => {
+        if (progress.value >= 100) {
+            clearInterval(interval)
+        } else {
+            progress.value += 10
+        }
+    }, 50)
 }
 </script>
 
@@ -123,84 +123,86 @@ function simulateUpload() {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Нова медична картка</DialogTitle>
+                <DialogTitle>{{ $t('pages.new_medcard') }}</DialogTitle>
                 <DialogDescription>
-                    Внесіть дані для заповнення картки.
+                    {{ $t('pages.enter_data') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="grid items-center gap-1">
                         <Label for="first_name" class="text-right">
-                            Ім'я
+                            {{ $t('label.first_name') }}
                         </Label>
                         <Input id="first_name" class="col-span-3" required v-model="form.first_name" disabled />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="last_name" class="text-right">
-                            Прізвище
+                            {{ $t('label.last_name') }}
                         </Label>
                         <Input id="last_name" class="col-span-3" required v-model="form.last_name" disabled />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="height" class="text-right">
-                            Зріст
+                            {{ $t('label.height') }}
                         </Label>
                         <Input id="height" class="col-span-3" required v-model="form.height" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="weight" class="text-right">
-                            Вага
+                            {{ $t('label.weight') }}
                         </Label>
                         <Input id="weight" class="col-span-3" required v-model="form.weight" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="blood_type" class="text-right">
-                            Група крові
+                            {{ $t('label.blood_type') }}
                         </Label>
                         <Input id="blood_type" class="col-span-3" required v-model="form.blood_type" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="blood_pressure" class="text-right">
-                            Артеріальний тиск
+                            {{ $t('label.blood_pressure') }}
                         </Label>
                         <Input id="blood_pressure" class="col-span-3" required v-model="form.blood_pressure" />
                     </div>
                 </div>
                 <DialogDescription>
-                    Або внесіть відповідний файл:
+                    {{ $t('pages.include_file') }}:
                 </DialogDescription>
                 <div class="grid gap-2">
                     <div class="w-1/2 border-2 border-dashed rounded-xl p-4 relative transition-all mx-auto"
-                        @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false" @drop.prevent="handleDrop"
-                        :class="{ 'border-blue-500 bg-blue-50': isDragging }">
+                        @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false"
+                        @drop.prevent="handleDrop" :class="{ 'border-blue-500 bg-blue-50': isDragging }">
                         <input type="file" class="hidden" ref="fileInput" multiple accept=".pdf,.doc,.docx,.txt"
-                        @change="handleFileChange" />
-                        <div class="p-12 flex items-center justify-center flex-col space-y-2 cursor-pointer" @click="openFilePicker">
-                        <Upload class="w-6 h-6 text-gray-500" />
-                        <p class="text-sm text-gray-500">Drag and drop files here or click to upload</p>
+                            @change="handleFileChange" />
+                        <div class="p-12 flex items-center justify-center flex-col space-y-2 cursor-pointer"
+                            @click="openFilePicker">
+                            <Upload class="w-6 h-6 text-gray-500" />
+                            <p class="text-sm text-gray-500">{{ $t('pages.drag_and_drop') }}</p>
                         </div>
                         <div v-if="form.file.name" class="mt-4 space-y-2">
-                        <div class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border shadow-sm">
-                            <div class="flex items-center space-x-2">
-                            <FileIcon class="w-5 h-5 text-gray-500" />
-                            <span class="text-sm">{{ form.file.name }}</span>
+                            <div
+                                class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border shadow-sm">
+                                <div class="flex items-center space-x-2">
+                                    <FileIcon class="w-5 h-5 text-gray-500" />
+                                    <span class="text-sm">{{ form.file.name }}</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <Progress v-model="progress" class="w-20 h-2" />
+                                    <Button size="icon" variant="ghost" @click="removeFile()">
+                                        <X class="w-4 h-4 text-red-500" />
+                                    </Button>
+                                </div>
+                                <span v-if="errors.file" class="text-red-600 text-sm">{{ errors.file }}</span>
                             </div>
-                            <div class="flex items-center space-x-2">
-                            <Progress v-model="progress" class="w-20 h-2" />
-                            <Button size="icon" variant="ghost" @click="removeFile()">
-                                <X class="w-4 h-4 text-red-500" />
-                            </Button>
-                            </div>
-                            <span v-if="errors.file" class="text-red-600 text-sm">{{ errors.file }}</span>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Зберегти
+                    {{ $t('label.save') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

@@ -208,10 +208,10 @@ function selectCenter(center) {
                 <div class="grid grid-cols-1 gap-2">
                     <div class="grid grid-cols-2 items-center gap-2">
                         <Label for="gender" class="text-right">
-                            {{ $t('label.gender') }}: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+                            {{ $t('label.gender') }}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
                         </Label>
                         <Label for="status" class="text-right">
-                            {{ $t('label.status') }}: {{ form.status === 'active' ? 'Active' : 'Discharge' }}
+                            {{ $t('label.status') }}: {{ form.status === 'active' ? $t('label.active') : $t('label.discharge') }}
                         </Label>
                         <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
                             <div class="flex items-center space-x-2">

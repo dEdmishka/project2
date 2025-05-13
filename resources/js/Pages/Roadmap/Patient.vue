@@ -5,84 +5,84 @@ import RoadmapCard from '@/components/blocks/roadmap/RoadmapCard.vue'
 
 const roadmapAuth = [
   {
-    title: 'Крок 1',
-    subtitle: 'Зайдіть в особистий кабінет',
-    description: 'Вже зареєстровані? Чудово! Тоді ви на один крок менше до Вашого призначення! Перейдіть за посиланням нижче, після чого Ви опинитеся у вже знайомому Вам особистому кабінеті!',
+    title: 'pages.roadmap.step_1',
+    subtitle: 'pages.roadmap.enter_account',
+    description: 'pages.roadmap.auth_patient',
     href: '/account',
-    hreftitle: 'Перейти до кабінету',
+    hreftitle: 'pages.roadmap.go_to_cabinet',
   },
   {
-    title: 'Крок 2',
-    subtitle: 'Оберіть центр',
-    description: 'На сторінці особистого кабінету оберіть серед вкладок зліва посилання <Центри>. При натисненні на неї Ви потрапите на сторінку з усіма переліченими в системі центрами, і всі вони доступні для Вашого вибору! Оберіть свій, знайшовши його за адресою, та натисність на кнопку <Хочу до вас!>',
+    title: 'pages.roadmap.step_2',
+    subtitle: 'pages.roadmap.choose_center',
+    description: 'pages.roadmap.patient_choose_center',
     href: '/account/centers',
-    hreftitle: 'Обрати центр',
+    hreftitle: 'pages.roadmap.choose_center',
   },
   {
-    title: 'Крок 3',
-    subtitle: 'Завершіть реєстрацію',
-    description: 'Після натиснення на кнопку <Хочу до вас!>, Вам відкриється вікно з вказаним центром, та додатковими полями (такими, як Ваша адреса, номер телефону, тощо). Заповнивши ці поля, натисніть на кнопку <Зберегти>. Після цього Ви опинитесь на у власному кабінеті, але вже пацієнтом, закріпленим за обраним Центром.',
+    title: 'pages.roadmap.step_3',
+    subtitle: 'pages.roadmap.end_auth',
+    description: 'pages.roadmap.patient_end_auth',
     href: '/account/centers',
-    hreftitle: 'Обрати центр',
+    hreftitle: 'pages.roadmap.choose_center',
   },
   {
-    title: 'Крок 4',
-    subtitle: 'Оберіть необхідну процедуру',
-    description: 'В особистому кабінеті серед вкладок зліва оберіть посилання <Процедури>, де Ви зможете знайти список доступних в центрі процедур, та обрати саме ту, яка Вас цікавить. При виборі Вам відкриється сторінка з можливістю записатися на неї. Оберіть час та лікаря, натисніть <Зберегти>, після чого сформується Ваш запис!',
+    title: 'pages.roadmap.step_4',
+    subtitle: 'pages.roadmap.choose_procedure',
+    description: 'pages.roadmap.patient_choose_procedure',
     href: '/account/procedures',
-    hreftitle: 'Обрати процедуру',
+    hreftitle: 'pages.roadmap.choose_procedure',
   },
   {
-    title: 'Крок 5',
-    subtitle: 'Будьте на зв`язку!',
-    description: 'Протягом певного часу з Вами вийдуть на зв`язок! Вас можуть попросити принести свої медичні дані з собою (якщо вони у фізичному вигляді), або самостійно внести їх до системи за такої можливості! Також Вас запитають за Ваші скарги чи побажання у особистому чаті з Вами! Ваш попередній запис ймовірно буде уточнено та доповнено, тому не переживайте, якщо він зміниться! Слідкуйте за оновленнями, Вам буде надіслано відповідне повідомлення!',
+    title: 'pages.roadmap.step_5',
+    subtitle: 'pages.roadmap.stay_in_touch',
+    description: 'pages.roadmap.patient_stay_in_touch',
     href: '/account/notifications',
-    hreftitle: 'Перевірити повідомлення',
+    hreftitle: 'pages.roadmap.check_messages',
   },
 ]
 
 const roadmap = [
   {
-    title: 'Крок 1',
-    subtitle: 'Зареєструйтеся',
-    description: 'Спершу Вам необхідно зареєструватися в даній системі! Перейдіть за посиланням нижче, заповніть поля з Вашими прізвищем, ім`ям та поштою, після чого Ви потрапите до особистого кабінету!',
+    title: 'pages.roadmap.step_1',
+    subtitle: 'pages.roadmap.register',
+    description: 'pages.roadmap.firstly_auth',
     href: '/signup',
-    hreftitle: 'Зареєструватися',
+    hreftitle: 'pages.roadmap.register',
   },
   {
-    title: 'Крок 2',
-    subtitle: 'Авторизуйтеся',
-    description: 'Вже зареєстровані? Чудово! Тоді ви на один крок менше до Вашого призначення! Перейдіть за посиланням нижче для подальшої авторизації в системі, після чого Ви опинитеся у вже знайомому Вам особистому кабінеті!',
+    title: 'pages.roadmap.step_2',
+    subtitle: 'pages.roadmap.authenticate',
+    description: 'pages.roadmap.patient_already_auth',
     href: '/login',
-    hreftitle: 'Авторизуватися',
+    hreftitle: 'pages.roadmap.auth',
   },
   {
-    title: 'Крок 3',
-    subtitle: 'Оберіть центр',
-    description: 'На сторінці особистого кабінету оберіть серед вкладок зліва посилання <Центри>. При натисненні на неї Ви потрапите на сторінку з усіма переліченими в системі центрами, і всі вони доступні для Вашого вибору! Оберіть свій, знайшовши його за адресою, та натисність на кнопку <Хочу до вас!>',
+    title: 'pages.roadmap.step_3',
+    subtitle: 'pages.roadmap.choose_center',
+    description: 'pages.roadmap.patient_choose_center',
     href: '/account/centers',
-    hreftitle: 'Обрати центр',
+    hreftitle: 'pages.roadmap.choose_center',
   },
   {
-    title: 'Крок 4',
-    subtitle: 'Завершіть реєстрацію',
-    description: 'Після натиснення на кнопку <Хочу до вас!>, Вам відкриється вікно з вказаним центром, та додатковими полями (такими, як Ваша адреса, номер телефону, тощо). Заповнивши ці поля, натисніть на кнопку <Зберегти>. Після цього Ви опинитесь на у власному кабінеті, але вже пацієнтом, закріпленим за обраним Центром.',
+    title: 'pages.roadmap.step_4',
+    subtitle: 'pages.roadmap.end_auth',
+    description: 'pages.roadmap.patient_end_auth',
     href: '/account/centers',
-    hreftitle: 'Обрати центр',
+    hreftitle: 'pages.roadmap.choose_center',
   },
   {
-    title: 'Крок 5',
-    subtitle: 'Оберіть необхідну процедуру',
-    description: 'В особистому кабінеті серед вкладок зліва оберіть посилання <Процедури>, де Ви зможете знайти список доступних в центрі процедур, та обрати саме ту, яка Вас цікавить. При виборі Вам відкриється сторінка з можливістю записатися на неї. Оберіть час та лікаря, натисніть <Зберегти>, після чого сформується Ваш запис!',
+    title: 'pages.roadmap.step_5',
+    subtitle: 'pages.roadmap.choose_procedure',
+    description: 'pages.roadmap.patient_choose_procedure',
     href: '/account/procedures',
-    hreftitle: 'Обрати процедуру',
+    hreftitle: 'pages.roadmap.choose_procedure',
   },
   {
-    title: 'Крок 6',
-    subtitle: 'Будьте на зв`язку!',
-    description: 'Протягом певного часу з Вами вийдуть на зв`язок! Вас можуть попросити принести свої медичні дані з собою (якщо вони у фізичному вигляді), або самостійно внести їх до системи за такої можливості! Також Вас запитають за Ваші скарги чи побажання у особистому чаті з Вами! Ваш попередній запис ймовірно буде уточнено та доповнено, тому не переживайте, якщо він зміниться! Слідкуйте за оновленнями, Вам буде надіслано відповідне повідомлення!',
+    title: 'pages.roadmap.step_6',
+    subtitle: 'pages.roadmap.stay_in_touch',
+    description: 'pages.roadmap.patient_stay_in_touch',
     href: '/account/notifications',
-    hreftitle: 'Перевірити повідомлення',
+    hreftitle: 'pages.roadmap.check_messages',
   },
 ]
 </script>
@@ -94,11 +94,12 @@ const roadmap = [
         <template #title>
           <h1 class="inline">
             <span class="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-              Шлях
+              {{ $t('pages.roadmap.roadmap_for') }}
             </span>
+            {{ "" }}
             <span
               class="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              Пацієнта
+              {{ $t('pages.roadmap.patient') }}
             </span>
           </h1>
         </template>

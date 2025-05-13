@@ -135,22 +135,22 @@ function simulateUpload() {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>Нова вступна інформація</DialogTitle>
+                <DialogTitle>{{ $t('pages.new_intake') }}</DialogTitle>
                 <DialogDescription>
-                    Внесіть дані для заповнення форми.
+                    {{ $t('pages.enter_data') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="grid items-center gap-1">
                         <Label for="first_name" class="text-right">
-                            Ім'я
+                            {{ $t('label.first_name') }}
                         </Label>
                         <Input id="first_name" class="col-span-3" required v-model="form.first_name" disabled />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="last_name" class="text-right">
-                            Прізвище
+                            {{ $t('pages.last_name') }}
                         </Label>
                         <Input id="last_name" class="col-span-3" required v-model="form.last_name" disabled />
                     </div>
@@ -158,55 +158,55 @@ function simulateUpload() {
                 <div class="grid gap-2 grid-cols-3">
                     <div class="grid items-center gap-1">
                         <Label for="awareness" class="text-right">
-                            Свідомість
+                            {{ $t('pages.awareness') }}
                         </Label>
                         <Input id="awareness" class="col-span-3" required v-model="form.awareness" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="head" class="text-right">
-                            Голова
+                            {{ $t('pages.head') }}
                         </Label>
                         <Input id="head" class="col-span-3" required v-model="form.head" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="limbs" class="text-right">
-                            Кінцівки
+                            {{ $t('pages.limbs') }}
                         </Label>
                         <Input id="limbs" class="col-span-3" required v-model="form.limbs" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="abdomen" class="text-right">
-                            Живіт
+                            {{ $t('pages.abdomen') }}
                         </Label>
                         <Input id="abdomen" class="col-span-3" required v-model="form.abdomen" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="skin" class="text-right">
-                            Шкіра
+                            {{ $t('pages.skin') }}
                         </Label>
                         <Input id="skin" class="col-span-3" required v-model="form.skin" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="lymph_nodes" class="text-right">
-                            Лімфовузли
+                            {{ $t('pages.lymph_nodes') }}
                         </Label>
                         <Input id="lymph_nodes" class="col-span-3" required v-model="form.lymph_nodes" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="breathe" class="text-right">
-                            Дихання
+                            {{ $t('pages.breathe') }}
                         </Label>
                         <Input id="breathe" class="col-span-3" required v-model="form.breathe" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="blood_pressure" class="text-right">
-                            Артеріальний тиск
+                            {{ $t('pages.blood_pressure') }}
                         </Label>
                         <Input id="blood_pressure" class="col-span-3" required v-model="form.blood_pressure" />
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="heart_rate" class="text-right">
-                            Частота серця
+                            {{ $t('pages.heart_rate') }}
                         </Label>
                         <Input id="heart_rate" class="col-span-3" required v-model="form.heart_rate" />
                     </div>
@@ -214,24 +214,24 @@ function simulateUpload() {
                 <div class="grid gap-2 grid-cols-2">
                     <div class="grid items-center gap-1">
                         <Label for="patologies" class="text-right">
-                            Патології
+                            {{ $t('pages.patologies') }}
                         </Label>
                         <Textarea v-model="form.patologies"></Textarea>
                         <span v-if="errors.patologies" class="text-red-600 text-sm">{{ errors.patologies }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="chronic_diseases" class="text-right">
-                            Хронічні захворювання
+                            {{ $t('pages.chronic_diseases') }}
                         </Label>
                         <Textarea v-model="form.chronic_diseases"></Textarea>
                         <span v-if="errors.chronic_diseases" class="text-red-600 text-sm">{{ errors.chronic_diseases
-                            }}</span>
+                        }}</span>
                     </div>
                 </div>
                 <div class="grid gap-2">
                     <div class="grid items-center gap-1">
                         <Label for="complaints" class="text-right">
-                            Скарги
+                            {{ $t('pages.complaints') }}
                         </Label>
                         <Textarea v-model="form.complaints"></Textarea>
                         <span v-if="errors.complaints" class="text-red-600 text-sm">{{ errors.complaints }}</span>
@@ -239,7 +239,7 @@ function simulateUpload() {
                 </div>
 
                 <DialogDescription>
-                    Або внесіть відповідний файл:
+                    {{ $t('pages.include_file') }}: 
                 </DialogDescription>
                 <div class="grid gap-2">
                     <div class="w-1/2 border-2 border-dashed rounded-xl p-4 relative transition-all mx-auto"
@@ -250,7 +250,7 @@ function simulateUpload() {
                         <div class="p-12 flex items-center justify-center flex-col space-y-2 cursor-pointer"
                             @click="openFilePicker">
                             <Upload class="w-6 h-6 text-gray-500" />
-                            <p class="text-sm text-gray-500">Drag and drop files here or click to upload</p>
+                            <p class="text-sm text-gray-500">{{ $t('pages.drag_and_drop') }}</p>
                         </div>
                         <div v-if="form.file.name" class="mt-4 space-y-2">
                             <div
@@ -273,7 +273,7 @@ function simulateUpload() {
             </div>
             <DialogFooter>
                 <Button type="submit" @click="submit">
-                    Зберегти
+                    {{ $t('label.save') }}
                 </Button>
             </DialogFooter>
         </DialogContent>

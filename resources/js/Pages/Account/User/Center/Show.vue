@@ -1,8 +1,6 @@
 <script setup>
 import Layout from "@/Layout/Dashboard/Index.vue";
 
-import { Link } from "@inertiajs/vue3"
-
 import CreateDialog from '@/Pages/Account/User/Center/CreateDialog.vue';
 
 import {
@@ -14,24 +12,10 @@ import {
     CardHeader,
 } from '@/components/ui/card'
 
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
 import Autoplay from 'embla-carousel-autoplay'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
-import { toast } from 'vue-sonner';
 import { watch, ref } from 'vue';
 import { dayName, formatPhoneNumber } from '@/helper'
 
@@ -50,54 +34,10 @@ const showCreateDialog = () => {
 const closeCreateDialog = () => {
     createDialog.value = false;
 };
-
-import {
-    Medal,
-    Map,
-    Plane,
-    Gift,
-    MoveRight,
-} from 'lucide-vue-next'
-const features = [
-    {
-        icon: Medal,
-        title: "Accessibility",
-        date: "2023-10-01",
-        description:
-            "Реабілітація за різними напрямками",
-        href: "/info/directions",
-    },
-    {
-        icon: Map,
-        title: "Community",
-        date: "2023-10-01",
-        description:
-            "Реабілітація поранених",
-        href: "/info/wounded",
-    },
-    {
-        icon: Plane,
-        title: "Scalability",
-        date: "2023-10-01",
-        description:
-            "Реабілітація дітей",
-        href: "/info/kids",
-    },
-    {
-        icon: Gift,
-        title: "Gamification",
-        date: "2023-10-01",
-        description:
-            "Реабілітація за кошти НСЗУ",
-        href: "/info/national",
-    },
-];
-
 </script>
 
 <template>
     <Layout>
-        <!-- {{ center }} -->
         <Card class="grid p-4 gap-8 border-0 shadow-none">
             <CardHeader>
                 <CardTitle
@@ -105,7 +45,7 @@ const features = [
                     {{ center.name }}
                 </CardTitle>
                 <CardDescription class="inline text-center text-xl text-gray-500 font-bold">
-                    Added at {{ center.created_at.slice(0, 10) }}
+                    {{ $t('pages.added_at') }} {{ center.created_at.slice(0, 10) }}
                 </CardDescription>
             </CardHeader>
             <CardContent class="grid grid-cols-2 gap-4">
@@ -114,21 +54,23 @@ const features = [
                         {{ center.description }}
                     </CardDescription>
                     <CardDescription class="text-xl font-bold inline text-black">
-                        Пошта: <p class="inline italic">
+                        {{ $t('label.email') }}: <p class="inline italic">
                             {{ center.email }}</p>
                     </CardDescription>
                     <CardDescription class="text-xl font-bold inline text-black">
-                        Адреса: <p class="inline italic">
+                        {{ $t('label.address') }}: <p class="inline italic">
                             {{ center.address }}</p>
                     </CardDescription>
                     <!-- {{ center }} -->
                     <CardDescription class="text-xl font-bold flex gap-2 text-black">
-                        Телефон: <p v-for="(phone, index) in center.phone_numbers" class="inline italic">
+                        {{ $t('label.phones') }}: <p v-for="(phone, index) in center.phone_numbers"
+                            class="inline italic">
                             {{ phone.phone_number }}</p>
                     </CardDescription>
                     <CardDescription class="text-xl capitalize font-bold flex gap-2 text-black">
-                        Соц. мережі: <a v-for="(link, index) in center.social_links" :href="link.url"
-                            target="_blank" rel="noopener" class="inline italic underline text-blue-600 hover:text-blue-800">
+                        {{ $t('label.social_links') }}: <a v-for="(link, index) in center.social_links" :href="link.url"
+                            target="_blank" rel="noopener"
+                            class="inline italic underline text-blue-600 hover:text-blue-800">
                             {{ link.platform }}</a>
                     </CardDescription>
                     <div class="grid grid-cols-2">
@@ -142,8 +84,7 @@ const features = [
                         </div>
                     </div>
                     <CardFooter class="font-bold uppercase items-end p-0 grid">
-                        <Button class="cursor-pointer" @click="showCreateDialog">Хочу до
-                            вас!</Button>
+                        <Button class="cursor-pointer" @click="showCreateDialog">{{ $t('pages.want_to_you') }}</Button>
                     </CardFooter>
                 </div>
                 <div v-if="center.images" class="grid grid-cols-1 place-items-center text-center">

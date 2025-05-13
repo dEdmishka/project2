@@ -180,7 +180,7 @@ const messages = ref({})
                         <div class="bg-muted/50 border rounded-lg"></div>
                       </AvatarFallback>
                     </Avatar>
-                    {{ selectedUser?.first_name || 'Select user...' }} {{ selectedUser?.last_name || ''
+                    {{ selectedUser?.first_name || $t('label.select_user') }} {{ selectedUser?.last_name || ''
                     }}
                     <ChevronDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>

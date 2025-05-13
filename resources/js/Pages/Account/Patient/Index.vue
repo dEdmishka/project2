@@ -206,7 +206,7 @@ import { motion } from 'motion-v'
             }
           }">
             <Label for="gender" class="text-right">
-              {{ $t('label.gender') }}: {{ form.gender === 'M' ? 'Male' : 'Female' }}
+              {{ $t('label.gender') }}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
             </Label>
             <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
               <div class="flex items-center space-x-2">

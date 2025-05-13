@@ -45,7 +45,7 @@ import { motion } from 'motion-v'
                     delay: 0.05
                 }
             }">
-                {{ $t('pages.contact_us_p2') }}
+                {{ $t('pages.contact_us_p1') }}
                 <br />
                 {{ $t('pages.contact_us_p2') }}
             </motion.p>
