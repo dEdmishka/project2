@@ -19,7 +19,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/comp
     <template #title>
       Home
     </template>
-    <Card class="@container/card">
+    <div class="grid space-y-6">
+      <Card class="@container/card">
       <CardHeader class="relative">
         <CardDescription>Total Revenue</CardDescription>
         <CardTitle class="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
@@ -107,5 +108,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/comp
         <div class="text-muted-foreground">Meets growth projections</div>
       </CardFooter>
     </Card>
+    </div>
   </Layout>
 </template>

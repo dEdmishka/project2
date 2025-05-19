@@ -274,7 +274,7 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            {{ $t('accounts.admin.wards') }}
+            {{ $t('account.admin.wards') }}
         </template>
         <div class="grid max-w-[275px]">
             <VersionSwitcher @change="selectCenter" :versions="props.centers"
@@ -307,7 +307,7 @@ watch(selectedField, (newField, oldField) => {
                 </DropdownMenu>
                 <Button class="ml-2" variant="outline" @click="showCreateDialog">
                     <Plus class="h-5"></Plus>
-                    {{ $t('label.create_new') }}
+                    {{ $t('pages.create_new') }}
                 </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>

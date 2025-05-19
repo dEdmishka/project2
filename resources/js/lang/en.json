@@ -41,6 +41,7 @@
             "departments": "Departments",
             "appointments": "Appointments",
             "wards": "Wards",
+            "users": "Users",
             "patients": "Patients",
             "staff": "Staff",
             "office": "Office",
@@ -70,6 +71,12 @@
     },
     "admin": {
         "you_sure": "You are sure want to delete",
+        "center": {
+            "create": "Create center",
+            "edit": "Edit center",
+            "delete": "Delete center",
+            "make_changes": "Make changes to your center here. Click save when you're done."
+        },
         "appointment": {
             "create": "Create appointment",
             "edit": "Edit appointment",

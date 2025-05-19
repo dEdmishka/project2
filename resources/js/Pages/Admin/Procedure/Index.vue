@@ -240,7 +240,7 @@ watch(selectedField, (newField, oldField) => {
                 </DropdownMenu>
                 <Button class="ml-2" variant="outline" @click="showCreateDialog">
                     <Plus class="h-5"></Plus>
-                    {{ $t('label.create_new') }}
+                    {{ $t('pages.create_new') }}
                 </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>

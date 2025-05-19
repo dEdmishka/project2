@@ -79,6 +79,7 @@ Route::group([], function () {
             Route::post('/procedures', [ProcedureController::class, 'store'])->name('account.procedure.store');
 
             Route::get('/appointments', [AppointmentController::class, 'index'])->name('account.appointment');
+            Route::post('/appointments', [AppointmentController::class, 'store'])->name('account.appointment.store');
 
             Route::get('/patients', [PatientController::class, 'index'])->name('account.patient');
 

@@ -39,14 +39,18 @@ import {
     getSortedRowModel,
     useVueTable,
 } from '@tanstack/vue-table'
-import { ArrowUpDown, ChevronDown, ChevronsRight, ChevronsLeft } from 'lucide-vue-next'
+import { ArrowUpDown, ChevronDown, ChevronsRight, ChevronsLeft, Plus } from 'lucide-vue-next'
 import { h, ref, watch } from 'vue'
 
-import CreateDialog from '@/Pages/Account/Patient/Procedure/CreateDialog.vue';
+import CreateDialog from '@/Pages/Account/Staff/Appointment/CreateDialog.vue';
 
 const props = defineProps({
     user: Object,
     data: Array,
+    centers: Array,
+    patients: Array,
+    staff: Array,
+    wards: Array,
     main_url: String,
 })
 
@@ -65,6 +69,10 @@ const closeCreateDialog = () => {
 
 const setCurrentCell = (editData) => {
     currentCell.value = editData;
+}
+
+const updateData = (newData) => {
+    data.value = newData;
 }
 
 const columns = [
@@ -249,7 +257,10 @@ watch(selectedField, (newField, oldField) => {
                         </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>
-
+                <Button class="ml-2" variant="outline" @click="showCreateDialog">
+                    <Plus class="h-5"></Plus>
+                    {{ $t('pages.create_new') }}
+                </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline" class="ml-auto">
@@ -366,7 +377,8 @@ watch(selectedField, (newField, oldField) => {
 
         </div>
 
-        <CreateDialog :procedure="currentCell" :user="$page.props.user" @close="closeCreateDialog"
-            v-model:open="createDialog" :mainUrl="$page.props.main_url" />
+        <CreateDialog @update="updateData" @close="closeCreateDialog" v-model:open="createDialog"
+            :mainUrl="$page.props.main_url" :patients="$page.props.patients" :staff="$page.props.staff"
+            :wards="$page.props.wards" />
     </Layout>
 </template>

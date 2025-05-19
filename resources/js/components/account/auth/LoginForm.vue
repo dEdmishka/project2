@@ -61,9 +61,6 @@ const submit = () => {
                     <Button type="submit" class="w-full">
                         {{ $t('account.auth.login') }}
                     </Button>
-                    <Button variant="outline" class="w-full">
-                        {{ $t('account.auth.login_google') }}
-                    </Button>
                 </div>
                 <div class="mt-4 text-center text-sm">
                     {{ $t('account.auth.dont_have_account') }}

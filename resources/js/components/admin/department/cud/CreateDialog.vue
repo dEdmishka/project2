@@ -93,7 +93,7 @@ const selectedCenter = computed(() =>
 )
 const filteredCenters = computed(() =>
     props.centers.filter(
-        (center) => center.name.toLowerCase().includes(search.value.toLowerCase())
+        (center) => center.name.toLowerCase().includes(searchCenter.value.toLowerCase())
     )
 )
 function selectCenter(center) {
@@ -108,7 +108,7 @@ const selectedDepartmentType = computed(() =>
 )
 const filteredDepartmentType = computed(() =>
     props.departmentTypes.filter(
-        (departmentType) => departmentType.type.toLowerCase().includes(search.value.toLowerCase())
+        (departmentType) => departmentType.type.toLowerCase().includes(searchDepartmentType.value.toLowerCase())
     )
 )
 function selectDepartmentType(departmentType) {

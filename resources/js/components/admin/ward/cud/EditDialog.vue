@@ -100,7 +100,7 @@ const selectedDepartment = computed(() =>
 )
 const filteredDepartments = computed(() =>
     props.departments.filter(
-        (department) => department.name.toLowerCase().includes(search.value.toLowerCase())
+        (department) => department.name.toLowerCase().includes(searchDepartment.value.toLowerCase())
     )
 )
 function selectDepartment(department) {
@@ -115,7 +115,7 @@ const selectedProcedure = computed(() =>
 )
 const filteredProcedure = computed(() =>
     props.procedures.filter(
-        (procedure) => procedure.name.toLowerCase().includes(search.value.toLowerCase())
+        (procedure) => procedure.name.toLowerCase().includes(searchProcedure.value.toLowerCase())
     )
 )
 function selectProcedure(procedure) {

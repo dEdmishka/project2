@@ -131,7 +131,7 @@ const selectedCenter = computed(() =>
 )
 const filteredCenters = computed(() =>
     props.centers.filter(
-        (center) => center.name.toLowerCase().includes(search.value.toLowerCase())
+        (center) => center.name.toLowerCase().includes(searchCenter.value.toLowerCase())
     )
 )
 function selectCenter(center) {
@@ -146,7 +146,7 @@ const selectedStaffType = computed(() =>
 )
 const filteredStaffType = computed(() =>
     props.staffTypes.filter(
-        (staffType) => staffType.type.toLowerCase().includes(search.value.toLowerCase())
+        (staffType) => staffType.type.toLowerCase().includes(searchStaffType.value.toLowerCase())
     )
 )
 function selectStaffType(staffType) {

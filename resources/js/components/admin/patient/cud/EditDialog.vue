@@ -117,7 +117,7 @@ const selectedCenter = computed(() =>
 )
 const filteredCenters = computed(() =>
     props.centers.filter(
-        (center) => center.name.toLowerCase().includes(search.value.toLowerCase())
+        (center) => center.name.toLowerCase().includes(searchCenter.value.toLowerCase())
     )
 )
 function selectCenter(center) {

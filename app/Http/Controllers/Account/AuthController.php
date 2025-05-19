@@ -57,7 +57,20 @@ class AuthController extends Controller
             'role' => 'regular',
         ]);
 
-        return redirect()->route('login');
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials)) {
+            // $request->session()->regenerate();
+
+            return redirect()->route('account.index');
+        }
+
+        return redirect()->back()->withErrors($validator)->withInput();
+
+        // return redirect()->route('login');
     }
 
     public function enter(Request $request)

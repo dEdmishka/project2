@@ -104,8 +104,8 @@ const selectedPatient = computed(() =>
 const filteredPatients = computed(() =>
     props.patients.filter(
         (patient) =>
-            patient.user.first_name.toLowerCase().includes(search.value.toLowerCase()) ||
-            patient.user.last_name.toLowerCase().includes(search.value.toLowerCase())
+            patient.user.first_name.toLowerCase().includes(searchPatient.value.toLowerCase()) ||
+            patient.user.last_name.toLowerCase().includes(searchPatient.value.toLowerCase())
     )
 )
 function selectPatient(patient) {
@@ -123,8 +123,8 @@ const selectedStaff = computed(() =>
 const filteredStaff = computed(() =>
     props.staff.filter(
         (staff) =>
-            staff.user.first_name.toLowerCase().includes(search.value.toLowerCase()) ||
-            staff.user.last_name.toLowerCase().includes(search.value.toLowerCase())
+            staff.user.first_name.toLowerCase().includes(searchStaff.value.toLowerCase()) ||
+            staff.user.last_name.toLowerCase().includes(searchStaff.value.toLowerCase())
     )
 )
 const toggleStaff = (staff) => {
@@ -144,7 +144,7 @@ const selectedWard = computed(() =>
 )
 const filteredWards = computed(() =>
     props.wards.filter(
-        (ward) => ward.name.toLowerCase().includes(search.value.toLowerCase())
+        (ward) => ward.name.toLowerCase().includes(searchWard.value.toLowerCase())
     )
 )
 function selectWard(ward) {

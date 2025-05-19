@@ -19,7 +19,7 @@ const data = {
   navMain: [
     {
       title: "account.admin.office",
-      url: "#",
+      url: "/admin",
       items: [
         // {
         //   title: "Home",
@@ -53,7 +53,7 @@ const data = {
     },
     {
       title: "account.admin.users",
-      url: "#",
+      url: "/admin/patients",
       items: [
         {
           title: "account.admin.patients",

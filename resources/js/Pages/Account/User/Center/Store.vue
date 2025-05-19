@@ -103,8 +103,8 @@ const selectedUser = computed(() =>
 const filteredUsers = computed(() =>
   props.users.filter(
     (user) =>
-      user.first_name.toLowerCase().includes(search.value.toLowerCase()) ||
-      user.last_name.toLowerCase().includes(search.value.toLowerCase())
+      user.first_name.toLowerCase().includes(searchUser.value.toLowerCase()) ||
+      user.last_name.toLowerCase().includes(searchUser.value.toLowerCase())
   )
 )
 function selectUser(user) {

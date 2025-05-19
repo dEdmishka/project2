@@ -289,7 +289,7 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            {{ $t('account.admin.center') }}
+            {{ $t('account.admin.centers') }}
         </template>
         <div class="">
             <div class="flex items-center py-4">
@@ -316,7 +316,7 @@ watch(selectedField, (newField, oldField) => {
                 </DropdownMenu>
                 <Button class="ml-2" variant="outline" @click="showCreateDialog">
                     <Plus class="h-5"></Plus>
-                    Create New
+                    {{ $t('pages.create_new') }}
                 </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>

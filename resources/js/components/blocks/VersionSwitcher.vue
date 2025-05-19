@@ -45,7 +45,7 @@ const selectVersion = (version) => {
                             <GalleryVerticalEnd class="size-4" />
                         </div>
                         <div class="flex flex-col gap-0.5 leading-none">
-                            <span class="font-semibold">{{ $t('current_center') }}</span>
+                            <span class="font-semibold">{{ $t('pages.current_center') }}</span>
                             <span v-if=selectedVersion class="">{{ selectedVersion?.name }}</span>
                         </div>
                         <ChevronsUpDown class="ml-auto" />
