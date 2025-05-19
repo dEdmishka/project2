@@ -17,10 +17,10 @@ return new class extends Migration
             // $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->foreignId('department_id')->constrained();
             $table->foreignId('procedure_id')->constrained();
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
+            $table->string('name');
+            $table->text('description');
             $table->integer('ward_number');
-            $table->integer('capacity')->nullable();
+            $table->integer('capacity');
             $table->timestamps();
         });
     }

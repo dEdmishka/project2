@@ -133,7 +133,7 @@ function simulateUpload() {
 
 <template>
     <Dialog :value="showDialog">
-        <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
+        <DialogContent class="sm:max-w-[850px] h-full overflow-auto">
             <DialogHeader>
                 <DialogTitle>{{ $t('pages.new_intake') }}</DialogTitle>
                 <DialogDescription>
@@ -150,7 +150,7 @@ function simulateUpload() {
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="last_name" class="text-right">
-                            {{ $t('pages.last_name') }}
+                            {{ $t('label.last_name') }}
                         </Label>
                         <Input id="last_name" class="col-span-3" required v-model="form.last_name" disabled />
                     </div>
@@ -158,70 +158,79 @@ function simulateUpload() {
                 <div class="grid gap-2 grid-cols-3">
                     <div class="grid items-center gap-1">
                         <Label for="awareness" class="text-right">
-                            {{ $t('pages.awareness') }}
+                            {{ $t('label.awareness') }}
                         </Label>
                         <Input id="awareness" class="col-span-3" required v-model="form.awareness" />
+                        <span v-if="errors.awareness" class="text-red-600 text-sm">{{ errors.awareness }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="head" class="text-right">
-                            {{ $t('pages.head') }}
+                            {{ $t('label.head') }}
                         </Label>
                         <Input id="head" class="col-span-3" required v-model="form.head" />
+                        <span v-if="errors.head" class="text-red-600 text-sm">{{ errors.head }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="limbs" class="text-right">
-                            {{ $t('pages.limbs') }}
+                            {{ $t('label.limbs') }}
                         </Label>
                         <Input id="limbs" class="col-span-3" required v-model="form.limbs" />
+                        <span v-if="errors.limbs" class="text-red-600 text-sm">{{ errors.limbs }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="abdomen" class="text-right">
-                            {{ $t('pages.abdomen') }}
+                            {{ $t('label.abdomen') }}
                         </Label>
                         <Input id="abdomen" class="col-span-3" required v-model="form.abdomen" />
+                        <span v-if="errors.abdomen" class="text-red-600 text-sm">{{ errors.abdomen }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="skin" class="text-right">
-                            {{ $t('pages.skin') }}
+                            {{ $t('label.skin') }}
                         </Label>
                         <Input id="skin" class="col-span-3" required v-model="form.skin" />
+                        <span v-if="errors.skin" class="text-red-600 text-sm">{{ errors.skin }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="lymph_nodes" class="text-right">
-                            {{ $t('pages.lymph_nodes') }}
+                            {{ $t('label.lymph_nodes') }}
                         </Label>
                         <Input id="lymph_nodes" class="col-span-3" required v-model="form.lymph_nodes" />
+                        <span v-if="errors.lymph_nodes" class="text-red-600 text-sm">{{ errors.lymph_nodes }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="breathe" class="text-right">
-                            {{ $t('pages.breathe') }}
+                            {{ $t('label.breathe') }}
                         </Label>
                         <Input id="breathe" class="col-span-3" required v-model="form.breathe" />
+                        <span v-if="errors.breathe" class="text-red-600 text-sm">{{ errors.breathe }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="blood_pressure" class="text-right">
-                            {{ $t('pages.blood_pressure') }}
+                            {{ $t('label.blood_pressure') }}
                         </Label>
                         <Input id="blood_pressure" class="col-span-3" required v-model="form.blood_pressure" />
+                        <span v-if="errors.blood_pressure" class="text-red-600 text-sm">{{ errors.blood_pressure }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="heart_rate" class="text-right">
-                            {{ $t('pages.heart_rate') }}
+                            {{ $t('label.heart_rate') }}
                         </Label>
                         <Input id="heart_rate" class="col-span-3" required v-model="form.heart_rate" />
+                        <span v-if="errors.heart_rate" class="text-red-600 text-sm">{{ errors.heart_rate }}</span>
                     </div>
                 </div>
                 <div class="grid gap-2 grid-cols-2">
                     <div class="grid items-center gap-1">
                         <Label for="patologies" class="text-right">
-                            {{ $t('pages.patologies') }}
+                            {{ $t('label.patologies') }}
                         </Label>
                         <Textarea v-model="form.patologies"></Textarea>
                         <span v-if="errors.patologies" class="text-red-600 text-sm">{{ errors.patologies }}</span>
                     </div>
                     <div class="grid items-center gap-1">
                         <Label for="chronic_diseases" class="text-right">
-                            {{ $t('pages.chronic_diseases') }}
+                            {{ $t('label.chronic_diseases') }}
                         </Label>
                         <Textarea v-model="form.chronic_diseases"></Textarea>
                         <span v-if="errors.chronic_diseases" class="text-red-600 text-sm">{{ errors.chronic_diseases
@@ -231,7 +240,7 @@ function simulateUpload() {
                 <div class="grid gap-2">
                     <div class="grid items-center gap-1">
                         <Label for="complaints" class="text-right">
-                            {{ $t('pages.complaints') }}
+                            {{ $t('label.complaints') }}
                         </Label>
                         <Textarea v-model="form.complaints"></Textarea>
                         <span v-if="errors.complaints" class="text-red-600 text-sm">{{ errors.complaints }}</span>

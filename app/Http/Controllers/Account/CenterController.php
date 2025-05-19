@@ -93,29 +93,29 @@ class CenterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // DB::transaction(function () use ($request) {
-        //     $patient = Patient::create([
-        //         'user_id' => $request->user_id,
-        //         'center_id' => $request->center_id,
-        //         'birth_date' => $request->birth_date,
-        //         'address' => $request->address,
-        //         'gender' => $request->gender,
-        //         'status' => 'active',
-        //     ]);
+        DB::transaction(function () use ($request) {
+            $patient = Patient::create([
+                'user_id' => $request->user_id,
+                'center_id' => $request->center_id,
+                'birth_date' => $request->birth_date,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'status' => 'active',
+            ]);
 
-        //     foreach ($request->phones as $phone) {
-        //         $patient->phoneNumbers()->create([
-        //             'phone_number' => $phone['phone_number'],
-        //         ]);
-        //     }
+            foreach ($request->phones as $phone) {
+                $patient->phoneNumbers()->create([
+                    'phone_number' => $phone['phone_number'],
+                ]);
+            }
 
-        //     foreach ($request->social_links as $link) {
-        //         $patient->socialLinks()->create([
-        //             'url' => $link['url'],
-        //             'platform' => detectPlatformFromUrl($link['url']),
-        //         ]);
-        //     }
-        // });
+            foreach ($request->social_links as $link) {
+                $patient->socialLinks()->create([
+                    'url' => $link['url'],
+                    'platform' => detectPlatformFromUrl($link['url']),
+                ]);
+            }
+        });
 
         return redirect()->route('account.index')->with('success', __('account.patient_created'));
     }

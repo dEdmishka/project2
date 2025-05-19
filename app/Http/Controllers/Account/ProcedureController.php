@@ -7,7 +7,9 @@ use App\Models\Appointment;
 use App\Models\Center;
 use App\Models\Patient;
 use App\Models\Procedure;
+use App\Models\Staff;
 use App\Models\User;
+use App\Models\Ward;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +64,15 @@ class ProcedureController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user()->load('image');
+
+        if (!$user->is_patient) {
+            return redirect()->back();
+        }
+
+        $patientId = $user->patient->id;
+        $centerId = $user->patient->center_id;
+
         $validator = Validator::make($request->all(), [
             'time' => 'required',
         ]);
@@ -72,30 +83,52 @@ class ProcedureController extends Controller
 
         $appointmentTime = Carbon::parse($request->time);
         $appointmentTimeEnd = $appointmentTime->copy()->addMinutes($request->duration);
+        $dayOfWeek = ($appointmentTime->dayOfWeek + 6) % 7;
 
-        // DB::transaction(function () use ($request) {
-        //     $patient = Patient::create([
-        //         'user_id' => $request->user_id,
-        //         'center_id' => $request->center_id,
-        //         'birth_date' => $request->birth_date,
-        //         'address' => $request->address,
-        //         'gender' => $request->gender,
-        //         'status' => 'active',
-        //     ]);
+        // dd($request, $appointmentTime, $appointmentTimeEnd);
 
-        //     foreach ($request->phones as $phone) {
-        //         $patient->phoneNumbers()->create([
-        //             'phone_number' => $phone['phone_number'],
-        //         ]);
-        //     }
+        // 🧠 1. Find a ward with the selected procedure and center
+        $ward = Ward::where('procedure_id', $request->procedure_id)
+            ->whereHas('department', function ($query) use ($centerId) {
+                $query->where('center_id', $centerId);
+            })
+            ->first();
 
-        //     foreach ($request->social_links as $link) {
-        //         $patient->socialLinks()->create([
-        //             'url' => $link['url'],
-        //             'platform' => detectPlatformFromUrl($link['url']),
-        //         ]);
-        //     }
-        // });
+        if (!$ward) {
+            return redirect()->back()->withErrors(['time' => __('account.no_available_ward')])->withInput();
+        }
+
+        // 🧠 2. Find staff
+        $availableStaff = Staff::where('center_id', $centerId)
+            ->whereHas('workingHours', function ($query) use ($appointmentTime, $appointmentTimeEnd, $dayOfWeek) {
+                $query
+                    ->where('day_of_week', $dayOfWeek)
+                    ->where('is_day_off', false)
+                    ->whereTime('start_time', '<=', $appointmentTime->format('H:i:s'))
+                    ->whereTime('end_time', '>=', $appointmentTimeEnd->format('H:i:s'));
+            })
+            ->get()
+            ->filter(function ($staff) use ($appointmentTime) {
+                return !$staff->appointments()->where('status', '!=', 'cancelled')->where('time', $appointmentTime->toDateTimeString())->exists();
+            })
+            ->first();
+
+        if (!$availableStaff) {
+            return redirect()->back()->withErrors(['time' => __('account.no_available_staff')])->withInput();
+        }
+
+        // 🧠 3. Create appointment
+        $appointment = Appointment::create([
+            'patient_id' => $patientId,
+            'ward_id' => $ward->id,
+            'time' => $request->time,
+            'status' => 'active',
+            'notes' => null,
+        ]);
+
+        // dd($appointment, $availableStaff->id);
+
+        $appointment->staff()->attach($availableStaff->id);
 
         return redirect()->route('account.appointment')->with('success', __('account.appointment_created'));
     }

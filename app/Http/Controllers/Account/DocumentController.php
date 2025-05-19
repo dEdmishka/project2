@@ -364,11 +364,24 @@ class DocumentController extends Controller
                 return redirect()->back()->with('success', __('account.intake_uploaded'));
             }
 
-            // $validator = Validator::make($request->all(), []);
+            $validator = Validator::make($request->all(), [
+                'patologies' => 'required|string',
+                'chronic_diseases' => 'required|string',
+                'complaints' => 'required|string',
+                'awareness' => 'required|string',
+                'head' => 'required|string',
+                'limbs' => 'required|string',
+                'abdomen' => 'required|string',
+                'skin' => 'required|string',
+                'lymph_nodes' => 'required|string',
+                'breathe' => 'required|string',
+                'blood_pressure' => 'required|string',
+                'heart_rate' => 'required|string',
+            ]);
 
-            // if ($validator->fails()) {
-            //     return redirect()->back()->withErrors($validator)->withInput();
-            // }
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
             DB::transaction(function () use ($patient, $request) {
                 $recordType = RecordType::where('type', 'Intake Summary')->firstOrFail();

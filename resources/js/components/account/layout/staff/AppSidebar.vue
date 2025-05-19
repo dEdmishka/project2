@@ -20,7 +20,7 @@ const props = defineProps();
 const data = {
   navMain: [
     {
-      title: "Профіль",
+      title: "account.sidebar.profile",
       url: "/account",
       items: [
         {

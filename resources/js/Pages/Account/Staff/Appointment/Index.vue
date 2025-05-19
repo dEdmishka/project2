@@ -224,7 +224,7 @@ watch(selectedField, (newField, oldField) => {
 <template>
     <Layout>
         <template #title>
-            {{ $t(account.admin.appointments) }}
+            {{ $t('account.admin.appointments') }}
         </template>
         <div class="">
             <div class="flex items-center py-4">

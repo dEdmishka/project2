@@ -17,7 +17,7 @@ return new class extends Migration
             // $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             // $table->foreignId('department_id')->index()->onDelete('cascade');
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->integer('duration');
             $table->double('cost');
             $table->boolean('is_active');

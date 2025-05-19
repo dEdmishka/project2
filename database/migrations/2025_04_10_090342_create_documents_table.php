@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('file_name');
             $table->string('file_path');
             $table->string('file_type');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('is_private');
             $table->nullableMorphs('documentable');
             $table->timestamps();
