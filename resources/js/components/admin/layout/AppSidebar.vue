@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/vue3"
 
+const props = defineProps({})
+
 const data = {
   navMain: [
     {

@@ -40,7 +40,7 @@
             "treatments": "Лікування",
             "departments": "Відділи",
             "appointments": "Прийоми",
-            "wards": "Відділення",
+            "wards": "Палати",
             "users": "Користувачі",
             "patients": "Пацієнти",
             "staff": "Персонал",
@@ -49,7 +49,8 @@
             "chat": "Чат",
             "diagnosis": "Діагноз",
             "documents": "Документи",
-            "schedule": "Розклад"
+            "schedule": "Розклад",
+            "notifications": "Повідомлення"
         },
         "nav": {
             "home": "Головна",

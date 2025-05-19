@@ -49,7 +49,8 @@
             "chat": "Chat",
             "diagnosis": "Diagnosis",
             "documents": "Documents",
-            "schedule": "Schedule"
+            "schedule": "Schedule",
+            "notifications": "Notifications"
         },
         "nav": {
             "home": "Home",
