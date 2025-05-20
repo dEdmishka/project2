@@ -74,7 +74,7 @@ const columns = [
     //     cell: ({ row }) => {
     //         const objData = row.original
 
-    //         return h('div', { class: 'grid py-4 px-2' }, h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Записатися!'))
+    //         return h('div', { class: 'grid py-4 px-2' }, h(Button, { class: 'cursor-pointer', onClick: () => { setCurrentCell(objData); showCreateDialog(); } }, 'Записатися!'))
     //     },
     // },
     {

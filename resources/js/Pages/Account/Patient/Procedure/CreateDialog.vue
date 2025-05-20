@@ -124,9 +124,9 @@ watch(formattedDateTime, newVal => {
     <Dialog :value="showDialog">
         <DialogContent class="sm:max-w-[850px] h-full md:h-auto overflow-auto md:overflow-hidden">
             <DialogHeader>
-                <DialogTitle>{{ $t('pages.new_patient') }}</DialogTitle>
+                <DialogTitle>{{ $t('admin.appointment.create') }}</DialogTitle>
                 <DialogDescription>
-                    {{ $t('pages.enter_reg_details') }}
+                    {{ $t('pages.enter_data') }}
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">

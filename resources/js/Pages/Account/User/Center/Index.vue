@@ -72,7 +72,7 @@ const columns = [
                 {
                     default: () => [
                         h(Button, { class: '', variant: "outline" }, h(Link, { class: '', href: `${props.main_url}/${objData.id}` }, 'Переглянути центр')),
-                        h(Button, { class: 'cursor-pointer', onClick: showCreateDialog, onCurrent: setCurrentCell(objData) }, 'Хочу до вас!')
+                        h(Button, { class: 'cursor-pointer', onClick: () => { setCurrentCell(objData); showCreateDialog(); } }, 'Хочу до вас!')
                     ],
                 })
         },

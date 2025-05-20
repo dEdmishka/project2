@@ -43,11 +43,11 @@ const updateData = (newData) => {
         </div>
 
         <div class="grid py-6 space-y-6">
-            <h1 class="text-2xl font-bold">{{ $t('medcard_for') }} {{ data.user.first_name }} {{ data.user.last_name }}
+            <h1 class="text-2xl font-bold">{{ $t('pages.medcard_for') }} {{ data.user.first_name }} {{ data.user.last_name }}
             </h1>
             <Card v-if="data?.records[0]?.documents">
                 <CardHeader>
-                    <CardTitle>{{ $t('medcard_record') }}</CardTitle>
+                    <CardTitle>{{ $t('pages.medcard_record') }}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <p class="text-gray-700 mb-4">{{ data.records[0].content }}</p>
@@ -60,14 +60,14 @@ const updateData = (newData) => {
                             </div>
                             <a :href="`/storage/${doc.file_path}`"
                                 class="text-blue-600 hover:underline flex items-center">
-                                <Download class="w-4 h-4 mr-1" /> {{ $t('view_download') }}
+                                <Download class="w-4 h-4 mr-1" /> {{ $t('pages.view_download') }}
                             </a>
                         </div>
                     </div>
-                    <p v-else class="text-gray-500">{{ $t('no_doc_uploaded') }}</p>
+                    <p v-else class="text-gray-500">{{ $t('pages.no_doc_uploaded') }}</p>
                 </CardContent>
             </Card>
-            <p v-else class="text-gray-500">{{ $t('no_medcard') }}</p>
+            <p v-else class="text-gray-500">{{ $t('pages.no_medcard') }}</p>
         </div>
 
         <CreateDialog @update="updateData" :patient="data" @close="closeCreateDialog" v-model:open="createDialog"

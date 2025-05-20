@@ -29,19 +29,17 @@ class ProcedureController extends Controller
 
         $centerId = $user->patient->center_id;
 
-        $procedures = Procedure::with(['wards.department' => function ($query) use ($centerId) {
-            $query->where('center_id', $centerId);
-        }])->where('is_active', true)->get();
+        $procedures = Procedure::with([
+            'wards'
+        ])->whereHas('wards', function ($query) use ($centerId) {
+            $query->whereHas('department', function ($q) use ($centerId) {
+                $q->where('center_id', $centerId);
+            });
+        })->where('is_active', true)->get();
 
         $procedures = $procedures->filter(function ($item) {
             return $item->wards->isNotEmpty();
         })->values();
-
-        // $appointments = Appointment::with(['ward.procedure' => function ($query) use ($centerId) {
-        //     $query->where('center_id', $centerId);
-        // }])->get();
-
-        // dd($appointments);
 
         $procedures = $procedures->map(function ($item) {
             return [
@@ -88,14 +86,32 @@ class ProcedureController extends Controller
         // dd($request, $appointmentTime, $appointmentTimeEnd);
 
         // 🧠 1. Find a ward with the selected procedure and center
-        $ward = Ward::where('procedure_id', $request->procedure_id)
-            ->whereHas('department', function ($query) use ($centerId) {
-                $query->where('center_id', $centerId);
-            })
+        $ward = Ward::whereHas('department', function ($query) use ($centerId) {
+            $query->where('center_id', $centerId);
+        })
+            ->where('procedure_id', $request->procedure_id)
             ->first();
 
         if (!$ward) {
             return redirect()->back()->withErrors(['time' => __('account.no_available_ward')])->withInput();
+        }
+
+        // 1. Перевірка на перевищення capacity
+        $activeAppointments = Appointment::where('ward_id', $ward->id)
+            ->whereBetween('time', [$appointmentTime, $appointmentTimeEnd->copy()->subMinute()])
+            ->count();
+
+        if ($activeAppointments >= $ward->capacity) {
+            return redirect()->back()->withErrors(['ward' => __('admin.ward_full')])->withInput();
+        }
+
+        // 2. Перевірка на конфлікт за пацієнтом
+        $conflictForPatient = Appointment::where('patient_id', $patientId)
+            ->whereBetween('time', [$appointmentTime, $appointmentTimeEnd->copy()->subMinute()])
+            ->exists();
+
+        if ($conflictForPatient) {
+            return redirect()->back()->withErrors(['time' => __('admin.patient_has_appointment')])->withInput();
         }
 
         // 🧠 2. Find staff
