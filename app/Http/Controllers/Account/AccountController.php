@@ -31,7 +31,7 @@ class AccountController extends Controller
         }
 
         if ($user->is_staff) {
-            $staff = Staff::with(['phoneNumbers', 'socialLinks', 'workingHours'])->find(Auth::id());
+            $staff = Staff::with(['phoneNumbers', 'socialLinks', 'workingHours'])->find($user->staff->id);
 
             return Inertia::render('Account/Staff/Index', [
                 'user' => array_merge(
@@ -114,6 +114,77 @@ class AccountController extends Controller
         }
 
         if ($user->is_staff) {
+            $staff = Staff::findOrFail($user->staff->id);
+
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required|unique:users,email,' . $user->id,
+                'image' => '',
+                'birth_date' => 'required',
+                'address' => 'required',
+                'gender' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            DB::transaction(function () use ($user, $staff, $request) {
+                $user->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                ]);
+
+                if ($request->hasFile('image')) {
+                    $image_path = $request->file('image')->store('images', 'public');
+
+                    $user->image()->update([
+                        'url' => 'storage/' . $image_path,
+                    ]);
+                }
+
+                $staff->update([
+                    'birth_date' => $request->birth_date,
+                    'address' => $request->address,
+                    'gender' => $request->gender,
+                ]);
+
+                $staff->phoneNumbers()->delete();
+                if (!empty($request->phones)) {
+                    foreach ($request->phones as $phone) {
+                        $staff->phoneNumbers()->create([
+                            'phone_number' => $phone['phone_number'],
+                        ]);
+                    }
+                }
+
+                $staff->socialLinks()->delete();
+                if (!empty($request->social_links)) {
+                    foreach ($request->social_links as $link) {
+                        $staff->socialLinks()->create([
+                            'url' => $link['url'],
+                            'platform' => detectPlatformFromUrl($link['url']),
+                        ]);
+                    }
+                }
+
+                
+                $staff->workingHours()->delete();
+                if (!empty($request->working_hours)) {
+                    foreach ($request->working_hours as $hour) {
+                        $staff->workingHours()->create([
+                            'day_of_week' => $hour['day_of_week'],
+                            'start_time' => $hour['start_time'] ?? null,
+                            'end_time' => $hour['end_time'] ?? null,
+                            'is_day_off' => $hour['is_day_off'],
+                        ]);
+                    }
+                }
+            });
+
+            return redirect()->back()->with('success', __('account.staff_updated'));
         }
 
         $validator = Validator::make($request->all(), [

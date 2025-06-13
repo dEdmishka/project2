@@ -58,20 +58,23 @@ const formatPhone = (event, index) => {
 };
 
 watch(
-  () => props.currentCell,
-  (newData) => {
-    if (newData) {
-      form.name = newData.name
-      form.email = newData.email
-      form.address = newData.address
-      form.description = newData.description
-      form.phones = newData.phones
-      form.social_links = newData.social_links
-      form.working_hours = newData.working_hours
-    }
-  },
-  { immediate: true }
+    () => props.currentCell,
+    (newData) => {
+        if (newData) {
+            form.name = newData.name
+            form.email = newData.email
+            form.address = newData.address
+            form.description = newData.description
+            form.phones = newData.phones
+            form.social_links = newData.social_links
+            form.working_hours = newData.working_hours
+        }
+    },
+    { immediate: true }
 )
+
+import { useI18n } from "vue-i18n";
+const i18n = useI18n();
 
 const submit = () => {
     form.put(`${props.mainUrl}/${props.currentCell.id}`, {
@@ -82,7 +85,7 @@ const submit = () => {
             const data = event.props.data;
             // console.log(data);
             const successMessage = event.props.flash.success;
-            toast('account.toast.success', {
+            toast(i18n.t('account.toast.success'), {
                 variant: 'default',
                 duration: 3000,
                 description: successMessage,
@@ -161,7 +164,8 @@ const submit = () => {
                         <div class="space-y-2">
                             <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
                                 <div class="flex flex-col items-start gap-1 flex-1">
-                                    <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)" placeholder="(0XX)-XXX-XX-XX" />
+                                    <Input v-model="phone.phone_number" @input="(e) => formatPhone(e, index)"
+                                        placeholder="(0XX)-XXX-XX-XX" />
                                     <span v-if="errors[`phones.${index}.phone_number`]" class="text-red-600 text-sm">
                                         {{ errors[`phones.${index}.phone_number`] }}
                                     </span>
@@ -213,7 +217,8 @@ const submit = () => {
 
                                 <div class="flex items-center gap-2">
                                     <Checkbox :model-value="Boolean(hour.is_day_off)"
-                                    @update:model-value="val => hour.is_day_off = val ? 1 : 0" id="day-off-{{ index }}" />
+                                        @update:model-value="val => hour.is_day_off = val ? 1 : 0"
+                                        id="day-off-{{ index }}" />
                                     <label :for="'day-off-' + index" class="text-sm">{{ $t('label.dayoff') }}</label>
                                 </div>
                             </div>
@@ -228,7 +233,7 @@ const submit = () => {
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </div>
             </div>

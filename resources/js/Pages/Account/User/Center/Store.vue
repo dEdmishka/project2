@@ -60,6 +60,9 @@ watch(
   { immediate: true }
 )
 
+import { useI18n } from "vue-i18n";
+const i18n = useI18n();
+
 const emit = defineEmits(['update', 'close']);
 const errors = ref({});
 
@@ -71,7 +74,7 @@ const submit = () => {
     onSuccess: (event) => {
       const data = event.props.data;
       const successMessage = event.props.flash.success;
-      toast('account.toast.success', {
+      toast(i18n.t('account.toast.success'), {
         variant: 'default',
         duration: 3000,
         description: successMessage,
@@ -156,7 +159,7 @@ function selectUser(user) {
             </div>
             <div class="grid items-center gap-2">
               <Label for="center" class="text-right">
-                {{ $t('label.center')}}
+                {{ $t('label.center') }}
               </Label>
               <Input id="address" class="col-span-3" required v-model="form.address" disabled />
             </div>
@@ -164,29 +167,29 @@ function selectUser(user) {
           <div class="grid grid-cols-1 gap-2">
             <div class="grid grid-cols-2 items-center gap-2">
               <Label for="gender" class="text-right">
-                {{ $t('label.gender')}}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
+                {{ $t('label.gender') }}: {{ form.gender === 'M' ? $t('label.male') : $t('label.female') }}
               </Label>
               <Label for="status" class="text-right">
-                {{ $t('label.status')}}: {{ form.status === 'active' ? $t('label.active') : $t('label.discharge') }}
+                {{ $t('label.status') }}: {{ form.status === 'active' ? $t('label.active') : $t('label.discharge') }}
               </Label>
               <RadioGroup :default-value="form.gender" :orientation="'vertical'" v-model="form.gender">
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="M" value="M" />
-                  <Label for="M">{{ $t('label.male')}}</Label>
+                  <Label for="M">{{ $t('label.male') }}</Label>
                 </div>
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="F" value="F" />
-                  <Label for="F">{{ $t('label.female')}}</Label>
+                  <Label for="F">{{ $t('label.female') }}</Label>
                 </div>
               </RadioGroup>
               <RadioGroup :default-value="form.status" :orientation="'vertical'" v-model="form.status">
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="active" value="active" />
-                  <Label for="active">{{ $t('label.active')}}</Label>
+                  <Label for="active">{{ $t('label.active') }}</Label>
                 </div>
                 <div class="flex items-center space-x-2">
                   <RadioGroupItem id="discharge" value="discharge" />
-                  <Label for="discharge">{{ $t('label.discharge')}}</Label>
+                  <Label for="discharge">{{ $t('label.discharge') }}</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -194,14 +197,14 @@ function selectUser(user) {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div class="grid items-center gap-2">
               <Label for="birth_date" class="text-right">
-                {{ $t('label.birth_date')}}
+                {{ $t('label.birth_date') }}
               </Label>
               <Input id="birth_date" type="date" class="col-span-3" required v-model="form.birth_date" />
               <span v-if="errors.birth_date" class="text-red-600 text-sm">{{ errors.birth_date }}</span>
             </div>
             <div class="grid items-center gap-2">
               <Label for="address" class="text-right">
-                {{ $t('label.address')}}
+                {{ $t('label.address') }}
               </Label>
               <Input id="address" class="col-span-3" required v-model="form.address" />
               <span v-if="errors.address" class="text-red-600 text-sm">{{ errors.address }}</span>
@@ -210,7 +213,7 @@ function selectUser(user) {
           <div class="grid grid-cols-2 gap-2">
             <div class="grid items-center gap-1">
               <Label for="name" class="text-right">
-                {{ $t('label.social_links')}}
+                {{ $t('label.social_links') }}
               </Label>
               <div class="space-y-2">
                 <div v-for="(social, index) in form.social_links" :key="'social-' + index" class="flex gap-2">
@@ -228,13 +231,13 @@ function selectUser(user) {
               </div>
               <Button type="button" variant="outline" class="mt-2"
                 @click="(form.social_links.length < 3) ? form.social_links.push({ url: '' }) : null">
-                <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_social_link')}}
+                <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_social_link') }}
               </Button>
             </div>
 
             <div class="grid items-center gap-1">
               <Label for="name" class="text-right">
-                {{ $t('label.phones')}}
+                {{ $t('label.phones') }}
               </Label>
               <div class="space-y-2">
                 <div v-for="(phone, index) in form.phones" :key="index" class="flex gap-2">
@@ -254,7 +257,7 @@ function selectUser(user) {
 
               <Button type="button" variant="outline" class="mt-2"
                 @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
-                <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone')}}
+                <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone') }}
               </Button>
             </div>
           </div>
@@ -262,7 +265,7 @@ function selectUser(user) {
 
         <div>
           <Button type="submit" @click="submit">
-            {{ $t('label.save')}}
+            {{ $t('label.save') }}
           </Button>
         </div>
       </div>

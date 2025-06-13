@@ -118,7 +118,7 @@ const columns = [
     },
     {
         accessorKey: 'ward',
-        accessorFn: row => { return row.ward?.name ?? '—' },
+        accessorFn: row => { return row.ward?.ward_number ?? '—' },
         header: ({ column }) => {
             return h(Button, {
                 variant: 'ghost',

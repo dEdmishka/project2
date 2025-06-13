@@ -113,7 +113,7 @@ const formatPhone = (event, index) => {
 
                     <div class="grid items-center gap-1">
                         <Label for="name" class="text-right">
-                            {{ $t('label.socail_links') }}
+                            {{ $t('label.social_links') }}
                         </Label>
                         <div class="space-y-2">
                             <div v-for="(social, index) in form.social_links" :key="'social-' + index"

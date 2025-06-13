@@ -111,7 +111,9 @@ const submit = () => {
                     <Label for="status" class="text-right">
                         {{ $t('label.status') }}
                     </Label>
-                    <Checkbox v-model="form.is_active" :checked="form.is_active == 1" />
+                    <p>
+                        <Checkbox v-model="form.is_active" :checked="form.is_active == 1" /> {{ form.is_active == 1 ? $t('label.active') : $t('label.canceled') }}
+                    </p>
                 </div>
             </div>
             <DialogFooter>

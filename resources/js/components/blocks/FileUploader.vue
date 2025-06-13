@@ -58,6 +58,9 @@ const form = useForm({
   files: []
 });
 
+import { useI18n } from "vue-i18n";
+const i18n = useI18n();
+
 const errors = ref({});
 
 const submit = () => {
@@ -69,7 +72,7 @@ const submit = () => {
     onSuccess: (event) => {
       const data = event.props.data;
       const successMessage = event.props.flash.success;
-      toast('account.toast.success', {
+      toast(i18n.t('account.toast.success'), {
         variant: 'default',
         duration: 3000,
         description: successMessage,

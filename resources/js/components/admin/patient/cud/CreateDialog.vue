@@ -287,7 +287,7 @@ function selectCenter(center) {
 
                         <Button type="button" variant="outline" class="mt-2"
                             @click="(form.phones.length < 3) ? form.phones.push({ phone_number: '' }) : null">
-                            <Plus class="h-4 w-4 mr-1" /> {{ $t('label.no_phone') }}
+                            <Plus class="h-4 w-4 mr-1" /> {{ $t('label.add_phone') }}
                         </Button>
                     </div>
                 </div>
